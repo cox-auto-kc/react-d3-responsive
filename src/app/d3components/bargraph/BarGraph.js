@@ -90,24 +90,7 @@ class BarGraph extends React.Component {
 
   reloadBarData() {
 
-    let data = [
-      { month:'Jan', new:20, old:30, third:30, four:20 },
-      { month:'Feb', new:29, old:83, third:30, four:20 },
-      { month:'Mar', new:86, old:75, third:30, four:20 },
-      { month:'Apr', new:13, old:57, third:30, four:20 },
-      { month:'May', new:30, old:23, third:30, four:20 },
-      { month:'Jun', new:30, old:23, third:30, four:20 },
-      { month:'Jul', new:50, old:27, third:30, four:20 }
-    ];
-
-    for(let i=0;i<data.length;++i){
-      let d = data[i];
-      d.new = Math.floor((Math.random() * 200));
-      d.old = Math.floor((Math.random() * 200));
-      d.third = Math.floor((Math.random() * 200));
-      d.four = Math.floor((Math.random() * 200));
-      data[i] = d;
-    }
+    let data = this.props.data;
 
     this.setState({data:data});
 
@@ -187,7 +170,6 @@ BarGraph.defaultProps = {
   width: 1920,
   height: 300,
   chartId: 'chart_id',
-  data:[],
   xData:'month',
   fillColor: 'transparent',
   margin: {

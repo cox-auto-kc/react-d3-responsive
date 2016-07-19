@@ -135,15 +135,12 @@ class AreaGraph extends React.Component {
     const parseDate = d3.time.format(this.props.dateFormat).parse;
 
     for(let i=0;i<data.length;++i) {
-
         let d = data[i];
         d.day = parseDate(d.day);
-        d.count = Math.floor((Math.random() * 500));
         data[i] = d;
     }
 
     this.setState({data:data});
-
   }
 
   updateSize(){
