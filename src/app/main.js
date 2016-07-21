@@ -40,12 +40,12 @@ class Main extends React.Component {
           lineType="cardinal"
           data={ChartData.scatterPlotData} />
         <BarGraph
-          lineType="linear"
+          title="Bar Graph"
           keys={['new','old','third','four']}
           data={ChartData.barGraphTestData} />
         <PieChart
           chartId="piechart"
-          title="PieChart"
+          title="Pie Chart"
           data={ChartData.pieTestData}
           innerRadiusRatio={2}
           labelOffset={1}

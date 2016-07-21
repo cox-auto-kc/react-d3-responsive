@@ -16,6 +16,7 @@ class LineGraph extends React.Component {
     super(props);
     this.showToolTip = this.showToolTip.bind(this);
     this.hideToolTip = this.hideToolTip.bind(this);
+    this.componentWillMount = this.componentWillMount.bind(this);
     this.state = {
       tooltip: {
         display: false,
@@ -33,22 +34,34 @@ class LineGraph extends React.Component {
     };
   }
 
-  componentWillMount(){
+  componentWillMount() {
     const _self = this;
     window.addEventListener('resize', function(e) {
       _self.updateSize();
     }, true);
-    _self.setState({width: _self.props.width});
+    this.setState({width: this.props.width});
   }
 
   componentDidMount() {
-    this.updateSize();
     this.reloadBarData();
+    this.repaintComponent();
   }
 
   componentWillUnmount() {
-    this.serverRequest.abort();
     window.removeEventListener('resize');
+  }
+
+  repaintComponent() {
+    const _self = this;
+    const forceResize = function(){
+        _self.updateSize();
+    };
+    function onRepaint(callback){
+      setTimeout(function(){
+        window.requestAnimationFrame(callback);
+      }, 0);
+    }
+    onRepaint(forceResize);
   }
 
   createChart(_self) {
@@ -59,11 +72,6 @@ class LineGraph extends React.Component {
     this.w = this.state.width - (this.props.margin.left + this.props.margin.right);
     // Height of graph
     this.h = this.props.height - (this.props.margin.top + this.props.margin.bottom);
-
-    // Width of svg
-    this.xWidth = this.state.width;
-    // Height of svg
-    this.yHeight = this.props.height;
 
     // X axis scale
     this.xScale = d3.time.scale()

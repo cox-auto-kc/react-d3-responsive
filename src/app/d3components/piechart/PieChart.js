@@ -17,7 +17,7 @@ class PieChart extends React.Component {
 
   componentWillMount(){
     const _self = this;
-    window.addEventListener('resize', function(e) {
+    window.addEventListener('resize', function() {
       _self.updateSize();
     }, true);
     _self.setState({width: _self.props.width});
@@ -29,8 +29,10 @@ class PieChart extends React.Component {
   }
 
   componentWillUnmount() {
-    this.serverRequest.abort();
-    window.removeEventListener('resize');
+    const _self = this;
+    window.removeEventListener('resize', function() {
+      _self.updateSize();
+    }, true);
   }
 
   createChart(_self) {
