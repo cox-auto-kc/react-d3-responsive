@@ -1,0 +1,70 @@
+{
+  "name": "d3-react-starterkit",
+  "version": "0.0.12",
+  "description": "D3 with React",
+  "main": "index.js",
+  "scripts": {
+    "start-message": "babel-node tools/startMessage.js",
+    "prestart": "npm-run-all --parallel start-message remove-dist",
+    "start": "npm-run-all --parallel open:src lint:watch",
+    "open:src": "babel-node tools/srcServer.js",
+    "open:dist": "babel-node tools/distServer.js",
+    "lint": "node_modules/.bin/esw webpack.config.* src tools",
+    "lint:watch": "npm run lint -- --watch",
+    "clean-dist": "npm run remove-dist && mkdir dist",
+    "remove-dist": "node_modules/.bin/rimraf ./dist",
+    "build:html": "babel-node tools/buildHtml.js",
+    "prebuild": "npm run clean-dist && npm run build:html",
+    "build": "babel-node tools/build.js && npm run open:dist",
+
+    "npm-build": "npm run clean-npm-build && npm run babel-compile && babel-node tools/npmBuild.js",
+    "clean-npm-build": "node_modules/.bin/rimraf ./npm-lib",
+    "babel-compile": "babel src/app/d3components --out-dir npm-lib",
+
+    "npm-public": "npm version patch && npm publish"
+  },
+  "keywords": [
+    "react",
+    "d3",
+    "responsive"
+  ],
+  "author": {
+    "name": "Drew Thorson",
+    "email": "thorsdre@gmail.com",
+    "url": "http://drewthorson.com/"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "6.10.1",
+    "babel-core": "6.9.1",
+    "babel-eslint": "6.0.4",
+    "babel-loader": "6.2.4",
+    "babel-preset-es2015": "6.9.0",
+    "babel-preset-react": "6.5.0",
+    "browser-sync": "2.13.0",
+    "cheerio": "0.20.0",
+    "colors": "1.1.2",
+    "connect-history-api-fallback": "1.2.0",
+    "copy-webpack-plugin": "3.0.1",
+    "eslint": "2.13.0",
+    "eslint-plugin-import": "1.8.1",
+    "eslint-plugin-react": "5.2.2",
+    "eslint-watch": "2.1.11",
+    "eventsource-polyfill": "0.9.6",
+    "extract-text-webpack-plugin": "1.0.1",
+    "npm-run-all": "2.1.2",
+    "transfer-webpack-plugin": "0.1.4",
+    "webpack": "1.13.1",
+    "webpack-dev-middleware": "1.6.1",
+    "webpack-hot-middleware": "2.10.0"
+  },
+  "dependencies": {
+    "d3": "3.5.17",
+    "react": "15.1.0",
+    "react-dom": "15.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/drew-thorson/d3-react-starterkit.git"
+  }
+}
