@@ -36,7 +36,7 @@ class LineGraph extends React.Component {
 
   componentWillMount() {
     const _self = this;
-    window.addEventListener('resize', function(e) {
+    window.addEventListener('resize', function() {
       _self.updateSize();
     }, true);
     this.setState({width: this.props.width});
@@ -200,7 +200,6 @@ class LineGraph extends React.Component {
     this.createChart(this);
 
     const _self = this;
-    let data = this.state.data;
     let lines, title;
 
     lines = this.dataNest.map(function (d,i) {
