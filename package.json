@@ -1,6 +1,6 @@
 {
   "name": "d3-react-starterkit",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "D3 with React",
   "main": "index.js",
   "scripts": {

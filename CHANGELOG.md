@@ -1,3 +1,7 @@
+###0.0.15:
+###### 22 JUL 2016
+- Fixed build uploaded to npm
+
 ###0.0.14:
 ###### 22 JUL 2016
 - Removed some excess code that wasn't used anymore
