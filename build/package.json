@@ -1,0 +1,22 @@
+{
+  "name": "d3-react-starterkit",
+  "version": "0.0.14",
+  "description": "D3 with React",
+  "main": "index.js",
+  "author": {
+    "name" : "Drew Thorson",
+    "email" : "thorsdre@gmail.com",
+    "url" : "http://drewthorson.com/"
+  },
+  "license": "MIT",
+  "keywords": [
+    "react",
+    "d3",
+    "responsive"
+  ],
+  "peerDependencies": {
+    "d3": "3.5.17",
+    "react": "15.1.0",
+    "react-dom": "15.1.0"
+  }
+}
