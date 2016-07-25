@@ -288,6 +288,68 @@ module.exports = {
       "count": 418
     }
   ],
+  lineGraphData3: [
+    {
+      "day": 20,
+      "count": 180
+    },
+    {
+      "day": 21,
+      "count": 250
+    },
+    {
+      "day": 22,
+      "count": 150
+    },
+    {
+      "day": 23,
+      "count": 496
+    },
+    {
+      "day": 24,
+      "count": 140
+    },
+    {
+      "day": 25,
+      "count": 380
+    },
+    {
+      "day": 26,
+      "count": 100
+    },
+    {
+      "day": 27,
+      "count": 150
+    },
+    {
+      "day": 28,
+      "count": 400
+    },
+    {
+      "day": 29,
+      "count": 345
+    },
+    {
+      "day": 30,
+      "count": 80
+    },
+    {
+      "day": 31,
+      "count": 532
+    },
+    {
+      "day": 33,
+      "count": 471
+    },
+    {
+      "day": 34,
+      "count": 246
+    },
+    {
+      "day": 35,
+      "count": 199
+    }
+  ],
   areaGraphData: [
     {
       "type": "A",

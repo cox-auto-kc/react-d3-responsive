@@ -1,3 +1,7 @@
+###0.0.16:
+###### -- --- 2016
+- Alternatives to date on X axis
+
 ###0.0.15:
 ###### 22 JUL 2016
 - Fixed build uploaded to npm
