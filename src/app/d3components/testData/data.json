@@ -288,6 +288,68 @@ module.exports = {
       "count": 418
     }
   ],
+  lineGraphData3: [
+    {
+      "day": 20,
+      "count": 180
+    },
+    {
+      "day": 21,
+      "count": 250
+    },
+    {
+      "day": 22,
+      "count": 150
+    },
+    {
+      "day": 23,
+      "count": 496
+    },
+    {
+      "day": 24,
+      "count": 140
+    },
+    {
+      "day": 25,
+      "count": 380
+    },
+    {
+      "day": 26,
+      "count": 100
+    },
+    {
+      "day": 27,
+      "count": 150
+    },
+    {
+      "day": 28,
+      "count": 400
+    },
+    {
+      "day": 29,
+      "count": 345
+    },
+    {
+      "day": 30,
+      "count": 80
+    },
+    {
+      "day": 31,
+      "count": 532
+    },
+    {
+      "day": 33,
+      "count": 471
+    },
+    {
+      "day": 34,
+      "count": 246
+    },
+    {
+      "day": 35,
+      "count": 199
+    }
+  ],
   areaGraphData: [
     {
       "type": "A",
@@ -816,6 +878,233 @@ module.exports = {
     {
       "type": "C",
       "day": "02-25-2016",
+      "count": 466
+    }
+  ],
+  scatterPlotData2: [
+    {
+      "type": "A",
+      "day": 92,
+      "count": 310
+    },
+    {
+      "type": "A",
+      "day": 39,
+      "count": 136
+    },
+    {
+      "type": "A",
+      "day": 498,
+      "count": 153
+    },
+    {
+      "type": "A",
+      "day": 165,
+      "count": 441
+    },
+    {
+      "type": "A",
+      "day": 284,
+      "count": 468
+    },
+    {
+      "type": "A",
+      "day": 215,
+      "count": 438
+    },
+    {
+      "type": "A",
+      "day": 124,
+      "count": 381
+    },
+    {
+      "type": "A",
+      "day": 2,
+      "count": 376
+    },
+    {
+      "type": "A",
+      "day": 358,
+      "count": 261
+    },
+    {
+      "type": "A",
+      "day": 458,
+      "count": 491
+    },
+    {
+      "type": "A",
+      "day": 181,
+      "count": 465
+    },
+    {
+      "type": "A",
+      "day": 450,
+      "count": 312
+    },
+    {
+      "type": "A",
+      "day": 170,
+      "count": 223
+    },
+    {
+      "type": "A",
+      "day": 322,
+      "count": 469
+    },
+    {
+      "type": "A",
+      "day": 5,
+      "count": 168
+    },
+    {
+      "type": "B",
+      "day": 147,
+      "count": 466
+    },
+    {
+      "type": "B",
+      "day": 164,
+      "count": 124
+    },
+    {
+      "type": "B",
+      "day": 404,
+      "count": 322
+    },
+    {
+      "type": "B",
+      "day": 158,
+      "count": 157
+    },
+    {
+      "type": "B",
+      "day": 258,
+      "count": 159
+    },
+    {
+      "type": "B",
+      "day": 313,
+      "count": 150
+    },
+    {
+      "type": "B",
+      "day": 396,
+      "count": 147
+    },
+    {
+      "type": "B",
+      "day": 220,
+      "count": 356
+    },
+    {
+      "type": "B",
+      "day": 269,
+      "count": 442
+    },
+    {
+      "type": "B",
+      "day": 451,
+      "count": 133
+    },
+    {
+      "type": "B",
+      "day": 95,
+      "count": 177
+    },
+    {
+      "type": "B",
+      "day": 444,
+      "count": 35
+    },
+    {
+      "type": "B",
+      "day": 239,
+      "count": 88
+    },
+    {
+      "type": "B",
+      "day": 463,
+      "count": 121
+    },
+    {
+      "type": "B",
+      "day": 470,
+      "count": 468
+    },
+    {
+      "type": "C",
+      "day": 389,
+      "count": 329
+    },
+    {
+      "type": "C",
+      "day": 400,
+      "count": 475
+    },
+    {
+      "type": "C",
+      "day": 80,
+      "count": 25
+    },
+    {
+      "type": "C",
+      "day": 388,
+      "count": 307
+    },
+    {
+      "type": "C",
+      "day": 96,
+      "count": 340
+    },
+    {
+      "type": "C",
+      "day": 383,
+      "count": 145
+    },
+    {
+      "type": "C",
+      "day": 98,
+      "count": 293
+    },
+    {
+      "type": "C",
+      "day": 468,
+      "count": 342
+    },
+    {
+      "type": "C",
+      "day": 402,
+      "count": 80
+    },
+    {
+      "type": "C",
+      "day": 147,
+      "count": 3
+    },
+    {
+      "type": "C",
+      "day": 432,
+      "count": 458
+    },
+    {
+      "type": "C",
+      "day": 175,
+      "count": 280
+    },
+    {
+      "type": "C",
+      "day": 304,
+      "count": 483
+    },
+    {
+      "type": "C",
+      "day": 315,
+      "count": 288
+    },
+    {
+      "type": "C",
+      "day": 329,
       "count": 466
     }
   ],

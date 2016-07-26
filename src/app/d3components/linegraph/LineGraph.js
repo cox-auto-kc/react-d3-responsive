@@ -74,15 +74,47 @@ class LineGraph extends React.Component {
     this.h = this.props.height - (this.props.margin.top + this.props.margin.bottom);
 
     // X axis scale
-    this.xScale = d3.time.scale()
-      .domain(
-        // Find min and max axis value
-        d3.extent(this.state.data, function (d) {
-          return d.day;
-        })
-      )
-      // Set range from 0 to width of container
-      .rangeRound([0, this.w]);
+    if(this.props.dataType !== 'date') {
+      this.xScale= d3.scale.linear()
+        .domain([
+          d3.min(this.state.data,function(d){
+            return d[_self.props.xData];
+          }),
+          d3.max(this.state.data,function(d){
+            return d[_self.props.xData];
+          })
+        ])
+        .range([0, this.w]);
+
+      if(this.props.dataPercent == 'x') {
+        this.xAxis = d3.svg.axis()
+          .scale(this.xScale)
+          .orient('bottom')
+          .tickFormat( function(x) {
+            return x + '%';
+          });
+      } else {
+        this.xAxis = d3.svg.axis()
+          .scale(this.xScale)
+          .orient('bottom');
+      }
+    } else {
+      this.xScale = d3.time.scale()
+        .domain(
+          // Find min and max axis value
+          d3.extent(this.state.data, function (d) {
+            return d.day;
+          })
+        )
+        // Set range from 0 to width of container
+        .rangeRound([0, this.w]);
+
+      this.xAxis = d3.svg.axis()
+        .scale(this.xScale)
+        .orient('bottom')
+        .ticks(Math.floor(this.w/100))
+        .tickFormat(d3.time.format(this.props.xFormat));
+    }
 
     // Y axis scale
     this.yScale = d3.scale.linear()
@@ -113,16 +145,20 @@ class LineGraph extends React.Component {
         .key(function(d) {return d.type;})
         .entries(this.state.data);
 
-    this.yAxis = d3.svg.axis()
-      .scale(this.yScale)
-      .orient('left')
-      .ticks(5);
-
-    this.xAxis = d3.svg.axis()
-      .scale(this.xScale)
-      .orient('bottom')
-      .ticks(Math.floor(this.w/100))
-      .tickFormat(d3.time.format(this.props.xFormat));
+    if(this.props.dataPercent == 'y') {
+      this.yAxis = d3.svg.axis()
+        .scale(this.yScale)
+        .orient('left')
+        .ticks(5)
+        .tickFormat( function(x) {
+          return x + '%';
+        });
+    } else {
+      this.yAxis = d3.svg.axis()
+        .scale(this.yScale)
+        .orient('left')
+        .ticks(5)
+    }
 
     this.yGrid = d3.svg.axis()
       .scale(this.yScale)
@@ -142,13 +178,14 @@ class LineGraph extends React.Component {
     const parseDate = d3.time.format(this.props.dateFormat).parse;
 
     for(let i=0;i<data.length;++i) {
-        let d = data[i];
+      let d = data[i];
+      if(this.props.dataType == 'date') {
         d.day = parseDate(d.day);
         data[i] = d;
+      }
     }
 
     this.setState({data:data});
-
   }
 
   updateSize(){
@@ -261,6 +298,8 @@ LineGraph.propTypes = {
   chartId: React.PropTypes.string,
   title: React.PropTypes.string,
   dateFormat: React.PropTypes.string,
+  dataType: React.PropTypes.string,
+  dataPercent: React.PropTypes.string,
   xFormat: React.PropTypes.string,
   data: React.PropTypes.array.isRequired,
   xData: React.PropTypes.string.isRequired,
@@ -277,6 +316,7 @@ LineGraph.defaultProps = {
   height: 300,
   chartId: 'chart_id',
   dateFormat:'%m-%d-%Y',
+  dataType:'date',
   xFormat:'%a %e',
   xData:'day',
   yData:'count',
