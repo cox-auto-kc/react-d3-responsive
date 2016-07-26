@@ -37,8 +37,8 @@ class Dots extends React.Component {
         <circle
           className="dot"
           r={_self.props.r}
-          cx={_self.props.x(d.day)}
-          cy={_self.props.y(d.count)}
+          cx={_self.props.x(d[_self.props.xData])}
+          cy={_self.props.y(d[_self.props.yData])}
           fill={_self.props.fill}
           stroke={_self.props.stroke}
           strokeWidth={_self.props.strokeWidth}

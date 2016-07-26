@@ -48,6 +48,8 @@ class Main extends React.Component {
         <ScatterPlot
           title="Scatter Plot - Number X axis"
           dataType="data"
+          xData="x"
+          yData="y"
           data={ChartData.scatterPlotData2} />
         <BarGraph
           title="Bar Graph"
