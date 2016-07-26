@@ -1,5 +1,9 @@
+###0.0.17:
+###### 26 JUL 2016
+- dataPoints - Utility accepts x and y data key via props
+
 ###0.0.16:
-###### -- --- 2016
+###### 26 JUL 2016
 - LineGraph - Alternatives to date on X axis
 - ScatterPlot - Alternatives to date on X axis
 
