@@ -42,9 +42,13 @@ class Main extends React.Component {
           lineType="cardinal"
           data={ChartData.areaGraphData2} />
         <ScatterPlot
-          title="Scatter Plot"
-          lineType="cardinal"
+          title="Scatter Plot - Date X axis"
+          dataType="date"
           data={ChartData.scatterPlotData} />
+        <ScatterPlot
+          title="Scatter Plot - Number X axis"
+          dataType="data"
+          data={ChartData.scatterPlotData2} />
         <BarGraph
           title="Bar Graph"
           keys={['new','old','third','four']}

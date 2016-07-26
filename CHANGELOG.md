@@ -1,6 +1,7 @@
 ###0.0.16:
 ###### -- --- 2016
 - LineGraph - Alternatives to date on X axis
+- ScatterPlot - Alternatives to date on X axis
 
 ###0.0.15:
 ###### 22 JUL 2016
