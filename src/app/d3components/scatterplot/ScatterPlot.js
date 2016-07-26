@@ -250,8 +250,8 @@ class ScatterPlot extends React.Component {
             showToolTip={_self.showToolTip}
             hideToolTip={_self.hideToolTip}
             removeFirstAndLast={false}
-            xData="day"
-            yData="count"
+            xData={_self.props.xData}
+            yData={_self.props.yData}
             r={5} />
           <ToolTip
             tooltip={_self.state.tooltip}
