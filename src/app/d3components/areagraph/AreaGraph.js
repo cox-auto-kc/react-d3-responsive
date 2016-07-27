@@ -42,12 +42,26 @@ class AreaGraph extends React.Component {
   }
 
   componentDidMount() {
-    this.updateSize();
     this.reloadBarData();
+    this.repaintComponent();
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize');
+    const _self = this;
+    window.removeEventListener('resize', function() { _self.updateSize() });
+  }
+
+  repaintComponent() {
+    const _self = this;
+    const forceResize = function(){
+        _self.updateSize();
+    };
+    function onRepaint(callback){
+      setTimeout(function(){
+        window.requestAnimationFrame(callback);
+      }, 0);
+    }
+    onRepaint(forceResize);
   }
 
   createChart(_self) {
