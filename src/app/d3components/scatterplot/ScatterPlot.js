@@ -48,7 +48,9 @@ class ScatterPlot extends React.Component {
 
   componentWillUnmount() {
     const _self = this;
-    window.removeEventListener('resize', function() { _self.updateSize() });
+    window.removeEventListener('resize', function() {
+      _self.updateSize();
+    });
   }
 
   repaintComponent() {
@@ -158,7 +160,7 @@ class ScatterPlot extends React.Component {
       this.yAxis = d3.svg.axis()
         .scale(this.yScale)
         .orient('left')
-        .ticks(5)
+        .ticks(5);
     }
 
     this.yGrid = d3.svg.axis()

@@ -32,7 +32,10 @@ class BarGraph extends React.Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize');
+    const _self = this;
+    window.removeEventListener('resize', function() {
+      _self.updateSize();
+    });
   }
 
   repaintComponent() {
@@ -186,7 +189,7 @@ BarGraph.defaultProps = {
   xData:'month',
   margin: {
     top: 10,
-    right: 10,
+    right: 40,
     bottom: 20,
     left: 60
   }
