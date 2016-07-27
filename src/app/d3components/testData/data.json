@@ -1,5 +1,5 @@
 module.exports = {
-  lineGraphData: [
+  "lineGraphData": [
     {
       "day":"02-11-2016",
       "count":180
@@ -61,7 +61,7 @@ module.exports = {
       "count":199
     }
   ],
-  lineGraphData2: [
+  "lineGraphData2": [
     {
       "type": "A",
       "day": "02-11-2016",
@@ -288,7 +288,7 @@ module.exports = {
       "count": 418
     }
   ],
-  lineGraphData3: [
+  "lineGraphData3": [
     {
       "day": 20,
       "count": 180
@@ -350,7 +350,7 @@ module.exports = {
       "count": 199
     }
   ],
-  areaGraphData: [
+  "areaGraphData": [
     {
       "type": "A",
       "day": "02-11-2016",
@@ -427,7 +427,7 @@ module.exports = {
       "count": 332
     }
   ],
-  areaGraphData2:  [
+  "areaGraphData2":  [
     {
       "type": "A",
       "day": "02-11-2016",
@@ -654,7 +654,7 @@ module.exports = {
       "count": 418
     }
   ],
-  scatterPlotData: [
+  "scatterPlotData": [
     {
       "type": "A",
       "day": "02-11-2016",
@@ -881,7 +881,7 @@ module.exports = {
       "count": 466
     }
   ],
-  scatterPlotData2: [
+  "scatterPlotData2": [
     {
       "type": "A",
       "x": 92,
@@ -1108,7 +1108,7 @@ module.exports = {
       "y": 466
     }
   ],
-  barGraphTestData: [
+  "barGraphTestData": [
     {
       "month": "Jan",
       "new": 0,
@@ -1159,7 +1159,7 @@ module.exports = {
       "four": 164
     }
   ],
-  pieTestData: [
+  "pieTestData": [
     158,93,20,120,187,45
   ]
 };
