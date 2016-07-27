@@ -255,8 +255,8 @@ class ScatterPlot extends React.Component {
             r={5} />
           <ToolTip
             tooltip={_self.state.tooltip}
-            xValue="Xtest"
-            yValue="Ytest" />
+            xValue={_self.props.xData}
+            yValue={_self.props.yData} />
         </g>
       );
     });
