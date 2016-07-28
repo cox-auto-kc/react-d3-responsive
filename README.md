@@ -30,8 +30,8 @@ import d3r from 'd3-react-starterkit';
 
 // es5
 var d3r = require('d3-react-starterkit');
-
 ```
+
 ### Available Charts
 
 ```js

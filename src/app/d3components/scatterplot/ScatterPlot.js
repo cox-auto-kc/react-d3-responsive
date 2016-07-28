@@ -23,6 +23,7 @@ class ScatterPlot extends React.Component {
           key: '',
           value: ''
         },
+        originalColor: '',
         pos:{
           x: 0,
           y: 0
@@ -202,7 +203,6 @@ class ScatterPlot extends React.Component {
   }
 
   showToolTip(e){
-    e.target.setAttribute('fill', '#6f8679');
     this.setState({
       tooltip: {
         display: true,
@@ -210,16 +210,18 @@ class ScatterPlot extends React.Component {
           key: e.target.getAttribute('data-key'),
           value: e.target.getAttribute('data-value')
         },
+        originalColor: e.target.getAttribute('fill'),
         pos:{
           x: e.target.getAttribute('cx'),
           y: e.target.getAttribute('cy')
         }
       }
     });
+    e.target.setAttribute('fill', '#6f8679');
   }
 
   hideToolTip(e){
-    e.target.setAttribute('fill', '#b1bfb7');
+    e.target.setAttribute('fill', this.state.tooltip.originalColor);
     this.setState({
       tooltip: {
         display: false,
@@ -227,6 +229,7 @@ class ScatterPlot extends React.Component {
           key: '',
           value: ''
         },
+        originalColor: '',
         pos:{
           x: 0,
           y: 0
@@ -252,7 +255,6 @@ class ScatterPlot extends React.Component {
             fill={_self.color(i)}
             showToolTip={_self.showToolTip}
             hideToolTip={_self.hideToolTip}
-            removeFirstAndLast={false}
             xData={_self.props.xData}
             yData={_self.props.yData}
             r={5} />
