@@ -1,3 +1,9 @@
+###0.0.18:
+###### 29 JUL 2016
+- Fix inital sizing issue with charts
+- Fix bug with scatter plot with showToolTip and hideToolTip changing data point color
+- Fix for componentWillMount event listener for resizing
+
 ###0.0.17:
 ###### 26 JUL 2016
 - dataPoints - Utility accepts x and y data key via props
