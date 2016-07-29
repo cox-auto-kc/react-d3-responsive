@@ -20,6 +20,10 @@ class Main extends React.Component {
           lineType="linear"
           data={ChartData.lineGraphData} />
         <LineGraph
+          title="Line Graph - Date X axis"
+          lineType="linear"
+          data={ChartData.lineGraphData} />
+        <LineGraph
           title="Multiple Line Graph"
           lineType="cardinal"
           strokeColor="#67ff67"
@@ -38,9 +42,20 @@ class Main extends React.Component {
           strokeColor="#67ff67"
           data={ChartData.areaGraphData} />
         <AreaGraph
+          title="Area Graph"
+          lineType="cardinal"
+          fillColor="#53c79f"
+          strokeColor="#67ff67"
+          data={ChartData.areaGraphData} />
+        <AreaGraph
           title="Multiple Area Graph"
           lineType="cardinal"
+          xFormat="%a"
           data={ChartData.areaGraphData2} />
+        <ScatterPlot
+          title="Scatter Plot - Date X axis"
+          dataType="date"
+          data={ChartData.scatterPlotData} />
         <ScatterPlot
           title="Scatter Plot - Date X axis"
           dataType="date"
@@ -51,6 +66,10 @@ class Main extends React.Component {
           xData="x"
           yData="y"
           data={ChartData.scatterPlotData2} />
+        <BarGraph
+          title="Bar Graph"
+          keys={['new','old','third','four']}
+          data={ChartData.barGraphTestData} />
         <BarGraph
           title="Bar Graph"
           keys={['new','old','third','four']}

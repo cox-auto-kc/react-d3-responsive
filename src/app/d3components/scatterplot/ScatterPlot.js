@@ -184,7 +184,9 @@ class ScatterPlot extends React.Component {
     for(let i=0;i<data.length;++i) {
       let d = data[i];
       if(this.props.dataType == 'date') {
-        d.day = parseDate(d.day);
+        if (typeof d.day === "string") {
+          d.day = parseDate(d.day);
+        }
         data[i] = d;
       }
     }

@@ -4,6 +4,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import d3 from 'd3';
+// import objectAssign from 'object-assign';
 import Axis from '../utilities/axis';
 import AxisLabel from '../utilities/axisLabel';
 import Grid from '../utilities/grid';
@@ -145,12 +146,15 @@ class AreaGraph extends React.Component {
     const parseDate = d3.time.format(this.props.dateFormat).parse;
 
     for(let i=0;i<data.length;++i) {
-        let d = data[i];
+      let d = data[i];
+      if (typeof d.day === "string") {
         d.day = parseDate(d.day);
-        data[i] = d;
+      }
+      data[i] = d;
     }
 
     this.setState({data:data});
+
   }
 
   updateSize(){

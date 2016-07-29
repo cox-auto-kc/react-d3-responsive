@@ -16,11 +16,9 @@
     "build:html": "babel-node tools/buildHtml.js",
     "prebuild": "npm run clean-dist && npm run build:html",
     "build": "babel-node tools/build.js && npm run open:dist",
-
     "npm-build": "npm run clean-npm-build && npm run babel-compile && babel-node tools/npmBuild.js",
     "clean-npm-build": "node_modules/.bin/rimraf ./npm-lib",
     "babel-compile": "babel src/app/d3components --out-dir npm-lib",
-
     "npm-public": "npm version patch && npm publish"
   },
   "keywords": [
