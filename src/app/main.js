@@ -21,6 +21,8 @@ class Main extends React.Component {
           yAxisLabel="Y Axis Label"
           xData="day"
           yData="count"
+          xToolTipLabel="X-TT"
+          yToolTipLabel="Y-TT"
           lineType="linear"
           data={ChartData.lineGraphData} />
         <LineGraph

@@ -75,7 +75,7 @@ class LineGraph extends React.Component {
     let yLabelWidthOffset = 0;
 
     if (this.props.xAxisLabel) {
-      xLabelHeightOffset = 40;
+      xLabelHeightOffset = 30;
     }
 
     if (this.props.yAxisLabel) {
@@ -279,8 +279,8 @@ class LineGraph extends React.Component {
             r={5} />
           <ToolTip
             tooltip={_self.state.tooltip}
-            xValue="Date"
-            yValue="Visitors" />
+            xValue={_self.props.xToolTipLabel}
+            yValue={_self.props.yToolTipLabel} />
         </g>
       );
     });
@@ -330,6 +330,8 @@ LineGraph.propTypes = {
   yData: React.PropTypes.string.isRequired,
   xAxisLabel: React.PropTypes.string,
   yAxisLabel: React.PropTypes.string,
+  xToolTipLabel: React.PropTypes.string,
+  yToolTipLabel: React.PropTypes.string,
   lineType: React.PropTypes.string,
   strokeColor: React.PropTypes.string,
   fillColor: React.PropTypes.string,
@@ -345,13 +347,15 @@ LineGraph.defaultProps = {
   xFormat:'%a %e',
   xData:'day',
   yData:'count',
+  xToolTipLabel: 'x',
+  yToolTipLabel: 'y',
   lineType:'linear',
   strokeColor: '#0082a1',
   fillColor: 'transparent',
   margin: {
     top: 10,
     right: 40,
-    bottom: 10,
+    bottom: 20,
     left: 40
   },
   yMaxBuffer: 100
