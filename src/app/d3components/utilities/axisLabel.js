@@ -11,16 +11,15 @@ class AxisLabel extends React.Component {
   }
 
   render(){
-    let translateLabelX = "translate("+(this.props.w/2)+","+(this.props.h-20)+")";
+    let translateLabelX = "translate("+(this.props.w/2)+","+(this.props.h+40)+")";
     let translateLabelY = "translate(-40,"+(this.props.h/2)+") rotate(270)";
     return (
-      <text className="axis-label" textAnchor="middle" transform={this.props.axisType === 'y' ? translateLabelY : translateLabelX} >{this.props.axisLabel}</text>
+      <text className={this.props.axisType + "-axis-label"} textAnchor="middle" transform={this.props.axisType === 'y' ? translateLabelY : translateLabelX} >{this.props.axisLabel}</text>
     );
   }
 }
 
 AxisLabel.propTypes = {
-  xm:React.PropTypes.number,
   w:React.PropTypes.number,
   h:React.PropTypes.number,
   axisLabel:React.PropTypes.string,

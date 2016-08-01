@@ -4,7 +4,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import d3 from 'd3';
-// import objectAssign from 'object-assign';
 import Axis from '../utilities/axis';
 import AxisLabel from '../utilities/axisLabel';
 import Grid from '../utilities/grid';

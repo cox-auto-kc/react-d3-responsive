@@ -17,24 +17,37 @@ class Main extends React.Component {
       <div>
         <LineGraph
           title="Line Graph - Date X axis"
+          xAxisLabel="X Axis Label"
+          yAxisLabel="Y Axis Label"
+          xData="day"
+          yData="count"
           lineType="linear"
           data={ChartData.lineGraphData} />
         <LineGraph
           title="Line Graph - Date X axis"
-          lineType="linear"
+          xAxisLabel="X Axis Label"
+          yAxisLabel="Y Axis Label"
+          xData="day"
+          yData="count"
+          lineType="cardinal"
           data={ChartData.lineGraphData} />
         <LineGraph
           title="Multiple Line Graph"
+          xData="day"
+          yData="count"
           lineType="cardinal"
           strokeColor="#67ff67"
           xFormat="%a"
           data={ChartData.lineGraphData2} />
         <LineGraph
           title="Line Graph - Number X axis"
+          xData="x"
+          yData="y"
           lineType="linear"
           dataType="data"
           dataPercent=""
           data={ChartData.lineGraphData3} />
+
         <AreaGraph
           title="Area Graph"
           lineType="linear"
