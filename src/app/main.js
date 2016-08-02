@@ -15,16 +15,24 @@ class Main extends React.Component {
   render() {
     return (
       <div>
+
         <LineGraph
           title="Line Graph - Date X axis"
+          width={700}
+          height={500}
+          chartId="custom-ID"
+          chartClassName="custom-CLASS"
           xAxisLabel="X Axis Label"
           yAxisLabel="Y Axis Label"
           xData="day"
           yData="count"
+          dateFormat="%m-%d-%Y"
           xToolTipLabel="X-TT"
           yToolTipLabel="Y-TT"
           lineType="linear"
+          yMaxBuffer={50}
           data={ChartData.lineGraphData} />
+
         <LineGraph
           title="Line Graph - Date X axis"
           xAxisLabel="X Axis Label"
@@ -47,23 +55,45 @@ class Main extends React.Component {
           yData="y"
           lineType="linear"
           dataType="data"
-          dataPercent=""
           data={ChartData.lineGraphData3} />
 
         <AreaGraph
           title="Area Graph"
+          width={700}
+          height={500}
+          chartId="custom-ID"
+          chartClassName="custom-CLASS"
+          xAxisLabel="X Axis Label"
+          yAxisLabel="Y Axis Label"
+          xData="day"
+          yData="count"
+          dateFormat="%m-%d-%Y"
+          xToolTipLabel="X-TT"
+          yToolTipLabel="Y-TT"
+          lineType="linear"
+          yMaxBuffer={50}
+          data={ChartData.areaGraphData} />
+
+        <AreaGraph
+          title="Area Graph"
+          xData="day"
+          yData="count"
           lineType="linear"
           fillColor="#53c79f"
           strokeColor="#67ff67"
           data={ChartData.areaGraphData} />
         <AreaGraph
           title="Area Graph"
+          xData="day"
+          yData="count"
           lineType="cardinal"
           fillColor="#53c79f"
           strokeColor="#67ff67"
           data={ChartData.areaGraphData} />
         <AreaGraph
           title="Multiple Area Graph"
+          xData="day"
+          yData="count"
           lineType="cardinal"
           xFormat="%a"
           data={ChartData.areaGraphData2} />

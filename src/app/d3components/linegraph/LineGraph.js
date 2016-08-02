@@ -254,7 +254,7 @@ class LineGraph extends React.Component {
     this.createChart(this);
 
     const _self = this;
-    let lines, title, axisLabels;
+    let lines;
 
     lines = this.dataNest.map(function (d,i) {
       return (
@@ -275,8 +275,7 @@ class LineGraph extends React.Component {
             hideToolTip={_self.hideToolTip}
             removeFirstAndLast={true}
             xData={_self.props.xData}
-            yData={_self.props.yData}
-            r={5} />
+            yData={_self.props.yData} />
           <ToolTip
             tooltip={_self.state.tooltip}
             xValue={_self.props.xToolTipLabel}
@@ -285,28 +284,37 @@ class LineGraph extends React.Component {
       );
     });
 
+    let title;
+
     if (this.props.title) {
       title = <h3>{this.props.title}</h3>;
-    } else {
-      title = "";
     }
 
+    let axisLabels = [];
+
     if (this.props.xAxisLabel) {
-      axisLabels = <AxisLabel h={this.h} w={this.w} axisLabel={this.props.yAxisLabel} axisType="y" />;
-    } else {
-      axisLabels = "";
+      axisLabels.push(<AxisLabel key={0} h={this.h} w={this.w} axisLabel={this.props.yAxisLabel} axisType="y" />);
+    }
+
+    if (this.props.yAxisLabel) {
+      axisLabels.push(<AxisLabel key={1} h={this.h} w={this.w} axisLabel={this.props.xAxisLabel} axisType="x" />);
+    }
+
+    let customClassName = "";
+
+    if(this.props.chartClassName){
+      customClassName = " " + this.props.chartClassName;
     }
 
     return (
       <div>
         {title}
-        <svg id={this.props.chartId} width={this.state.width} height={this.props.height}>
+        <svg className={"rd3r-chart rd3r-line-graph" + customClassName} id={this.props.chartId} width={this.state.width} height={this.props.height}>
           <g transform={this.transform}>
             <Grid h={this.h} grid={this.yGrid} gridType="y" />
             <Axis h={this.h} axis={this.yAxis} axisType="y" />
             <Axis h={this.h} axis={this.xAxis} axisType="x" />
             {axisLabels}
-            <AxisLabel h={this.h} w={this.w} axisLabel={this.props.xAxisLabel} axisType="x" />
             {lines}
           </g>
         </svg>
@@ -317,10 +325,11 @@ class LineGraph extends React.Component {
 }
 
 LineGraph.propTypes = {
+  title: React.PropTypes.string,
   width: React.PropTypes.number,
   height: React.PropTypes.number,
   chartId: React.PropTypes.string,
-  title: React.PropTypes.string,
+  chartClassName: React.PropTypes.string,
   dateFormat: React.PropTypes.string,
   dataType: React.PropTypes.string,
   dataPercent: React.PropTypes.string,
@@ -333,7 +342,6 @@ LineGraph.propTypes = {
   xToolTipLabel: React.PropTypes.string,
   yToolTipLabel: React.PropTypes.string,
   lineType: React.PropTypes.string,
-  strokeColor: React.PropTypes.string,
   fillColor: React.PropTypes.string,
   margin: React.PropTypes.object,
   yMaxBuffer: React.PropTypes.number
@@ -341,16 +349,13 @@ LineGraph.propTypes = {
 
 LineGraph.defaultProps = {
   width: 1920,
-  height: 300,
+  height: 400,
   dateFormat:'%m-%d-%Y',
   dataType:'date',
   xFormat:'%a %e',
-  xData:'day',
-  yData:'count',
   xToolTipLabel: 'x',
   yToolTipLabel: 'y',
   lineType:'linear',
-  strokeColor: '#0082a1',
   fillColor: 'transparent',
   margin: {
     top: 10,

@@ -16,6 +16,7 @@ class AreaGraph extends React.Component {
     super(props);
     this.showToolTip = this.showToolTip.bind(this);
     this.hideToolTip = this.hideToolTip.bind(this);
+    this.componentWillMount = this.componentWillMount.bind(this);
     this.state = {
       tooltip: {
         display: false,
@@ -33,12 +34,12 @@ class AreaGraph extends React.Component {
     };
   }
 
-  componentWillMount(){
+  componentWillMount() {
     const _self = this;
     window.addEventListener('resize', function() {
       _self.updateSize();
     }, true);
-    _self.setState({width: _self.props.width});
+    this.setState({width: this.props.width});
   }
 
   componentDidMount() {
@@ -70,21 +71,65 @@ class AreaGraph extends React.Component {
 
     this.color = d3.scale.category10();
 
+    let xLabelHeightOffset = 0;
+    let yLabelWidthOffset = 0;
+
+    if (this.props.xAxisLabel) {
+      xLabelHeightOffset = 30;
+    }
+
+    if (this.props.yAxisLabel) {
+      yLabelWidthOffset = 20;
+    }
+
     // Width of graph
-    this.w = this.state.width - (this.props.margin.left + this.props.margin.right);
+    this.w = this.state.width - (this.props.margin.left + this.props.margin.right + yLabelWidthOffset);
+
     // Height of graph
-    this.h = this.props.height - (this.props.margin.top + this.props.margin.bottom);
+    this.h = this.props.height - (this.props.margin.top + this.props.margin.bottom + xLabelHeightOffset);
 
     // X axis scale
-    this.xScale = d3.time.scale()
-      .domain(
-        // Find min and max axis value
-        d3.extent(this.state.data, function (d) {
-          return d.day;
-        })
-      )
-      // Set range from 0 to width of container
-      .rangeRound([0, this.w]);
+    if(this.props.dataType !== 'date') {
+      this.xScale= d3.scale.linear()
+        .domain([
+          d3.min(this.state.data,function(d){
+            return d[_self.props.xData];
+          }),
+          d3.max(this.state.data,function(d){
+            return d[_self.props.xData];
+          })
+        ])
+        .range([0, this.w]);
+
+      if(this.props.dataPercent == 'x') {
+        this.xAxis = d3.svg.axis()
+          .scale(this.xScale)
+          .orient('bottom')
+          .tickFormat( function(x) {
+            return x + '%';
+          });
+      } else {
+        this.xAxis = d3.svg.axis()
+          .scale(this.xScale)
+          .orient('bottom');
+      }
+    } else {
+      this.xScale = d3.time.scale()
+        .domain(
+          // Find min and max axis value
+          d3.extent(this.state.data, function (d) {
+            return d[_self.props.xData];
+          })
+        )
+        // Set range from 0 to width of container
+        .rangeRound([0, this.w]);
+
+      this.xAxis = d3.svg.axis()
+        .scale(this.xScale)
+        .orient('bottom')
+        .ticks(Math.floor(this.w/100))
+        .tickFormat(d3.time.format(this.props.xFormat));
+    }
 
     // Y axis scale
     this.yScale = d3.scale.linear()
@@ -116,16 +161,20 @@ class AreaGraph extends React.Component {
         .key(function(d) {return d.type;})
         .entries(this.state.data);
 
-    this.yAxis = d3.svg.axis()
-      .scale(this.yScale)
-      .orient('left')
-      .ticks(5);
-
-    this.xAxis = d3.svg.axis()
-      .scale(this.xScale)
-      .orient('bottom')
-      .ticks(Math.floor(this.w/100))
-      .tickFormat(d3.time.format(this.props.xFormat));
+    if(this.props.dataPercent == 'y') {
+      this.yAxis = d3.svg.axis()
+        .scale(this.yScale)
+        .orient('left')
+        .ticks(5)
+        .tickFormat( function(x) {
+          return x + '%';
+        });
+    } else {
+      this.yAxis = d3.svg.axis()
+        .scale(this.yScale)
+        .orient('left')
+        .ticks(5);
+    }
 
     this.yGrid = d3.svg.axis()
       .scale(this.yScale)
@@ -134,7 +183,7 @@ class AreaGraph extends React.Component {
       .tickSize(-this.w, 0, 0)
       .tickFormat("");
 
-    this.transform = 'translate(' + this.props.margin.left + ',' + this.props.margin.top + ')';
+    this.transform = 'translate(' + (this.props.margin.left + yLabelWidthOffset) + ',' + this.props.margin.top + ')';
   }
 
   reloadBarData() {
@@ -146,14 +195,15 @@ class AreaGraph extends React.Component {
 
     for(let i=0;i<data.length;++i) {
       let d = data[i];
-      if (typeof d.day === "string") {
-        d.day = parseDate(d.day);
+      if(this.props.dataType == 'date') {
+        if (typeof d[this.props.xData] === "string") {
+          d[this.props.xData] = parseDate(d[this.props.xData]);
+        }
+        data[i] = d;
       }
-      data[i] = d;
     }
 
     this.setState({data:data});
-
   }
 
   updateSize(){
@@ -205,7 +255,7 @@ class AreaGraph extends React.Component {
     this.createChart(this);
 
     const _self = this;
-    let lines, title;
+    let lines;
 
     lines = this.dataNest.map(function (d,i) {
       return (
@@ -215,7 +265,7 @@ class AreaGraph extends React.Component {
             fill={_self.color(i)}
             stroke={_self.props.strokeColor}
             opacity=".9"
-            strokeWidth="2px" />
+            strokeWidth={3} />
           <Dots
             data={d.values}
             x={_self.xScale}
@@ -228,27 +278,43 @@ class AreaGraph extends React.Component {
             yData={_self.props.yData} />
           <ToolTip
             tooltip={_self.state.tooltip}
-            xValue="Date"
-            yValue="Visitors" />
+            xValue={_self.props.xToolTipLabel}
+            yValue={_self.props.yToolTipLabel} />
         </g>
       );
     });
 
+    let title;
+
     if (this.props.title) {
       title = <h3>{this.props.title}</h3>;
-    } else {
-      title = "";
+    }
+
+    let axisLabels = [];
+
+    if (this.props.xAxisLabel) {
+      axisLabels.push(<AxisLabel key={0} h={this.h} w={this.w} axisLabel={this.props.yAxisLabel} axisType="y" />);
+    }
+
+    if (this.props.yAxisLabel) {
+      axisLabels.push(<AxisLabel key={1} h={this.h} w={this.w} axisLabel={this.props.xAxisLabel} axisType="x" />);
+    }
+
+    let customClassName = "";
+
+    if(this.props.chartClassName){
+      customClassName = " " + this.props.chartClassName;
     }
 
     return (
       <div>
         {title}
-        <svg id={this.props.chartId} width={this.state.width} height={this.props.height}>
+        <svg className={"rd3r-chart rd3r-area-graph" + customClassName} id={this.props.chartId} width={this.state.width} height={this.props.height}>
           <g transform={this.transform}>
             <Grid h={this.h} grid={this.yGrid} gridType="y" />
             <Axis h={this.h} axis={this.yAxis} axisType="y" />
             <Axis h={this.h} axis={this.xAxis} axisType="x" />
-            <AxisLabel h={this.h} axisLabel="Visitors" axisType="y" />
+            {axisLabels}
             {lines}
           </g>
         </svg>
@@ -259,38 +325,43 @@ class AreaGraph extends React.Component {
 }
 
 AreaGraph.propTypes = {
+  title: React.PropTypes.string,
   width: React.PropTypes.number,
   height: React.PropTypes.number,
   chartId: React.PropTypes.string,
-  title: React.PropTypes.string,
+  chartClassName: React.PropTypes.string,
   dateFormat: React.PropTypes.string,
+  dataType: React.PropTypes.string,
+  dataPercent: React.PropTypes.string,
   xFormat: React.PropTypes.string,
   data: React.PropTypes.array.isRequired,
   xData: React.PropTypes.string.isRequired,
   yData: React.PropTypes.string.isRequired,
+  xAxisLabel: React.PropTypes.string,
+  yAxisLabel: React.PropTypes.string,
+  xToolTipLabel: React.PropTypes.string,
+  yToolTipLabel: React.PropTypes.string,
   lineType: React.PropTypes.string,
   strokeColor: React.PropTypes.string,
-  fillColor: React.PropTypes.string,
   margin: React.PropTypes.object,
   yMaxBuffer: React.PropTypes.number
 };
 
 AreaGraph.defaultProps = {
   width: 1920,
-  height: 300,
-  chartId: 'chart_id',
+  height: 400,
   dateFormat:'%m-%d-%Y',
+  dataType:'date',
   xFormat:'%a %e',
-  xData:'day',
-  yData:'count',
+  xToolTipLabel: 'x',
+  yToolTipLabel: 'y',
   lineType:'linear',
   strokeColor: '#ffffff',
-  fillColor: '#0082a1',
   margin: {
     top: 10,
     right: 40,
     bottom: 20,
-    left: 60
+    left: 40
   },
   yMaxBuffer: 100
 };
