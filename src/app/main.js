@@ -99,14 +99,20 @@ class Main extends React.Component {
           data={ChartData.areaGraphData2} />
         <ScatterPlot
           title="Scatter Plot - Date X axis"
+          xData="day"
+          yData="count"
           dataType="date"
           data={ChartData.scatterPlotData} />
         <ScatterPlot
           title="Scatter Plot - Date X axis"
+          xData="day"
+          yData="count"
           dataType="date"
           data={ChartData.scatterPlotData} />
         <ScatterPlot
           title="Scatter Plot - Number X axis"
+          xData="day"
+          yData="count"
           dataType="data"
           xData="x"
           yData="y"

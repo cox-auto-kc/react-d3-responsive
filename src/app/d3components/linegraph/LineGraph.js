@@ -111,7 +111,8 @@ class LineGraph extends React.Component {
       } else {
         this.xAxis = d3.svg.axis()
           .scale(this.xScale)
-          .orient('bottom');
+          .orient('bottom')
+          .ticks(Math.floor(this.w/100));
       }
     } else {
       this.xScale = d3.time.scale()
