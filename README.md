@@ -26,26 +26,26 @@ Import into your ReactJS project one of the following ways:
 
 ```js
 // es6
-import d3r from 'd3-react-starterkit';
+import rd3r from 'd3-react-starterkit';
 
 // es5
-var d3r = require('d3-react-starterkit');
+var rd3r = require('d3-react-starterkit');
 ```
 
 ### Available Charts
 
 ```js
-const AreaGraph = d3r.AreaGraph;
-const BarGraph = d3r.BarGraph;
-const LineGraph = d3r.LineGraph;
-const PieChart = d3r.PieChart;
-const ScatterPlot = d3r.ScatterPlot;
+const AreaGraph = rd3r.AreaGraph;
+const BarGraph = rd3r.BarGraph;
+const LineGraph = rd3r.LineGraph;
+const PieChart = rd3r.PieChart;
+const ScatterPlot = rd3r.ScatterPlot;
 ```
 
 [For usage.](https://drew-thorson.github.io/d3-react-starterkit/)
 
 ### Support
-Issues: [d3-react-starterkit](https://github.com/drew-thorson/d3-react-starterkit/issues) on Github
+Issues: [react-d3-responsive](https://github.com/cox-auto-kc/react-d3-responsive/issues) on Github
 
 ### Background
 Inspired by [this blog post](http://www.adeveloperdiary.com/react-js/create-reusable-charts-react-d3-part1/) by Abhisek Jana of [A Developer Diary](http://www.adeveloperdiary.com/)

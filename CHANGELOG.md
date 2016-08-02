@@ -3,6 +3,7 @@
 - Fix inital sizing issue with charts
 - Fix bug with scatter plot with showToolTip and hideToolTip changing data point color
 - Fix for componentWillMount event listener for resizing
+- Passing of more customization props to components
 
 ###0.0.17:
 ###### 26 JUL 2016

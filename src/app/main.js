@@ -1,13 +1,13 @@
 import React from 'react';
-import d3r from './d3components';
-// import d3r from '../../lib-compiled';
-// import d3r from '../../script-compiled';
+import rd3r from './d3components';
+// import rd3r from '../../lib-compiled';
+// import rd3r from '../../script-compiled';
 
-const LineGraph = d3r.LineGraph;
-const AreaGraph = d3r.AreaGraph;
-const BarGraph = d3r.BarGraph;
-const PieChart = d3r.PieChart;
-const ScatterPlot = d3r.ScatterPlot;
+const LineGraph = rd3r.LineGraph;
+const AreaGraph = rd3r.AreaGraph;
+const BarGraph = rd3r.BarGraph;
+const PieChart = rd3r.PieChart;
+const ScatterPlot = rd3r.ScatterPlot;
 
 import ChartData from './d3components/testData/data.json';
 
