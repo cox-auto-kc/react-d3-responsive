@@ -206,7 +206,7 @@ class LineGraph extends React.Component {
     this.setState({data:data});
   }
 
-  updateSize(){
+  updateSize() {
     let node = ReactDOM.findDOMNode(this);
     let parentWidth = node.offsetWidth;
     if (parentWidth < this.props.width) {
