@@ -209,7 +209,6 @@ BarGraph.propTypes = {
 BarGraph.defaultProps = {
   width: 1920,
   height: 400,
-  xData:'month',
   margin: {
     top: 10,
     right: 40,

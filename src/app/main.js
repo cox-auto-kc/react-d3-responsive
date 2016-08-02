@@ -119,12 +119,14 @@ class Main extends React.Component {
           data={ChartData.scatterPlotData2} />
         <BarGraph
           title="Bar Graph"
+          xData="month"
           xAxisLabel="X Axis Label"
           yAxisLabel="Y Axis Label"
           keys={['new','old','third','four']}
           data={ChartData.barGraphTestData} />
         <BarGraph
           title="Bar Graph"
+          xData="month"
           keys={['new','old','third','four']}
           data={ChartData.barGraphTestData} />
         <PieChart
