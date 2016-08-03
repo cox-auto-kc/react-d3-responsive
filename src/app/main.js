@@ -111,11 +111,9 @@ class Main extends React.Component {
           data={ChartData.scatterPlotData} />
         <ScatterPlot
           title="Scatter Plot - Number X axis"
-          xData="day"
-          yData="count"
-          dataType="data"
           xData="x"
           yData="y"
+          dataType="data"
           data={ChartData.scatterPlotData2} />
         <BarGraph
           title="Bar Graph"

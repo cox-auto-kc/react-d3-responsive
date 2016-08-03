@@ -214,7 +214,7 @@ BarGraph.defaultProps = {
     right: 40,
     bottom: 20,
     left: 40
-  },
+  }
 };
 
 export default BarGraph;
