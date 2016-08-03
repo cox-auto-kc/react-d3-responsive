@@ -1,5 +1,9 @@
+###0.0.19:
+###### 03 AUG 2016
+- Edit Readme for installation
+
 ###0.0.18:
-###### 29 JUL 2016
+###### 03 AUG 2016
 - Fix inital sizing issue with charts
 - Fix bug with scatter plot with showToolTip and hideToolTip changing data point color
 - Fix for componentWillMount event listener for resizing

@@ -2,17 +2,19 @@
 
 Modular ReactJS charts made using [d3](https://d3js.org/) chart utilities.
 
-[![npm version](https://badge.fury.io/js/d3-react-starterkit.svg)](https://badge.fury.io/js/d3-react-starterkit)
+[![npm version](https://badge.fury.io/js/react-d3-responsive.svg)](https://badge.fury.io/js/react-d3-responsive)
 
 ## Usage
 
 The latest version of react-d3-responsive requires **React 0.14 or later** and **D3 3.5.17**.
 
+** We do not support d3@v4.0 currently**
+
 ### NPM
 Via `npm`:
 
 ```
-npm install d3-react-starterkit
+npm install react-d3-responsive
 ```
 
 If you havn't installed `react` and `d3` then:
@@ -26,10 +28,10 @@ Import into your ReactJS project one of the following ways:
 
 ```js
 // es6
-import rd3r from 'd3-react-starterkit';
+import rd3r from 'react-d3-responsive';
 
 // es5
-var rd3r = require('d3-react-starterkit');
+var rd3r = require('react-d3-responsive');
 ```
 
 ### Available Charts
@@ -42,7 +44,7 @@ const PieChart = rd3r.PieChart;
 const ScatterPlot = rd3r.ScatterPlot;
 ```
 
-[For usage.](https://drew-thorson.github.io/d3-react-starterkit/)
+[For usage.](https://cox-auto-kc.github.io/react-d3-responsive/)
 
 ### Support
 Issues: [react-d3-responsive](https://github.com/cox-auto-kc/react-d3-responsive/issues) on Github
@@ -55,5 +57,5 @@ Also referencing [rd3](https://github.com/yang-wei/rd3) by Yang Wei for structur
 ### License
 MIT
 
-Copyright (c) 2016 Drew Thorson
+Copyright &copy; 2016 Drew Thorson
 
