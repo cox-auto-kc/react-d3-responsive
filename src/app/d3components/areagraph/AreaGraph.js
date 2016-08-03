@@ -112,7 +112,7 @@ class AreaGraph extends React.Component {
         this.xAxis = d3.svg.axis()
           .scale(this.xScale)
           .orient('bottom')
-          .ticks(Math.floor(this.w/100))
+          .ticks(Math.floor(this.w/100));
       }
     } else {
       this.xScale = d3.time.scale()
