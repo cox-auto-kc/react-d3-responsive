@@ -8,7 +8,7 @@ Modular ReactJS charts made using [d3](https://d3js.org/) chart utilities.
 
 The latest version of react-d3-responsive requires **React 0.14 or later** and **D3 3.5.17**.
 
-** We do not support d3@v4.0 currently**
+**We do not support d3@v4.0 currently**
 
 ### NPM
 Via `npm`:
@@ -28,21 +28,16 @@ Import into your ReactJS project one of the following ways:
 
 ```js
 // es6
-import rd3r from 'react-d3-responsive';
-
-// es5
-var rd3r = require('react-d3-responsive');
+import {AreaGraph, BarGraph, LineGraph, PieChart, ScatterPlot} from 'react-d3-responsive';
 ```
 
 ### Available Charts
 
-```js
-const AreaGraph = rd3r.AreaGraph;
-const BarGraph = rd3r.BarGraph;
-const LineGraph = rd3r.LineGraph;
-const PieChart = rd3r.PieChart;
-const ScatterPlot = rd3r.ScatterPlot;
-```
+*AreaGraph
+*BarGraph
+*LineGraph
+*PieChart
+*ScatterPlot
 
 [For usage.](https://cox-auto-kc.github.io/react-d3-responsive/)
 
