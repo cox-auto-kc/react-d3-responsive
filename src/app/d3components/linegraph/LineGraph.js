@@ -357,7 +357,7 @@ LineGraph.defaultProps = {
   xToolTipLabel: 'x',
   yToolTipLabel: 'y',
   lineType:'linear',
-  fillColor: 'transparent',
+  fillColor: 'none',
   margin: {
     top: 10,
     right: 40,

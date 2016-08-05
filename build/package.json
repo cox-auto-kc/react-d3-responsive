@@ -14,9 +14,9 @@
     "d3",
     "responsive"
   ],
-  "peerDependencies": {
-    "d3": "3.5.17",
-    "react": "15.1.0",
-    "react-dom": "15.1.0"
+  "dependencies": {
+    "d3": "^3.5.4",
+    "react": "^0.14.0 || ^15.0.1",
+    "react-dom": "^0.14.0 || ^15.0.1"
   }
 }
