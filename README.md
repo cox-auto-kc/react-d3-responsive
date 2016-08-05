@@ -6,7 +6,7 @@ Modular ReactJS charts made using [d3](https://d3js.org/) chart utilities.
 
 ## Usage
 
-The latest version of react-d3-responsive requires **React 0.14 or later** and **D3 3.5.17**.
+The latest version of react-d3-responsive requires **React 0.14 or later** and **D3 3.5.4 or later**.
 
 **We do not support d3@v4.0 currently**
 
@@ -17,14 +17,7 @@ Via `npm`:
 npm install react-d3-responsive
 ```
 
-If you havn't installed `react` and `d3` then:
-
-```
-npm install react react-dom
-npm install d3@3.5.17
-```
-
-Import into your ReactJS project one of the following ways:
+Import into your ReactJS project:
 
 ```js
 // es6

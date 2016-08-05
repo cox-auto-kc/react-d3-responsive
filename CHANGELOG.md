@@ -1,3 +1,9 @@
+###0.0.20:
+###### 05 AUG 2016
+- Edit Readme for installation
+- Fix multiple line graph issue with tooltip not showing on hovering over datapoint
+- Update package.json for installation
+
 ###0.0.19:
 ###### 03 AUG 2016
 - Edit Readme for installation

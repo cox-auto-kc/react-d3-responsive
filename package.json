@@ -1,6 +1,6 @@
 {
   "name": "react-d3-responsive",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "description": "D3 with React",
   "main": "index.js",
   "scripts": {
@@ -57,9 +57,9 @@
     "webpack-hot-middleware": "2.10.0"
   },
   "dependencies": {
-    "d3": "3.5.17",
-    "react": "^15.3.0",
-    "react-dom": "^15.3.0"
+    "d3": "^3.5.4",
+    "react": "^0.14.0 || ^15.0.1",
+    "react-dom": "^0.14.0 || ^15.0.1"
   },
   "repository": {
     "type": "git",
