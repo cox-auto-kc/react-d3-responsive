@@ -37,7 +37,7 @@ class ToolTip extends React.Component {
     }
 
     return (
-      <g transform={transform} opacity={opacity} className="banana">
+      <g transform={transform} opacity={opacity}>
         <rect className="shadow" width={width} height={height} rx="5" ry="5" fill="#6391da" opacity=".9"/>
         <polygon className="shadow" points="10,0  30,0  20,10" transform={transformArrow} fill="#6391da" opacity=".9"/>
         <text transform={transformText}>
