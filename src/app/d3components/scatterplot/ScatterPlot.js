@@ -9,6 +9,7 @@ import AxisLabel from '../utilities/axisLabel';
 import Grid from '../utilities/grid';
 import Dots from '../utilities/dataPoints';
 import ToolTip from '../utilities/tooltip';
+import TrendLine from '../utilities/trendLine';
 
 class ScatterPlot extends React.Component {
 
@@ -91,7 +92,7 @@ class ScatterPlot extends React.Component {
 
     // X axis scale
     if(this.props.dataType !== 'date') {
-      this.xScale= d3.scale.linear()
+      this.xScale = d3.scale.linear()
         .domain([
           d3.min(this.state.data,function(d){
             return d[_self.props.xData];
@@ -266,6 +267,12 @@ class ScatterPlot extends React.Component {
             tooltip={_self.state.tooltip}
             xValue={_self.props.xToolTipLabel}
             yValue={_self.props.yToolTipLabel} />
+          <TrendLine
+            data={d.values}
+            x={_self.xScale}
+            y={_self.yScale}
+            xData={_self.props.xData}
+            yData={_self.props.yData} />
         </g>
       );
     });

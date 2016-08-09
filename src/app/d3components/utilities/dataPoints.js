@@ -35,7 +35,7 @@ class Dots extends React.Component {
 
       return (
         <circle
-          className="dot"
+          className="data-plot-point"
           r={_self.props.r}
           cx={_self.props.x(d[_self.props.xData])}
           cy={_self.props.y(d[_self.props.yData])}
