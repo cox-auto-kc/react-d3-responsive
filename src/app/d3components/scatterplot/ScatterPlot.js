@@ -269,6 +269,7 @@ class ScatterPlot extends React.Component {
             yValue={_self.props.yToolTipLabel} />
           <TrendLine
             data={d.values}
+            width={_self.state.width}
             x={_self.xScale}
             y={_self.yScale}
             xData={_self.props.xData}

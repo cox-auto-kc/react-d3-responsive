@@ -258,7 +258,6 @@ class LineGraph extends React.Component {
     let lines;
 
     lines = this.dataNest.map(function (d,i) {
-      console.log(d);
       return (
         <g key={i}>
           <path

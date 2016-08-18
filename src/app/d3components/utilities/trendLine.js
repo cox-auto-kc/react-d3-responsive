@@ -1,15 +1,88 @@
 'use strict';
 
 import React from 'react';
+import ReactDOM from 'react-dom';
 import d3 from 'd3';
 
 class TrendLine extends React.Component {
 
   constructor(props) {
     super(props);
+    this.componentWillMount = this.componentWillMount.bind(this);
+    this.state = {
+      width: this.props.width,
+      data: []
+    };
+  }
+
+  componentWillMount() {
+    const _self = this;
+    window.addEventListener('resize', function() {
+      _self.updateSize();
+      _self.getEndPoints();
+    }, true);
+    this.setState({width: this.props.width});
+  }
+
+  componentDidMount() {
+    this.reloadBarData();
+    this.repaintComponent();
+  }
+
+  componentWillUnmount() {
+    const _self = this;
+    window.removeEventListener('resize', function() {
+      _self.updateSize();
+    });
+  }
+
+  repaintComponent() {
+    const _self = this;
+    const forceResize = function(){
+      _self.updateSize();
+      _self.getEndPoints();
+    };
+    function onRepaint(callback){
+      setTimeout(function(){
+        window.requestAnimationFrame(callback);
+      }, 0);
+    }
+    onRepaint(forceResize);
+  }
+
+  reloadBarData() {
+
+  }
+
+  updateSize(){
+    let node = ReactDOM.findDOMNode(this);
+    let parentWidth = node.offsetWidth;
+    if (parentWidth < this.props.width) {
+      this.setState({width:parentWidth});
+    } else {
+      this.setState({width:this.props.width});
+    }
   }
 
   createChart(_self) {
+
+    let xLabelHeightOffset = 0;
+    let yLabelWidthOffset = 0;
+
+    if (this.props.xAxisLabel) {
+      xLabelHeightOffset = 30;
+    }
+
+    if (this.props.yAxisLabel) {
+      yLabelWidthOffset = 20;
+    }
+
+    // Width of graph
+    this.w = this.state.width - (this.props.margin.left + this.props.margin.right + yLabelWidthOffset);
+
+    // Height of graph
+    this.h = this.props.height - (this.props.margin.top + this.props.margin.bottom + xLabelHeightOffset);
+
     // Create line
     this.line = d3.svg.line()
       .x(function (d) {
@@ -17,8 +90,36 @@ class TrendLine extends React.Component {
       })
       .y(function (d) {
         return this.yScale(d[_self.props.yData]);
-      })
-      .interpolate(this.props.lineType);
+      });
+
+    this.xScale= d3.scale.linear()
+      .domain([
+        d3.min(this.state.data,function(d){
+          return d[_self.props.xData];
+        }),
+        d3.max(this.state.data,function(d){
+          return d[_self.props.xData];
+        })
+      ])
+      .range([0, this.w]);
+
+    this.yScale = d3.scale.linear()
+      .domain([
+        // Find min axis value and subtract buffer
+        d3.min(this.state.data,function(d){
+          return d[_self.props.yData];
+        }),
+        // Find max axis value and add buffer
+        d3.max(this.state.data,function(d){
+          return d[_self.props.yData];
+        })
+      ])
+      // Set range from height of container to 0
+      .range([this.h, 0]);
+
+    this.dataNest = d3.nest()
+        .key(function(d) {return d.type;})
+        .entries(this.state.data);
   }
 
   // returns slope, intercept and r-square of the line
@@ -44,10 +145,7 @@ class TrendLine extends React.Component {
     return [slope, intercept, rSquare];
   }
 
-  render() {
-
-    this.createChart(this);
-
+  getEndPoints() {
     const _self = this;
     let data = this.props.data;
 
@@ -62,16 +160,34 @@ class TrendLine extends React.Component {
     let y2 = leastSquaresCoeff[0] * xSeries.length + leastSquaresCoeff[1];
 
     let trendData = [
-      {'x':x1, 'y':y1},
-      {'x':x2, 'y':y2}
+      {
+        "type": "Trend Line",
+        'x':x1,
+        'y':y1
+      },
+      {
+        "type": "Trend Line",
+        'x':x2,
+        'y':y2
+      }
     ];
 
-    let line = trendData.map(function(d,i) {
-      console.log(d);
+    this.setState({data: trendData});
+  }
+
+  render() {
+
+    this.createChart(this);
+
+    const _self = this;
+
+    let line = this.dataNest.map(function(d,i) {
+      console.log(d.values);
       return (
         <g className="trend-line" key={i} >
           <path
-            d={_self.line(d)}
+            d={_self.line(d.values)}
+            stroke="#333333"
             opacity=".9"
             strokeWidth={3}
             strokeLinecap="round" />
@@ -86,11 +202,29 @@ class TrendLine extends React.Component {
 }
 
 TrendLine.propTypes = {
+  width: React.PropTypes.number,
+  height: React.PropTypes.number,
   data: React.PropTypes.array,
   x: React.PropTypes.func,
   y: React.PropTypes.func,
   xData: React.PropTypes.string.isRequired,
-  yData: React.PropTypes.string.isRequired
+  yData: React.PropTypes.string.isRequired,
+  xAxisLabel: React.PropTypes.string,
+  yAxisLabel: React.PropTypes.string,
+  margin: React.PropTypes.object,
+  yMaxBuffer: React.PropTypes.number
+};
+
+TrendLine.defaultProps = {
+  width: 1920,
+  height: 400,
+  margin: {
+    top: 10,
+    right: 40,
+    bottom: 20,
+    left: 40
+  },
+  yMaxBuffer: 100
 };
 
 export default TrendLine;
