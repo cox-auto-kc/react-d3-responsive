@@ -66,56 +66,14 @@ class TrendLine extends React.Component {
 
   createChart(_self) {
 
-    let xLabelHeightOffset = 0;
-    let yLabelWidthOffset = 0;
-
-    if (this.props.xAxisLabel) {
-      xLabelHeightOffset = 30;
-    }
-
-    if (this.props.yAxisLabel) {
-      yLabelWidthOffset = 20;
-    }
-
-    // Width of graph
-    this.w = this.state.width - (this.props.margin.left + this.props.margin.right + yLabelWidthOffset);
-
-    // Height of graph
-    this.h = this.props.height - (this.props.margin.top + this.props.margin.bottom + xLabelHeightOffset);
-
     // Create line
     this.line = d3.svg.line()
       .x(function (d) {
-        return this.xScale(d[_self.props.xData]);
+        return this.props.x(d[_self.props.xData]);
       })
       .y(function (d) {
-        return this.yScale(d[_self.props.yData]);
+        return this.props.y(d[_self.props.yData]);
       });
-
-    this.xScale= d3.scale.linear()
-      .domain([
-        d3.min(this.state.data,function(d){
-          return d[_self.props.xData];
-        }),
-        d3.max(this.state.data,function(d){
-          return d[_self.props.xData];
-        })
-      ])
-      .range([0, this.w]);
-
-    this.yScale = d3.scale.linear()
-      .domain([
-        // Find min axis value and subtract buffer
-        d3.min(this.state.data,function(d){
-          return d[_self.props.yData];
-        }),
-        // Find max axis value and add buffer
-        d3.max(this.state.data,function(d){
-          return d[_self.props.yData];
-        })
-      ])
-      // Set range from height of container to 0
-      .range([this.h, 0]);
 
     this.dataNest = d3.nest()
         .key(function(d) {return d.type;})
@@ -145,6 +103,30 @@ class TrendLine extends React.Component {
     return [slope, intercept, rSquare];
   }
 
+  linearRegression(y,x){
+    var lr = {};
+    var n = y.length;
+    var sum_x = 0;
+    var sum_y = 0;
+    var sum_xy = 0;
+    var sum_xx = 0;
+    var sum_yy = 0;
+
+    for (var i = 0; i < y.length; i++) {
+      sum_x += x[i];
+      sum_y += y[i];
+      sum_xy += (x[i]*y[i]);
+      sum_xx += (x[i]*x[i]);
+      sum_yy += (y[i]*y[i]);
+    }
+
+    lr['slope'] = (n * sum_xy - sum_x * sum_y) / (n*sum_xx - sum_x * sum_x);
+    lr['intercept'] = (sum_y - lr.slope * sum_x)/n;
+    lr['r2'] = Math.pow((n*sum_xy - sum_x*sum_y)/Math.sqrt((n*sum_xx-sum_x*sum_x)*(n*sum_yy-sum_y*sum_y)),2);
+
+    return lr;
+  }
+
   getEndPoints() {
     const _self = this;
     let data = this.props.data;
@@ -152,12 +134,24 @@ class TrendLine extends React.Component {
     let xSeries = data.map(function (d) { return d[_self.props.xData]; });
     let ySeries = data.map(function (d) { return d[_self.props.yData]; });
 
+    // let leastSquaresCoeff = this.linearRegression(ySeries, xSeries);
+
     let leastSquaresCoeff = this.leastSquares(xSeries, ySeries);
+
+    console.log(leastSquaresCoeff);
+
+    // let x1 = d3.min(xSeries, function(d) { return d; });
+    // let y1 = leastSquaresCoeff.slope + leastSquaresCoeff.intercept;
+    // let x2 = d3.max(xSeries, function(d) { return d; });
+    // let y2 = (leastSquaresCoeff.slope * xSeries.length) + leastSquaresCoeff.intercept;
 
     let x1 = d3.min(xSeries, function(d) { return d; });
     let y1 = leastSquaresCoeff[0] + leastSquaresCoeff[1];
     let x2 = d3.max(xSeries, function(d) { return d; });
-    let y2 = leastSquaresCoeff[0] * xSeries.length + leastSquaresCoeff[1];
+    let y2 = (leastSquaresCoeff[0] * xSeries.length) + leastSquaresCoeff[1];
+
+    console.log('x1: ' + x1 + ' y1:' + y1);
+    console.log('x2: ' + x2 + ' y2:' + y2);
 
     let trendData = [
       {
@@ -182,13 +176,13 @@ class TrendLine extends React.Component {
     const _self = this;
 
     let line = this.dataNest.map(function(d,i) {
-      console.log(d.values);
+      console.log(d);
       return (
         <g className="trend-line" key={i} >
           <path
             d={_self.line(d.values)}
             stroke="#333333"
-            opacity=".9"
+            opacity=".5"
             strokeWidth={3}
             strokeLinecap="round" />
         </g>
