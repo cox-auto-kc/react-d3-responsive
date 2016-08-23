@@ -1208,6 +1208,21 @@ module.exports = {
       "type": "B",
       "x": 10,
       "y": 190
+    },
+    {
+      "type": "C",
+      "x": 110,
+      "y": 20
+    },
+    {
+      "type": "C",
+      "x": 50,
+      "y": 60
+    },
+    {
+      "type": "C",
+      "x": -10,
+      "y": 20
     }
   ],
   "barGraphTestData": [

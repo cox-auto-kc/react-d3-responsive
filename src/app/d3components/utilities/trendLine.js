@@ -80,8 +80,10 @@ class TrendLine extends React.Component {
         .entries(this.state.data);
   }
 
-  // returns slope, intercept and r-square of the line
+  // returns slope, yIntercept and r-square of the line
   leastSquares(xSeries, ySeries) {
+    let ls = {};
+
     let reduceSumFunc = function(prev, cur) { return prev + cur; };
 
     let xBar = xSeries.reduce(reduceSumFunc) * 1.0 / xSeries.length;
@@ -96,35 +98,11 @@ class TrendLine extends React.Component {
     let ssXY = xSeries.map(function(d, i) { return (d - xBar) * (ySeries[i] - yBar); })
       .reduce(reduceSumFunc);
 
-    let slope = ssXY / ssXX;
-    let intercept = yBar - (xBar * slope);
-    let rSquare = Math.pow(ssXY, 2) / (ssXX * ssYY);
+    ls['slope'] = ssXY / ssXX;
+    ls['yIntercept'] = yBar - (xBar * ls.slope);
+    ls['rSquare'] = Math.pow(ssXY, 2) / (ssXX * ssYY);
 
-    return [slope, intercept, rSquare];
-  }
-
-  linearRegression(y,x){
-    var lr = {};
-    var n = y.length;
-    var sum_x = 0;
-    var sum_y = 0;
-    var sum_xy = 0;
-    var sum_xx = 0;
-    var sum_yy = 0;
-
-    for (var i = 0; i < y.length; i++) {
-      sum_x += x[i];
-      sum_y += y[i];
-      sum_xy += (x[i]*y[i]);
-      sum_xx += (x[i]*x[i]);
-      sum_yy += (y[i]*y[i]);
-    }
-
-    lr['slope'] = (n * sum_xy - sum_x * sum_y) / (n*sum_xx - sum_x * sum_x);
-    lr['intercept'] = (sum_y - lr.slope * sum_x)/n;
-    lr['r2'] = Math.pow((n*sum_xy - sum_x*sum_y)/Math.sqrt((n*sum_xx-sum_x*sum_x)*(n*sum_yy-sum_y*sum_y)),2);
-
-    return lr;
+    return ls;
   }
 
   getEndPoints() {
@@ -134,24 +112,14 @@ class TrendLine extends React.Component {
     let xSeries = data.map(function (d) { return d[_self.props.xData]; });
     let ySeries = data.map(function (d) { return d[_self.props.yData]; });
 
-    // let leastSquaresCoeff = this.linearRegression(ySeries, xSeries);
-
     let leastSquaresCoeff = this.leastSquares(xSeries, ySeries);
 
     console.log(leastSquaresCoeff);
 
-    // let x1 = d3.min(xSeries, function(d) { return d; });
-    // let y1 = leastSquaresCoeff.slope + leastSquaresCoeff.intercept;
-    // let x2 = d3.max(xSeries, function(d) { return d; });
-    // let y2 = (leastSquaresCoeff.slope * xSeries.length) + leastSquaresCoeff.intercept;
-
     let x1 = d3.min(xSeries, function(d) { return d; });
-    let y1 = leastSquaresCoeff[0] + leastSquaresCoeff[1];
+    let y1 = (leastSquaresCoeff.slope * x1) + leastSquaresCoeff.yIntercept;
     let x2 = d3.max(xSeries, function(d) { return d; });
-    let y2 = (leastSquaresCoeff[0] * xSeries.length) + leastSquaresCoeff[1];
-
-    console.log('x1: ' + x1 + ' y1:' + y1);
-    console.log('x2: ' + x2 + ' y2:' + y2);
+    let y2 = (leastSquaresCoeff.slope * x2) + leastSquaresCoeff.yIntercept;
 
     let trendData = [
       {
