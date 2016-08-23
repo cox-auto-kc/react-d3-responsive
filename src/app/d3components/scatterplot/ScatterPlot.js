@@ -252,8 +252,23 @@ class ScatterPlot extends React.Component {
     let dataPoints;
 
     dataPoints = this.dataNest.map(function (d,i) {
+
+      let trendLine = [];
+
+      if (_self.props.trendLine) {
+        trendLine.push(<TrendLine
+            key={i}
+            data={d.values}
+            width={_self.state.width}
+            x={_self.xScale}
+            y={_self.yScale}
+            xData={_self.props.xData}
+            yData={_self.props.yData} />);
+      }
+
       return (
         <g key={i}>
+          {trendLine}
           <Dots
             data={d.values}
             x={_self.xScale}
@@ -267,13 +282,6 @@ class ScatterPlot extends React.Component {
             tooltip={_self.state.tooltip}
             xValue={_self.props.xToolTipLabel}
             yValue={_self.props.yToolTipLabel} />
-          <TrendLine
-            data={d.values}
-            width={_self.state.width}
-            x={_self.xScale}
-            y={_self.yScale}
-            xData={_self.props.xData}
-            yData={_self.props.yData} />
         </g>
       );
     });
@@ -335,6 +343,7 @@ ScatterPlot.propTypes = {
   yAxisLabel: React.PropTypes.string,
   xToolTipLabel: React.PropTypes.string,
   yToolTipLabel: React.PropTypes.string,
+  trendLine: React.PropTypes.bool,
   margin: React.PropTypes.object,
   yMaxBuffer: React.PropTypes.number
 };
@@ -347,6 +356,7 @@ ScatterPlot.defaultProps = {
   xFormat:'%a %e',
   xToolTipLabel: 'x',
   yToolTipLabel: 'y',
+  trendLine: true,
   margin: {
     top: 10,
     right: 40,

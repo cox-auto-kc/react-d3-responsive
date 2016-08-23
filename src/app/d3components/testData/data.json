@@ -1222,7 +1222,7 @@ module.exports = {
     {
       "type": "C",
       "x": -10,
-      "y": 20
+      "y": -200
     }
   ],
   "barGraphTestData": [

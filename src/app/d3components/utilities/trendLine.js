@@ -1,3 +1,4 @@
+/*eslint-disable react/no-set-state */
 'use strict';
 
 import React from 'react';
@@ -114,8 +115,6 @@ class TrendLine extends React.Component {
 
     let leastSquaresCoeff = this.leastSquares(xSeries, ySeries);
 
-    console.log(leastSquaresCoeff);
-
     let x1 = d3.min(xSeries, function(d) { return d; });
     let y1 = (leastSquaresCoeff.slope * x1) + leastSquaresCoeff.yIntercept;
     let x2 = d3.max(xSeries, function(d) { return d; });
@@ -144,16 +143,15 @@ class TrendLine extends React.Component {
     const _self = this;
 
     let line = this.dataNest.map(function(d,i) {
-      console.log(d);
       return (
-        <g className="trend-line" key={i} >
-          <path
-            d={_self.line(d.values)}
-            stroke="#333333"
-            opacity=".5"
-            strokeWidth={3}
-            strokeLinecap="round" />
-        </g>
+        <path
+          key={i}
+          className="trend-line"
+          d={_self.line(d.values)}
+          stroke="#333333"
+          opacity=".5"
+          strokeWidth={3}
+          strokeLinecap="round" />
       );
     });
 
