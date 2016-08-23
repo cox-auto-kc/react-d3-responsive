@@ -356,7 +356,7 @@ ScatterPlot.defaultProps = {
   xFormat:'%a %e',
   xToolTipLabel: 'x',
   yToolTipLabel: 'y',
-  trendLine: true,
+  trendLine: false,
   margin: {
     top: 10,
     right: 40,
