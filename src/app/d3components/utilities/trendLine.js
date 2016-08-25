@@ -19,6 +19,7 @@ class TrendLine extends React.Component {
   componentWillMount() {
     const _self = this;
     window.addEventListener('resize', function() {
+      _self.minMaxing();
       _self.updateSize();
       _self.getEndPoints();
     }, true);
@@ -26,13 +27,13 @@ class TrendLine extends React.Component {
   }
 
   componentDidMount() {
-    this.reloadBarData();
     this.repaintComponent();
   }
 
   componentWillUnmount() {
     const _self = this;
     window.removeEventListener('resize', function() {
+      _self.minMaxing();
       _self.updateSize();
     });
   }
@@ -40,6 +41,7 @@ class TrendLine extends React.Component {
   repaintComponent() {
     const _self = this;
     const forceResize = function(){
+      _self.minMaxing();
       _self.updateSize();
       _self.getEndPoints();
     };
@@ -49,10 +51,6 @@ class TrendLine extends React.Component {
       }, 0);
     }
     onRepaint(forceResize);
-  }
-
-  reloadBarData() {
-
   }
 
   updateSize(){
@@ -106,6 +104,17 @@ class TrendLine extends React.Component {
     return ls;
   }
 
+  minMaxing() {
+    const _self = this;
+
+    let minMax = {};
+    let lineData = this.props.lineExtend;
+    minMax['xMin'] = d3.min(lineData.map(function (d) { return d[_self.props.xData]; }));
+    minMax['xMax'] = d3.max(lineData.map(function (d) { return d[_self.props.xData]; }));
+
+    return minMax;
+  }
+
   getEndPoints() {
     const _self = this;
     let data = this.props.data;
@@ -114,12 +123,11 @@ class TrendLine extends React.Component {
     let ySeries = data.map(function (d) { return d[_self.props.yData]; });
 
     let leastSquaresCoeff = this.leastSquares(xSeries, ySeries);
+    let trendExtend = this.minMaxing();
 
-    let x1 = d3.min(xSeries, function(d) { return d; });
-    if (this.props.xMin) { x1 = this.props.xMin; }
+    let x1 = trendExtend.xMin;
     let y1 = (leastSquaresCoeff.slope * x1) + leastSquaresCoeff.yIntercept;
-    let x2 = d3.max(xSeries, function(d) { return d; });
-    if (this.props.xMax) { x2 = this.props.xMax; }
+    let x2 = trendExtend.xMax;
     let y2 = (leastSquaresCoeff.slope * x2) + leastSquaresCoeff.yIntercept;
 
     let trendData = [
@@ -150,8 +158,8 @@ class TrendLine extends React.Component {
           key={i}
           className="trend-line"
           d={_self.line(d.values)}
-          stroke="#333333"
-          opacity=".5"
+          stroke={_self.props.lineStroke}
+          opacity=".4"
           strokeWidth={3}
           strokeLinecap="round" />
       );
@@ -167,12 +175,12 @@ TrendLine.propTypes = {
   width: React.PropTypes.number,
   height: React.PropTypes.number,
   data: React.PropTypes.array,
+  lineExtend: React.PropTypes.array,
   x: React.PropTypes.func,
   y: React.PropTypes.func,
+  lineStroke: React.PropTypes.string,
   xData: React.PropTypes.string.isRequired,
   yData: React.PropTypes.string.isRequired,
-  xMin: React.PropTypes.number,
-  xMax: React.PropTypes.number,
   xAxisLabel: React.PropTypes.string,
   yAxisLabel: React.PropTypes.string,
   margin: React.PropTypes.object,
@@ -182,8 +190,6 @@ TrendLine.propTypes = {
 TrendLine.defaultProps = {
   width: 1920,
   height: 400,
-  xMin: -10,
-  xMax: 110,
   margin: {
     top: 10,
     right: 40,

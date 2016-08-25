@@ -262,6 +262,8 @@ class ScatterPlot extends React.Component {
             width={_self.state.width}
             x={_self.xScale}
             y={_self.yScale}
+            lineStroke={_self.color(i)}
+            lineExtend={_self.state.data}
             xData={_self.props.xData}
             yData={_self.props.yData} />);
       }

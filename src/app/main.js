@@ -102,6 +102,8 @@ class Main extends React.Component {
           title="Scatter Plot - Date X axis"
           xData="x"
           yData="y"
+          xAxisLabel="X Axis Label"
+          yAxisLabel="Y Axis Label"
           trendLine={true}
           data={ChartData.scatterPlotData3}
           dataType="data" />
