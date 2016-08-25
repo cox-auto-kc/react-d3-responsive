@@ -116,8 +116,10 @@ class TrendLine extends React.Component {
     let leastSquaresCoeff = this.leastSquares(xSeries, ySeries);
 
     let x1 = d3.min(xSeries, function(d) { return d; });
+    if (this.props.xMin) { x1 = this.props.xMin; }
     let y1 = (leastSquaresCoeff.slope * x1) + leastSquaresCoeff.yIntercept;
     let x2 = d3.max(xSeries, function(d) { return d; });
+    if (this.props.xMax) { x2 = this.props.xMax; }
     let y2 = (leastSquaresCoeff.slope * x2) + leastSquaresCoeff.yIntercept;
 
     let trendData = [
@@ -169,6 +171,8 @@ TrendLine.propTypes = {
   y: React.PropTypes.func,
   xData: React.PropTypes.string.isRequired,
   yData: React.PropTypes.string.isRequired,
+  xMin: React.PropTypes.number,
+  xMax: React.PropTypes.number,
   xAxisLabel: React.PropTypes.string,
   yAxisLabel: React.PropTypes.string,
   margin: React.PropTypes.object,
@@ -178,6 +182,8 @@ TrendLine.propTypes = {
 TrendLine.defaultProps = {
   width: 1920,
   height: 400,
+  xMin: -10,
+  xMax: 110,
   margin: {
     top: 10,
     right: 40,
