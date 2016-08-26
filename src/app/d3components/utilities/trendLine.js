@@ -104,6 +104,7 @@ class TrendLine extends React.Component {
     return ls;
   }
 
+  // extends trend line the full width of the graph
   minMaxing() {
     const _self = this;
 
@@ -115,9 +116,16 @@ class TrendLine extends React.Component {
     return minMax;
   }
 
+  // Makes the two points needed for the trend line to graph
   getEndPoints() {
     const _self = this;
-    let data = this.props.data;
+    let data;
+
+    if(this.props.lineNumbers == 'single') {
+      data = this.props.lineExtend;
+    } else {
+      data = this.props.data;
+    }
 
     let xSeries = data.map(function (d) { return d[_self.props.xData]; });
     let ySeries = data.map(function (d) { return d[_self.props.yData]; });
@@ -175,10 +183,11 @@ TrendLine.propTypes = {
   width: React.PropTypes.number,
   height: React.PropTypes.number,
   data: React.PropTypes.array,
+  lineStroke: React.PropTypes.string,
   lineExtend: React.PropTypes.array,
+  lineNumbers: React.PropTypes.oneOf(['single','multi']),
   x: React.PropTypes.func,
   y: React.PropTypes.func,
-  lineStroke: React.PropTypes.string,
   xData: React.PropTypes.string.isRequired,
   yData: React.PropTypes.string.isRequired,
   xAxisLabel: React.PropTypes.string,
@@ -190,6 +199,7 @@ TrendLine.propTypes = {
 TrendLine.defaultProps = {
   width: 1920,
   height: 400,
+  lineNumbers: 'multi',
   margin: {
     top: 10,
     right: 40,
