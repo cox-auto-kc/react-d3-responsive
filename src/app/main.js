@@ -97,24 +97,35 @@ class Main extends React.Component {
           lineType="cardinal"
           xFormat="%a"
           data={ChartData.areaGraphData2} />
+
         <ScatterPlot
           title="Scatter Plot - Date X axis"
           xData="day"
           yData="count"
           dataType="date"
+          trendLine={true}
           data={ChartData.scatterPlotData} />
         <ScatterPlot
           title="Scatter Plot - Date X axis"
-          xData="day"
-          yData="count"
-          dataType="date"
-          data={ChartData.scatterPlotData} />
-        <ScatterPlot
-          title="Scatter Plot - Number X axis"
           xData="x"
           yData="y"
-          dataType="data"
-          data={ChartData.scatterPlotData2} />
+          xAxisLabel="X Axis Label"
+          yAxisLabel="Y Axis Label"
+          trendLine={true}
+          lineNumbers="single"
+          data={ChartData.scatterPlotData3}
+          dataType="data" />
+        <ScatterPlot
+          title="Scatter Plot - Date X axis"
+          xData="x"
+          yData="y"
+          xAxisLabel="X Axis Label"
+          yAxisLabel="Y Axis Label"
+          trendLine={true}
+          lineNumbers="multi"
+          data={ChartData.scatterPlotData3}
+          dataType="data" />
+
         <BarGraph
           title="Bar Graph"
           xData="month"

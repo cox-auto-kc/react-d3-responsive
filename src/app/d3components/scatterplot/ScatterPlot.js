@@ -9,6 +9,7 @@ import AxisLabel from '../utilities/axisLabel';
 import Grid from '../utilities/grid';
 import Dots from '../utilities/dataPoints';
 import ToolTip from '../utilities/tooltip';
+import TrendLine from '../utilities/trendLine';
 
 class ScatterPlot extends React.Component {
 
@@ -91,7 +92,7 @@ class ScatterPlot extends React.Component {
 
     // X axis scale
     if(this.props.dataType !== 'date') {
-      this.xScale= d3.scale.linear()
+      this.xScale = d3.scale.linear()
         .domain([
           d3.min(this.state.data,function(d){
             return d[_self.props.xData];
@@ -251,8 +252,26 @@ class ScatterPlot extends React.Component {
     let dataPoints;
 
     dataPoints = this.dataNest.map(function (d,i) {
+
+      let trendLine = [];
+
+      if (_self.props.trendLine) {
+        trendLine.push(<TrendLine
+            key={i}
+            data={d.values}
+            width={_self.state.width}
+            x={_self.xScale}
+            y={_self.yScale}
+            lineStroke={_self.color(i)}
+            lineExtend={_self.state.data}
+            lineNumbers={_self.props.lineNumbers}
+            xData={_self.props.xData}
+            yData={_self.props.yData} />);
+      }
+
       return (
         <g key={i}>
+          {trendLine}
           <Dots
             data={d.values}
             x={_self.xScale}
@@ -316,17 +335,19 @@ ScatterPlot.propTypes = {
   height: React.PropTypes.number,
   chartId: React.PropTypes.string,
   chartClassName: React.PropTypes.string,
+  data: React.PropTypes.array.isRequired,
   dateFormat: React.PropTypes.string,
   dataType: React.PropTypes.string,
   dataPercent: React.PropTypes.string,
-  xFormat: React.PropTypes.string,
-  data: React.PropTypes.array.isRequired,
   xData: React.PropTypes.string.isRequired,
   yData: React.PropTypes.string.isRequired,
+  xFormat: React.PropTypes.string,
   xAxisLabel: React.PropTypes.string,
   yAxisLabel: React.PropTypes.string,
   xToolTipLabel: React.PropTypes.string,
   yToolTipLabel: React.PropTypes.string,
+  trendLine: React.PropTypes.bool,
+  lineNumbers: React.PropTypes.oneOf(['single','multi']),
   margin: React.PropTypes.object,
   yMaxBuffer: React.PropTypes.number
 };
@@ -339,6 +360,7 @@ ScatterPlot.defaultProps = {
   xFormat:'%a %e',
   xToolTipLabel: 'x',
   yToolTipLabel: 'y',
+  trendLine: false,
   margin: {
     top: 10,
     right: 40,
