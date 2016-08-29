@@ -106,7 +106,7 @@ class Main extends React.Component {
           trendLine={true}
           data={ChartData.scatterPlotData} />
         <ScatterPlot
-          title="Scatter Plot - Date X axis"
+          title="Scatter Plot - data X axis, single trend line"
           xData="x"
           yData="y"
           xAxisLabel="X Axis Label"
@@ -116,7 +116,7 @@ class Main extends React.Component {
           data={ChartData.scatterPlotData3}
           dataType="data" />
         <ScatterPlot
-          title="Scatter Plot - Date X axis"
+          title="Scatter Plot - data X axis, multiple trend line"
           xData="x"
           yData="y"
           xAxisLabel="X Axis Label"
