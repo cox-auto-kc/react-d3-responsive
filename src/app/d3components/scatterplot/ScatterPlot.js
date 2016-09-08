@@ -10,6 +10,7 @@ import Grid from '../utilities/grid';
 import Dots from '../utilities/dataPoints';
 import ToolTip from '../utilities/tooltip';
 import TrendLine from '../utilities/trendLine';
+import Legend from '../utilities/legend';
 
 class ScatterPlot extends React.Component {
 
@@ -321,6 +322,7 @@ class ScatterPlot extends React.Component {
             <Axis h={this.h} axis={this.xAxis} axisType="x" />
             {axisLabels}
             {dataPoints}
+            <Legend />
           </g>
         </svg>
       </div>
