@@ -1,3 +1,9 @@
+###0.0.21:
+###### 08 SEP 2016
+- Trend line added
+- Trend line prop added to scatter plot
+- Trend line types supported; linear
+
 ###0.0.20:
 ###### 05 AUG 2016
 - Edit Readme for installation
