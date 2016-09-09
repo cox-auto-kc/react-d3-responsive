@@ -7,6 +7,9 @@ class ChartLegend extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      data: []
+    };
   }
 
   createChart(_self) {
@@ -25,17 +28,31 @@ class ChartLegend extends React.Component {
     }
 
     // Width of graph
-    this.w = this.state.width - (this.props.margin.left + this.props.margin.right + yLabelWidthOffset);
+    this.w = this.props.width - (this.props.margin.left + this.props.margin.right + yLabelWidthOffset);
 
     // Height of graph
     this.h = this.props.height - (this.props.margin.top + this.props.margin.bottom + xLabelHeightOffset);
 
-    this.legend = d3.svg;
+    this.transform = 'translate(' + this.props.width + ',' + this.props.height + ')';
+
   }
 
   render(){
+
+    const legendItems = [];
+    let temp;
+
+    this.props.data.forEach((d, i) => {
+      if (temp != d.type) {
+        legendItems.push(<text key={i}>{d.type}</text>);
+        temp = d.type
+      }
+    });
+
     return (
-      <g className="chart-legend"></g>
+      <g className="chart-legend" transform={this.transform}>
+        {legendItems}
+      </g>
     );
   }
 }
@@ -43,6 +60,7 @@ class ChartLegend extends React.Component {
 ChartLegend.propTypes = {
   width: React.PropTypes.number,
   height: React.PropTypes.number,
+  data: React.PropTypes.array,
   xAxisLabel: React.PropTypes.string,
   yAxisLabel: React.PropTypes.string,
   margin: React.PropTypes.object
