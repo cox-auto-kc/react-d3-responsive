@@ -19,7 +19,7 @@ class ChartLegend extends React.Component {
     let xLabelHeightOffset = 0;
     let yLabelWidthOffset = 0;
 
-    if (this.props.xAxisLabel) {
+    if (true) {
       xLabelHeightOffset = 30;
     }
 
@@ -31,13 +31,15 @@ class ChartLegend extends React.Component {
     this.w = this.props.width - (this.props.margin.left + this.props.margin.right + yLabelWidthOffset);
 
     // Height of graph
-    this.h = this.props.height - (this.props.margin.top + this.props.margin.bottom + xLabelHeightOffset);
+    this.h = this.props.height + xLabelHeightOffset;
 
-    this.transform = 'translate(' + this.props.width + ',' + this.props.height + ')';
+    this.transform = 'translate(0,' + this.h + ')';
 
   }
 
   render(){
+
+    this.createChart(this);
 
     const legendItems = [];
     let temp;
@@ -45,9 +47,11 @@ class ChartLegend extends React.Component {
     this.props.data.forEach((d, i) => {
       if (temp != d.type) {
         legendItems.push(<text key={i}>{d.type}</text>);
-        temp = d.type
+        temp = d.type;
       }
     });
+
+    console.log(legendItems.length);
 
     return (
       <g className="chart-legend" transform={this.transform}>

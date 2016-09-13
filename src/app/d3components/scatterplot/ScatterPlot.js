@@ -322,7 +322,7 @@ class ScatterPlot extends React.Component {
             <Axis h={this.h} axis={this.xAxis} axisType="x" />
             {axisLabels}
             {dataPoints}
-            <Legend height={this.h} data={_self.state.data} />
+            <Legend height={this.h} width={this.state.width} data={_self.state.data} />
           </g>
         </svg>
       </div>
