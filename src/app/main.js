@@ -17,7 +17,7 @@ class Main extends React.Component {
       <div>
 
         <LineGraph
-          title="Line Graph - Date X axis"
+          title="Line Graph - 700px max width"
           width={700}
           height={500}
           chartId="custom-ID"
@@ -34,7 +34,7 @@ class Main extends React.Component {
           data={ChartData.lineGraphData} />
 
         <LineGraph
-          title="Line Graph - Date X axis"
+          title="Line Graph - d3 cardinal line"
           xAxisLabel="X Axis Label"
           yAxisLabel="Y Axis Label"
           xData="day"
@@ -42,7 +42,7 @@ class Main extends React.Component {
           lineType="cardinal"
           data={ChartData.lineGraphData} />
         <LineGraph
-          title="Multiple Line Graph"
+          title="Multiple Line Graph - Date X axis"
           xData="day"
           yData="count"
           lineType="cardinal"
@@ -58,7 +58,7 @@ class Main extends React.Component {
           data={ChartData.lineGraphData3} />
 
         <AreaGraph
-          title="Area Graph"
+          title="Area Graph - 700px max width"
           width={700}
           height={500}
           chartId="custom-ID"
@@ -83,7 +83,7 @@ class Main extends React.Component {
           strokeColor="#67ff67"
           data={ChartData.areaGraphData} />
         <AreaGraph
-          title="Area Graph"
+          title="Area Graph - d3 cardinal line"
           xData="day"
           yData="count"
           lineType="cardinal"
@@ -91,7 +91,7 @@ class Main extends React.Component {
           strokeColor="#67ff67"
           data={ChartData.areaGraphData} />
         <AreaGraph
-          title="Multiple Area Graph"
+          title="Multiple Area Graph - d3 cardinal lines"
           xData="day"
           yData="count"
           lineType="cardinal"
@@ -106,7 +106,7 @@ class Main extends React.Component {
           trendLine={true}
           data={ChartData.scatterPlotData} />
         <ScatterPlot
-          title="Scatter Plot - Date X axis"
+          title="Scatter Plot - Single Trend Line All Data"
           xData="x"
           yData="y"
           xAxisLabel="X Axis Label"
@@ -116,7 +116,7 @@ class Main extends React.Component {
           data={ChartData.scatterPlotData3}
           dataType="data" />
         <ScatterPlot
-          title="Scatter Plot - Date X axis"
+          title="Scatter Plot - Trend Line for Each Data Type"
           xData="x"
           yData="y"
           xAxisLabel="X Axis Label"
@@ -129,23 +129,32 @@ class Main extends React.Component {
         <BarGraph
           title="Bar Graph"
           xData="month"
+          keys={['new','old','third','four']}
+          data={ChartData.barGraphTestData} />
+        <BarGraph
+          title="Bar Graph - With Axis Labels"
+          xData="month"
           xAxisLabel="X Axis Label"
           yAxisLabel="Y Axis Label"
           keys={['new','old','third','four']}
           data={ChartData.barGraphTestData} />
-        <BarGraph
-          title="Bar Graph"
-          xData="month"
-          keys={['new','old','third','four']}
-          data={ChartData.barGraphTestData} />
+
         <PieChart
-          chartId="piechart"
           title="Pie Chart"
+          chartId="piechart"
           data={ChartData.pieTestData}
           innerRadiusRatio={2}
           labelOffset={1}
           startAngle={0}
           endAngle={360} />
+        <PieChart
+          title="Pie Chart - Different Start and End Angles"
+          chartId="piechart"
+          data={ChartData.pieTestData}
+          innerRadiusRatio={2}
+          labelOffset={1}
+          startAngle={-50}
+          endAngle={154} />
       </div>
     );
   }
