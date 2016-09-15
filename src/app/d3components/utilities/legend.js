@@ -7,9 +7,6 @@ class ChartLegend extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      data: []
-    };
   }
 
   createChart(_self) {
@@ -19,7 +16,7 @@ class ChartLegend extends React.Component {
     let xLabelHeightOffset = 0;
     let yLabelWidthOffset = 0;
 
-    if (true) {
+    if (this.props.xAxisLabel) {
       xLabelHeightOffset = 30;
     }
 
@@ -31,7 +28,14 @@ class ChartLegend extends React.Component {
     this.w = this.props.width - (this.props.margin.left + this.props.margin.right + yLabelWidthOffset);
 
     // Height of graph
-    this.h = this.props.height + xLabelHeightOffset;
+    this.h = this.props.height - (this.props.margin.top + this.props.margin.bottom + xLabelHeightOffset);
+
+    this.xScale = d3.scale.ordinal()
+        .rangeRoundBands([0, this.w], .3)
+        .domain(this.props.data.map(function(d) { return d.x; }));
+
+    // Height of graph
+    this.h = this.props.height;
 
     this.transform = 'translate(0,' + this.h + ')';
 
@@ -40,6 +44,8 @@ class ChartLegend extends React.Component {
   render(){
 
     this.createChart(this);
+
+    console.log(this.xScale);
 
     const legendItems = [];
     let temp;

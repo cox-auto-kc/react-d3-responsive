@@ -186,7 +186,7 @@ class ScatterPlot extends React.Component {
     // Format date for d3 to use
     const parseDate = d3.time.format(this.props.dateFormat).parse;
 
-    for(let i=0;i<data.length;++i) {
+    data.forEach((value, i) => {
       let d = data[i];
       if(this.props.dataType == 'date') {
         if (typeof d[this.props.xData] === "string") {
@@ -194,7 +194,7 @@ class ScatterPlot extends React.Component {
         }
         data[i] = d;
       }
-    }
+    });
 
     this.setState({data:data});
   }
@@ -306,9 +306,15 @@ class ScatterPlot extends React.Component {
       axisLabels.push(<AxisLabel key={1} h={this.h} w={this.w} axisLabel={this.props.xAxisLabel} axisType="x" />);
     }
 
+    let legend;
+
+    if (this.props.legend) {
+      legend = <Legend height={this.h} width={this.state.width} data={_self.state.data} />;
+    }
+
     let customClassName = "";
 
-    if(this.props.chartClassName){
+    if (this.props.chartClassName) {
       customClassName = " " + this.props.chartClassName;
     }
 
@@ -322,7 +328,7 @@ class ScatterPlot extends React.Component {
             <Axis h={this.h} axis={this.xAxis} axisType="x" />
             {axisLabels}
             {dataPoints}
-            <Legend height={this.h} width={this.state.width} data={_self.state.data} />
+            {legend}
           </g>
         </svg>
       </div>
@@ -348,6 +354,7 @@ ScatterPlot.propTypes = {
   yAxisLabel: React.PropTypes.string,
   xToolTipLabel: React.PropTypes.string,
   yToolTipLabel: React.PropTypes.string,
+  legend: React.PropTypes.bool,
   trendLine: React.PropTypes.bool,
   lineNumbers: React.PropTypes.oneOf(['single','multi']),
   margin: React.PropTypes.object,
@@ -362,6 +369,7 @@ ScatterPlot.defaultProps = {
   xFormat:'%a %e',
   xToolTipLabel: 'x',
   yToolTipLabel: 'y',
+  legend: true,
   trendLine: false,
   margin: {
     top: 10,
