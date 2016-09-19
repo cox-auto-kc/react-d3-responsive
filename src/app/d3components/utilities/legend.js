@@ -45,8 +45,6 @@ class ChartLegend extends React.Component {
 
     this.createChart(this);
 
-    console.log(this.xScale);
-
     const legendItems = [];
     let temp;
 
@@ -56,8 +54,6 @@ class ChartLegend extends React.Component {
         temp = d.type;
       }
     });
-
-    console.log(legendItems.length);
 
     return (
       <g className="chart-legend" transform={this.transform}>
