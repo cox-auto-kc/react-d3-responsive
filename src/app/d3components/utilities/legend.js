@@ -30,10 +30,6 @@ class ChartLegend extends React.Component {
     // Height of graph
     this.h = this.props.height - (this.props.margin.top + this.props.margin.bottom + xLabelHeightOffset);
 
-    this.xScale = d3.scale.ordinal()
-        .rangeRoundBands([0, this.w], .3)
-        .domain(this.props.data.map(function(d) { return d.x; }));
-
     // Height of graph
     this.h = this.props.height;
 
@@ -50,7 +46,12 @@ class ChartLegend extends React.Component {
 
     this.props.data.forEach((d, i) => {
       if (temp != d.type) {
-        legendItems.push(<text key={i}>{d.type}</text>);
+        legendItems.push(
+          <g key={i}>
+            <circle r="5" fill="green"/>
+            <text>{d.type}</text>
+          </g>
+        );
         temp = d.type;
       }
     });
