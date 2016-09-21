@@ -33,7 +33,7 @@ class ChartLegend extends React.Component {
     // Height of graph
     this.h = this.props.height;
 
-    this.transform = 'translate(0,' + this.h + ')';
+    this.transform = 'translate(5,' + (this.h + 50) + ')';
 
   }
 
@@ -47,9 +47,13 @@ class ChartLegend extends React.Component {
     this.props.data.forEach((d, i) => {
       if (temp != d.type) {
         legendItems.push(
-          <g key={i}>
-            <circle r="5" fill="green"/>
-            <text>{d.type}</text>
+          <g key={i} transform={'translate(' + i * 10 + ',0)'}>
+            <circle
+              r="5"
+              fill={this.color(i)}
+              cx={0}
+              cy={-5} />
+            <text dx={10}>{d.type}</text>
           </g>
         );
         temp = d.type;
