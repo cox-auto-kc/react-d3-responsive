@@ -328,9 +328,11 @@ class ScatterPlot extends React.Component {
             <Axis h={this.h} axis={this.xAxis} axisType="x" />
             {axisLabels}
             {dataPoints}
-            {legend}
           </g>
         </svg>
+        <div>
+          {legend}
+        </div>
       </div>
     );
   }
