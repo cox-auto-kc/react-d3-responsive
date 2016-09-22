@@ -9,6 +9,7 @@ import AxisLabel from '../utilities/axisLabel';
 import Grid from '../utilities/grid';
 import Dots from '../utilities/dataPoints';
 import ToolTip from '../utilities/tooltip';
+import Legend from '../utilities/legend';
 
 class LineGraph extends React.Component {
 
@@ -301,6 +302,12 @@ class LineGraph extends React.Component {
       axisLabels.push(<AxisLabel key={1} h={this.h} w={this.w} axisLabel={this.props.xAxisLabel} axisType="x" />);
     }
 
+    let legend;
+
+    if (this.props.legend) {
+      legend = <Legend height={this.h} width={this.state.width} data={_self.state.data} />;
+    }
+
     let customClassName = "";
 
     if(this.props.chartClassName){
@@ -319,6 +326,9 @@ class LineGraph extends React.Component {
             {lines}
           </g>
         </svg>
+        <div>
+          {legend}
+        </div>
       </div>
     );
   }
@@ -342,6 +352,7 @@ LineGraph.propTypes = {
   yAxisLabel: React.PropTypes.string,
   xToolTipLabel: React.PropTypes.string,
   yToolTipLabel: React.PropTypes.string,
+  legend: React.PropTypes.bool,
   lineType: React.PropTypes.string,
   fillColor: React.PropTypes.string,
   margin: React.PropTypes.object,
@@ -356,6 +367,7 @@ LineGraph.defaultProps = {
   xFormat:'%a %e',
   xToolTipLabel: 'x',
   yToolTipLabel: 'y',
+  legend: true,
   lineType:'linear',
   fillColor: 'none',
   margin: {
