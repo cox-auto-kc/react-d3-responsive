@@ -1,3 +1,10 @@
+###0.1.0:
+###### 22 SEP 2016
+- Legend Component Utility added
+- Legend added to Line Graph
+- Legend added to Area Graph
+- Legend added to Scatter Plot
+
 ###0.0.21:
 ###### 08 SEP 2016
 - Trend line added
