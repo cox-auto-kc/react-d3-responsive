@@ -21,7 +21,7 @@ class ChartLegend extends React.Component {
 
     const legendItems = [];
     let temp;
-
+    
     this.props.data.forEach((d, i) => {
       if (temp != d.type) {
         legendItems.push(

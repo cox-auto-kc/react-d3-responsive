@@ -1282,6 +1282,21 @@ module.exports = {
     }
   ],
   "pieTestData": [
-    158,93,20,120,187,45
+    {
+      "type": "testing1",
+      "value": 158
+    },
+    {
+      "type": "testing2",
+      "value": 93
+    },
+    {
+      "type": "testing3",
+      "value": 20
+    },
+    {
+      "type": "testing4",
+      "value": 120
+    }
   ]
 };

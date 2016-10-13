@@ -153,6 +153,7 @@ class Main extends React.Component {
           data={ChartData.pieTestData}
           innerRadiusRatio={2}
           labelOffset={1}
+          showLabel={false}
           startAngle={-50}
           endAngle={154} />
       </div>

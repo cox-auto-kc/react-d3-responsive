@@ -4,6 +4,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import d3 from 'd3';
+import Legend from '../utilities/legend';
 
 class PieChart extends React.Component {
 
@@ -50,7 +51,7 @@ class PieChart extends React.Component {
 
   createChart(_self) {
 
-    this.color = d3.scale.category20();
+    this.color = d3.scale.category10();
 
     let pieHeight = _self.state.height;
     let pieWidth;
@@ -80,7 +81,7 @@ class PieChart extends React.Component {
     this.pie = d3.layout.pie()
       .startAngle(startAngle)
       .endAngle(endAngle)
-      .value(function (d) { return d; });
+      .value(function (d) { return d.value; });
 
     this.transform = 'translate(' + radius + ',' + radius + ')';
 
@@ -121,35 +122,51 @@ class PieChart extends React.Component {
 
     const _self = this;
     let data = this.state.data;
-    let title;
+    let title = "";
+    let legend;
 
-    let wedge = _self.pie(data).map(function(d,i) {
-      let fill = _self.color(i);
-      let centroid = _self.arc.centroid(d);
-      let labelOffset = _self.props.labelOffset;
-      let label = "translate(" + centroid[0]*labelOffset +"," + centroid[1]*labelOffset + ")";
-
-      return (
-        <g key={i}>
-          <path
-            fill={fill}
-            d={_self.arc(d)}>
-          </path>
-          <text
-            transform={label}
-            textAnchor="middle">
-            {d.data}
-          </text>
-        </g>
-      );
-
-    });
+    if (this.props.legend) {
+      legend = <Legend height={this.h} width={this.state.width} data={_self.state.data} />;
+    }
 
     if (this.props.title) {
       title = <h3>{this.props.title}</h3>;
-    } else {
-      title = "";
     }
+
+    let wedge = _self.pie(data).map(function(d,i) {
+      let fill = _self.color(i);
+      if (_self.props.showLabel) {
+        let centroid = _self.arc.centroid(d);
+        let labelOffset = _self.props.labelOffset;
+        let label = "translate(" + centroid[0]*labelOffset +"," + centroid[1]*labelOffset + ")";
+
+        return (
+          <g key={i}>
+            <path
+              fill={fill}
+              d={_self.arc(d)}>
+            </path>
+            <text
+              transform={label}
+              textAnchor="middle">
+              {d.data.value}
+            </text>
+          </g>
+        );
+
+      } else {
+
+        return (
+          <g key={i}>
+            <path
+              fill={fill}
+              d={_self.arc(d)}>
+            </path>
+          </g>
+        );
+
+      }
+    });
 
     return(
       <div>
@@ -159,6 +176,9 @@ class PieChart extends React.Component {
             {wedge}
           </g>
         </svg>
+        <div>
+          {legend}
+        </div>
       </div>
     );
   }
@@ -171,16 +191,19 @@ PieChart.propTypes = {
   chartId: React.PropTypes.string,
   title: React.PropTypes.string,
   data: React.PropTypes.array,
+  showLabel: React.PropTypes.bool,
   labelOffset: React.PropTypes.number,
   startAngle: React.PropTypes.number,
   endAngle: React.PropTypes.number,
-  innerRadiusRatio: React.PropTypes.number
+  innerRadiusRatio: React.PropTypes.number,
+  legend: React.PropTypes.bool
 };
 
 PieChart.defaultProps = {
   width: 300,
   height: 300,
   data: [],
+  showLabel: true,
   labelOffset: 1,
   startAngle: 0,
   endAngle: 360,
@@ -189,7 +212,8 @@ PieChart.defaultProps = {
     right: 50,
     bottom: 50,
     left: 50
-  }
+  },
+  legend: true
 };
 
 export default PieChart;
