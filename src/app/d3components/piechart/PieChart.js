@@ -75,7 +75,7 @@ class PieChart extends React.Component {
     let radius = diameter/2;
 
     let outerRadius = radius;
-    let innerRadius = _self.props.innerRadiusRatio ? radius/_self.props.innerRadiusRatio : 0;
+    let innerRadius = _self.props.innerRadiusRatio ? radius*_self.props.innerRadiusRatio : 0;
     let startAngle = _self.degreesToRadians(_self.props.startAngle);
     let endAngle = _self.degreesToRadians(_self.props.endAngle);
 
