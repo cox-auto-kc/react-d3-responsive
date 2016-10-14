@@ -154,6 +154,7 @@ class Main extends React.Component {
           innerRadiusRatio={2}
           labelOffset={1}
           showLabel={false}
+          legend={false}
           startAngle={-50}
           endAngle={154} />
       </div>

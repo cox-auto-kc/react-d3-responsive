@@ -122,63 +122,45 @@ class PieChart extends React.Component {
 
     const _self = this;
     let data = this.state.data;
-    let title = "";
-    let legend;
-
-    if (this.props.legend) {
-      legend = <Legend data={_self.state.data} labelKey={_self.props.labelKey} />;
-    }
-
-    if (this.props.title) {
-      title = <h3>{this.props.title}</h3>;
-    }
 
     let wedge = _self.pie(data).map(function(d,i) {
       let fill = _self.color(i);
-      if (_self.props.showLabel) {
-        let centroid = _self.arc.centroid(d);
-        let labelOffset = _self.props.labelOffset;
-        let label = "translate(" + centroid[0]*labelOffset +"," + centroid[1]*labelOffset + ")";
+      let centroid = _self.arc.centroid(d);
+      let labelOffset = _self.props.labelOffset;
+      let label = "translate(" + centroid[0]*labelOffset +"," + centroid[1]*labelOffset + ")";
 
-        return (
-          <g key={i}>
-            <path
-              fill={fill}
-              d={_self.arc(d)}>
-            </path>
-            <text
-              transform={label}
-              textAnchor="middle">
-              {d.data[_self.props.valueKey]}
-            </text>
-          </g>
-        );
-
-      } else {
-
-        return (
-          <g key={i}>
-            <path
-              fill={fill}
-              d={_self.arc(d)}>
-            </path>
-          </g>
-        );
-
-      }
+      return (
+        <g key={i}>
+          <path
+            fill={fill}
+            d={_self.arc(d)}>
+          </path>
+          {_self.props.showLabel ? 
+          <text
+            transform={label}
+            textAnchor="middle">
+            {d.data[_self.props.valueKey]}
+          </text>
+          : null}
+        </g>
+      );
     });
 
     return(
       <div>
-        {title}
+        {_self.props.title ? 
+        <h3>{_self.props.title}</h3>
+        : null}
         <svg id={this.props.chartId} width={this.state.width} height={this.state.height}>
           <g transform={this.transform}>
             {wedge}
           </g>
         </svg>
+        {_self.props.legend ? 
         <div>
-          {legend}
+          <Legend data={_self.state.data} labelKey={_self.props.labelKey} />
         </div>
+        : null}
       </div>
     );
   }
