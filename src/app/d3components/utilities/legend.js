@@ -19,18 +19,19 @@ class ChartLegend extends React.Component {
 
     this.createChart(this);
 
+    const _self = this; 
     const legendItems = [];
     let temp;
-
+    
     this.props.data.forEach((d, i) => {
-      if (temp != d.type) {
+      if (temp != d[_self.props.labelKey]) {
         legendItems.push(
-          <span key={i}>
+          <span key={i} style={{display: "inline-block"}}>
             <span style={{ color: this.color(i), paddingRight: '5px' }}>&#9679;</span>
-            <span style={{ paddingRight: '15px' }}>{d.type}</span>
+            <span style={{ paddingRight: '15px' }}>{d[_self.props.labelKey]}</span>
           </span>
         );
-        temp = d.type;
+        temp = d[_self.props.labelKey];
       }
     });
 
@@ -43,10 +44,12 @@ class ChartLegend extends React.Component {
 }
 
 ChartLegend.propTypes = {
-  data: React.PropTypes.array
+  data: React.PropTypes.array,
+  labelKey: React.PropTypes.string
 };
 
 ChartLegend.defaultProps = {
+  labelKey: "type"
 };
 
 export default ChartLegend;

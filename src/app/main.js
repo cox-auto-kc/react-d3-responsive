@@ -143,7 +143,7 @@ class Main extends React.Component {
           title="Pie Chart"
           chartId="piechart"
           data={ChartData.pieTestData}
-          innerRadiusRatio={2}
+          innerRadiusRatio={0}
           labelOffset={1}
           startAngle={0}
           endAngle={360} />
@@ -151,8 +151,10 @@ class Main extends React.Component {
           title="Pie Chart - Different Start and End Angles"
           chartId="piechart"
           data={ChartData.pieTestData}
-          innerRadiusRatio={2}
+          innerRadiusRatio={.8}
           labelOffset={1}
+          showLabel={false}
+          legend={false}
           startAngle={-50}
           endAngle={154} />
       </div>
