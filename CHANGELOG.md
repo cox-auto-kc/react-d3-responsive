@@ -1,3 +1,12 @@
+###0.1.1:
+###### 17 OCT 2016
+- Legend added to Pie Chart
+- Added Custom Key Value Prop
+- Added Custom Label Value Prop
+- Added show or hide Label Prop
+- Inner Radius Ratio is now from 0.00 to 1.00 (1 being 100% of the Radius)
+- Refined some code on pie chart
+
 ###0.1.0:
 ###### 22 SEP 2016
 - Legend Component Utility added
