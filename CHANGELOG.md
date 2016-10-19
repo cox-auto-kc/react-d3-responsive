@@ -1,3 +1,8 @@
+###0.1.2:
+###### 19 OCT 2016
+- Added Custom Key Value Prop to LineGraph Component
+- Refined some code on LineGraph Component
+
 ###0.1.1:
 ###### 17 OCT 2016
 - Legend added to Pie Chart
