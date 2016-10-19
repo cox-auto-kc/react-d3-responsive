@@ -1,351 +1,381 @@
 module.exports = {
   "lineGraphData": [
     {
+      "label": "Data Sample 1",
       "day":"02-11-2016",
       "count":180
     },
     {
+      "label": "Data Sample 1",
       "day":"02-12-2016",
       "count":250
     },
     {
+      "label": "Data Sample 1",
       "day":"02-13-2016",
       "count":150
     },
     {
+      "label": "Data Sample 1",
       "day":"02-14-2016",
       "count":496
     },
     {
+      "label": "Data Sample 1",
       "day":"02-15-2016",
       "count":140
     },
     {
+      "label": "Data Sample 1",
       "day":"02-16-2016",
       "count":380
     },
     {
+      "label": "Data Sample 1",
       "day":"02-17-2016",
       "count":100
     },
     {
+      "label": "Data Sample 1",
       "day":"02-18-2016",
       "count":150
     },
     {
+      "label": "Data Sample 1",
       "day":"02-19-2016",
       "count":400
     },
     {
+      "label": "Data Sample 1",
       "day":"02-20-2016",
       "count":345
     },
     {
+      "label": "Data Sample 1",
       "day":"02-21-2016",
       "count":80
     },
     {
+      "label": "Data Sample 1",
       "day":"02-22-2016",
       "count":520
     },
     {
+      "label": "Data Sample 1",
       "day":"02-23-2016",
       "count":471
     },
     {
+      "label": "Data Sample 1",
       "day":"02-24-2016",
       "count":246
     },
     {
+      "label": "Data Sample 1",
       "day":"02-25-2016",
       "count":199
     }
   ],
   "lineGraphData2": [
     {
-      "type": "A",
+      "label": "A",
       "day": "02-11-2016",
       "count": 246
     },
     {
-      "type": "A",
+      "label": "A",
       "day": "02-12-2016",
       "count": 19
     },
     {
-      "type": "A",
+      "label": "A",
       "day": "02-13-2016",
       "count": 352
     },
     {
-      "type": "A",
+      "label": "A",
       "day": "02-14-2016",
       "count": 495
     },
     {
-      "type": "A",
+      "label": "A",
       "day": "02-15-2016",
       "count": 415
     },
     {
-      "type": "A",
+      "label": "A",
       "day": "02-16-2016",
       "count": 178
     },
     {
-      "type": "A",
+      "label": "A",
       "day": "02-17-2016",
       "count": 40
     },
     {
-      "type": "A",
+      "label": "A",
       "day": "02-18-2016",
       "count": 111
     },
     {
-      "type": "A",
+      "label": "A",
       "day": "02-19-2016",
       "count": 93
     },
     {
-      "type": "A",
+      "label": "A",
       "day": "02-20-2016",
       "count": 36
     },
     {
-      "type": "A",
+      "label": "A",
       "day": "02-21-2016",
       "count": 355
     },
     {
-      "type": "A",
+      "label": "A",
       "day": "02-22-2016",
       "count": 68
     },
     {
-      "type": "A",
+      "label": "A",
       "day": "02-23-2016",
       "count": 176
     },
     {
-      "type": "A",
+      "label": "A",
       "day": "02-24-2016",
       "count": 53
     },
     {
-      "type": "A",
+      "label": "A",
       "day": "02-25-2016",
       "count": 340
     },
     {
-      "type": "B",
+      "label": "B",
       "day": "02-11-2016",
       "count": 360
     },
     {
-      "type": "B",
+      "label": "B",
       "day": "02-12-2016",
       "count": 305
     },
     {
-      "type": "B",
+      "label": "B",
       "day": "02-13-2016",
       "count": 374
     },
     {
-      "type": "B",
+      "label": "B",
       "day": "02-14-2016",
       "count": 104
     },
     {
-      "type": "B",
+      "label": "B",
       "day": "02-15-2016",
       "count": 259
     },
     {
-      "type": "B",
+      "label": "B",
       "day": "02-16-2016",
       "count": 277
     },
     {
-      "type": "B",
+      "label": "B",
       "day": "02-17-2016",
       "count": 202
     },
     {
-      "type": "B",
+      "label": "B",
       "day": "02-18-2016",
       "count": 186
     },
     {
-      "type": "B",
+      "label": "B",
       "day": "02-19-2016",
       "count": 243
     },
     {
-      "type": "B",
+      "label": "B",
       "day": "02-20-2016",
       "count": 498
     },
     {
-      "type": "B",
+      "label": "B",
       "day": "02-21-2016",
       "count": 38
     },
     {
-      "type": "B",
+      "label": "B",
       "day": "02-22-2016",
       "count": 165
     },
     {
-      "type": "B",
+      "label": "B",
       "day": "02-23-2016",
       "count": 40
     },
     {
-      "type": "B",
+      "label": "B",
       "day": "02-24-2016",
       "count": 264
     },
     {
-      "type": "B",
+      "label": "B",
       "day": "02-25-2016",
       "count": 106
     },
     {
-      "type": "C",
+      "label": "C",
       "day": "02-11-2016",
       "count": 213
     },
     {
-      "type": "C",
+      "label": "C",
       "day": "02-12-2016",
       "count": 296
     },
     {
-      "type": "C",
+      "label": "C",
       "day": "02-13-2016",
       "count": 466
     },
     {
-      "type": "C",
+      "label": "C",
       "day": "02-14-2016",
       "count": 409
     },
     {
-      "type": "C",
+      "label": "C",
       "day": "02-15-2016",
       "count": 133
     },
     {
-      "type": "C",
+      "label": "C",
       "day": "02-16-2016",
       "count": 53
     },
     {
-      "type": "C",
+      "label": "C",
       "day": "02-17-2016",
       "count": 200
     },
     {
-      "type": "C",
+      "label": "C",
       "day": "02-18-2016",
       "count": 364
     },
     {
-      "type": "C",
+      "label": "C",
       "day": "02-19-2016",
       "count": 41
     },
     {
-      "type": "C",
+      "label": "C",
       "day": "02-20-2016",
       "count": 414
     },
     {
-      "type": "C",
+      "label": "C",
       "day": "02-21-2016",
       "count": 96
     },
     {
-      "type": "C",
+      "label": "C",
       "day": "02-22-2016",
       "count": 94
     },
     {
-      "type": "C",
+      "label": "C",
       "day": "02-23-2016",
       "count": 282
     },
     {
-      "type": "C",
+      "label": "C",
       "day": "02-24-2016",
       "count": 6
     },
     {
-      "type": "C",
+      "label": "C",
       "day": "02-25-2016",
       "count": 418
     }
   ],
   "lineGraphData3": [
     {
+      "label": "Data Sample 2",
       "x": 20,
       "y": 180
     },
     {
+      "label": "Data Sample 2",
       "x": 21,
       "y": 250
     },
     {
+      "label": "Data Sample 2",
       "x": 22,
       "y": 150
     },
     {
+      "label": "Data Sample 2",
       "x": 23,
       "y": 496
     },
     {
+      "label": "Data Sample 2",
       "x": 24,
       "y": 140
     },
     {
+      "label": "Data Sample 2",
       "x": 25,
       "y": 380
     },
     {
+      "label": "Data Sample 2",
       "x": 26,
       "y": 100
     },
     {
+      "label": "Data Sample 2",
       "x": 27,
       "y": 150
     },
     {
+      "label": "Data Sample 2",
       "x": 28,
       "y": 400
     },
     {
+      "label": "Data Sample 2",
       "x": 29,
       "y": 345
     },
     {
+      "label": "Data Sample 2",
       "x": 30,
       "y": 80
     },
     {
+      "label": "Data Sample 2",
       "x": 31,
       "y": 532
     },
     {
+      "label": "Data Sample 2",
       "x": 33,
       "y": 471
     },
     {
+      "label": "Data Sample 2",
       "x": 34,
       "y": 246
     },
     {
+      "label": "Data Sample 2",
       "x": 35,
       "y": 199
     }

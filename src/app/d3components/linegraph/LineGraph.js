@@ -75,13 +75,8 @@ class LineGraph extends React.Component {
     let xLabelHeightOffset = 0;
     let yLabelWidthOffset = 0;
 
-    if (this.props.xAxisLabel) {
-      xLabelHeightOffset = 30;
-    }
-
-    if (this.props.yAxisLabel) {
-      yLabelWidthOffset = 20;
-    }
+    {this.props.xAxisLabel ? xLabelHeightOffset = 30 : null;}
+    {this.props.yAxisLabel ? yLabelWidthOffset = 20 : null;}
 
     // Width of graph
     this.w = this.state.width - (this.props.margin.left + this.props.margin.right + yLabelWidthOffset);
@@ -159,7 +154,7 @@ class LineGraph extends React.Component {
       .interpolate(this.props.lineType);
 
     this.dataNest = d3.nest()
-        .key(function(d) {return d.type;})
+        .key(function(d) { return d[_self.props.valueKey]; })
         .entries(this.state.data);
 
     if(this.props.dataPercent == 'y') {
@@ -286,28 +281,6 @@ class LineGraph extends React.Component {
       );
     });
 
-    let title;
-
-    if (this.props.title) {
-      title = <h3>{this.props.title}</h3>;
-    }
-
-    let axisLabels = [];
-
-    if (this.props.xAxisLabel) {
-      axisLabels.push(<AxisLabel key={0} h={this.h} w={this.w} axisLabel={this.props.yAxisLabel} axisType="y" />);
-    }
-
-    if (this.props.yAxisLabel) {
-      axisLabels.push(<AxisLabel key={1} h={this.h} w={this.w} axisLabel={this.props.xAxisLabel} axisType="x" />);
-    }
-
-    let legend;
-
-    if (this.props.legend) {
-      legend = <Legend height={this.h} width={this.state.width} data={_self.state.data} />;
-    }
-
     let customClassName = "";
 
     if(this.props.chartClassName){
@@ -316,19 +289,26 @@ class LineGraph extends React.Component {
 
     return (
       <div>
-        {title}
+        {this.props.title ? <h3>{this.props.title}</h3> : null}
         <svg className={"rd3r-chart rd3r-line-graph" + customClassName} id={this.props.chartId} width={this.state.width} height={this.props.height}>
           <g transform={this.transform}>
             <Grid h={this.h} grid={this.yGrid} gridType="y" />
             <Axis h={this.h} axis={this.yAxis} axisType="y" />
             <Axis h={this.h} axis={this.xAxis} axisType="x" />
-            {axisLabels}
+            {this.props.xAxisLabel ?
+              <AxisLabel key={0} h={this.h} w={this.w} axisLabel={this.props.yAxisLabel} axisType="y" />
+            : null}
+            {this.props.yAxisLabel ?
+              <AxisLabel key={1} h={this.h} w={this.w} axisLabel={this.props.xAxisLabel} axisType="x" />
+            : null}
             {lines}
           </g>
         </svg>
+        {this.props.legend ?
         <div>
-          {legend}
+           <Legend data={_self.state.data} labelKey={_self.props.valueKey} />
         </div>
+        : null}
       </div>
     );
   }
@@ -346,6 +326,7 @@ LineGraph.propTypes = {
   dataPercent: React.PropTypes.string,
   xFormat: React.PropTypes.string,
   data: React.PropTypes.array.isRequired,
+  valueKey: React.PropTypes.string,
   xData: React.PropTypes.string.isRequired,
   yData: React.PropTypes.string.isRequired,
   xAxisLabel: React.PropTypes.string,
@@ -362,6 +343,7 @@ LineGraph.propTypes = {
 LineGraph.defaultProps = {
   width: 1920,
   height: 400,
+  valueKey: "label",
   dateFormat:'%m-%d-%Y',
   dataType:'date',
   xFormat:'%a %e',
