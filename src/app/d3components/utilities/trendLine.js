@@ -9,7 +9,9 @@ class TrendLine extends React.Component {
 
   constructor(props) {
     super(props);
-    this.componentWillMount = this.componentWillMount.bind(this);
+    this.updateSize = this.updateSize.bind(this);
+    this.minMaxing = this.minMaxing.bind(this);
+    this.getEndPoints = this.getEndPoints.bind(this);
     this.state = {
       width: this.props.width,
       data: []
@@ -17,12 +19,11 @@ class TrendLine extends React.Component {
   }
 
   componentWillMount() {
-    const _self = this;
     window.addEventListener('resize', function() {
-      _self.minMaxing();
-      _self.updateSize();
-      _self.getEndPoints();
-    }, true);
+      this.minMaxing;
+      this.updateSize;
+      this.getEndPoints;
+    }, false);
     this.setState({width: this.props.width});
   }
 
@@ -31,16 +32,24 @@ class TrendLine extends React.Component {
   }
 
   componentWillUnmount() {
-    const _self = this;
     window.removeEventListener('resize', function() {
-      _self.minMaxing();
-      _self.updateSize();
-    });
+      this.minMaxing;
+      this.updateSize;
+      this.getEndPoints;
+    }, false);
+  }
+
+  updateSize() {
+    let node = ReactDOM.findDOMNode(this);
+    let parentWidth = node.offsetWidth;
+    (parentWidth < this.props.width) ? 
+      this.setState({width:parentWidth}) :
+      this.setState({width:this.props.width});
   }
 
   repaintComponent() {
     const _self = this;
-    const forceResize = function(){
+    const forceResize = function() {
       _self.minMaxing();
       _self.updateSize();
       _self.getEndPoints();
@@ -51,16 +60,6 @@ class TrendLine extends React.Component {
       }, 0);
     }
     onRepaint(forceResize);
-  }
-
-  updateSize(){
-    let node = ReactDOM.findDOMNode(this);
-    let parentWidth = node.offsetWidth;
-    if (parentWidth < this.props.width) {
-      this.setState({width:parentWidth});
-    } else {
-      this.setState({width:this.props.width});
-    }
   }
 
   createChart(_self) {
