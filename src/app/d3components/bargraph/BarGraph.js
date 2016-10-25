@@ -12,7 +12,7 @@ class BarGraph extends React.Component {
 
   constructor(props) {
     super(props);
-    this.componentWillMount = this.componentWillMount.bind(this);
+    this.updateSize = this.updateSize.bind(this);
     this.state = {
       width: this.props.width,
       data: []
@@ -20,10 +20,7 @@ class BarGraph extends React.Component {
   }
 
   componentWillMount() {
-    const _self = this;
-    window.addEventListener('resize', function() {
-      _self.updateSize();
-    }, true);
+    window.addEventListener('resize', this.updateSize, false);
     this.setState({width: this.props.width});
   }
 
@@ -33,17 +30,19 @@ class BarGraph extends React.Component {
   }
 
   componentWillUnmount() {
-    const _self = this;
-    window.removeEventListener('resize', function() {
-      _self.updateSize();
-    });
+    window.removeEventListener('resize', this.updateSize, false);
+  }
+
+  updateSize() {
+    let node = ReactDOM.findDOMNode(this);
+    let parentWidth = node.offsetWidth;
+    (parentWidth < this.props.width) ? 
+      this.setState({width:parentWidth}) :
+      this.setState({width:this.props.width});
   }
 
   repaintComponent() {
-    const _self = this;
-    const forceResize = function(){
-        _self.updateSize();
-    };
+    const forceResize = this.updateSize;
     function onRepaint(callback){
       setTimeout(function(){
         window.requestAnimationFrame(callback);
@@ -116,16 +115,6 @@ class BarGraph extends React.Component {
 
     this.setState({data:data});
 
-  }
-
-  updateSize() {
-    let node = ReactDOM.findDOMNode(this);
-    let parentWidth = node.offsetWidth;
-    if (parentWidth < this.props.width) {
-      this.setState({width:parentWidth});
-    } else {
-      this.setState({width:this.props.width});
-    }
   }
 
   render(){
