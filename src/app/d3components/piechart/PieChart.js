@@ -22,7 +22,7 @@ class PieChart extends React.Component {
     window.addEventListener('resize', this.updateSize, false);
     this.setState({
       width: this.props.width,
-      width: this.props.height
+      height: this.props.height
     });
   }
 
