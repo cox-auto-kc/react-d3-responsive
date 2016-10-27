@@ -49,7 +49,7 @@ ChartLegend.propTypes = {
 };
 
 ChartLegend.defaultProps = {
-  labelKey: "type"
+  labelKey: "label"
 };
 
 export default ChartLegend;

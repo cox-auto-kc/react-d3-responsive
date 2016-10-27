@@ -67,14 +67,14 @@ class TrendLine extends React.Component {
     // Create line
     this.line = d3.svg.line()
       .x(function (d) {
-        return this.props.x(d[_self.props.xData]);
+        return this.props.x(d[_self.props.xDataKey]);
       })
       .y(function (d) {
-        return this.props.y(d[_self.props.yData]);
+        return this.props.y(d[_self.props.yDataKey]);
       });
 
     this.dataNest = d3.nest()
-        .key(function(d) {return d.type;})
+        .key(function(d) {return d.label;})
         .entries(this.state.data);
   }
 
@@ -109,8 +109,8 @@ class TrendLine extends React.Component {
 
     let minMax = {};
     let lineData = this.props.lineExtend;
-    minMax['xMin'] = d3.min(lineData.map(function (d) { return d[_self.props.xData]; }));
-    minMax['xMax'] = d3.max(lineData.map(function (d) { return d[_self.props.xData]; }));
+    minMax['xMin'] = d3.min(lineData.map(function (d) { return d[_self.props.xDataKey]; }));
+    minMax['xMax'] = d3.max(lineData.map(function (d) { return d[_self.props.xDataKey]; }));
 
     return minMax;
   }
@@ -126,8 +126,8 @@ class TrendLine extends React.Component {
       data = this.props.data;
     }
 
-    let xSeries = data.map(function (d) { return d[_self.props.xData]; });
-    let ySeries = data.map(function (d) { return d[_self.props.yData]; });
+    let xSeries = data.map(function (d) { return d[_self.props.xDataKey]; });
+    let ySeries = data.map(function (d) { return d[_self.props.yDataKey]; });
 
     let leastSquaresCoeff = this.leastSquares(xSeries, ySeries);
     let trendExtend = this.minMaxing();
@@ -139,12 +139,12 @@ class TrendLine extends React.Component {
 
     let trendData = [
       {
-        "type": "Trend Line",
+        "label": "Trend Line",
         'x':x1,
         'y':y1
       },
       {
-        "type": "Trend Line",
+        "label": "Trend Line",
         'x':x2,
         'y':y2
       }
@@ -187,10 +187,8 @@ TrendLine.propTypes = {
   lineNumbers: React.PropTypes.oneOf(['single','multi']),
   x: React.PropTypes.func,
   y: React.PropTypes.func,
-  xData: React.PropTypes.string.isRequired,
-  yData: React.PropTypes.string.isRequired,
-  xAxisLabel: React.PropTypes.string,
-  yAxisLabel: React.PropTypes.string,
+  xDataKey: React.PropTypes.string.isRequired,
+  yDataKey: React.PropTypes.string.isRequired,
   margin: React.PropTypes.object,
   yMaxBuffer: React.PropTypes.number
 };

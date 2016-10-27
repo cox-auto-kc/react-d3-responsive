@@ -24,8 +24,8 @@ class Main extends React.Component {
           chartClassName="custom-CLASS"
           xAxisLabel="X Axis Label"
           yAxisLabel="Y Axis Label"
-          xData="day"
-          yData="count"
+          xDataKey="day"
+          yDataKey="count"
           dateFormat="%m-%d-%Y"
           xToolTipLabel="X-TT"
           yToolTipLabel="Y-TT"
@@ -37,22 +37,22 @@ class Main extends React.Component {
           title="Line Graph - d3 cardinal line"
           xAxisLabel="X Axis Label"
           yAxisLabel="Y Axis Label"
-          xData="day"
-          yData="count"
+          xDataKey="day"
+          yDataKey="count"
           lineType="cardinal"
           data={ChartData.lineGraphData} />
         <LineGraph
           title="Multiple Line Graph - Date X axis"
-          xData="day"
-          yData="count"
+          xDataKey="day"
+          yDataKey="count"
           lineType="cardinal"
           strokeColor="#67ff67"
           xFormat="%a"
           data={ChartData.lineGraphData2} />
         <LineGraph
           title="Line Graph - Number X axis"
-          xData="x"
-          yData="y"
+          xDataKey="x"
+          yDataKey="y"
           lineType="linear"
           dataType="data"
           data={ChartData.lineGraphData3} />
@@ -65,8 +65,8 @@ class Main extends React.Component {
           chartClassName="custom-CLASS"
           xAxisLabel="X Axis Label"
           yAxisLabel="Y Axis Label"
-          xData="day"
-          yData="count"
+          xDataKey="day"
+          yDataKey="count"
           dateFormat="%m-%d-%Y"
           xToolTipLabel="X-TT"
           yToolTipLabel="Y-TT"
@@ -76,39 +76,39 @@ class Main extends React.Component {
 
         <AreaGraph
           title="Area Graph"
-          xData="day"
-          yData="count"
+          xDataKey="day"
+          yDataKey="count"
           lineType="linear"
           fillColor="#53c79f"
           strokeColor="#67ff67"
           data={ChartData.areaGraphData} />
         <AreaGraph
           title="Area Graph - d3 cardinal line"
-          xData="day"
-          yData="count"
+          xDataKey="day"
+          yDataKey="count"
           lineType="cardinal"
           fillColor="#53c79f"
           strokeColor="#67ff67"
           data={ChartData.areaGraphData} />
         <AreaGraph
           title="Multiple Area Graph - d3 cardinal lines"
-          xData="day"
-          yData="count"
+          xDataKey="day"
+          yDataKey="count"
           lineType="cardinal"
           xFormat="%a"
           data={ChartData.areaGraphData2} />
 
         <ScatterPlot
           title="Scatter Plot - Date X axis"
-          xData="day"
-          yData="count"
+          xDataKey="day"
+          yDataKey="count"
           dataType="date"
           trendLine={true}
           data={ChartData.scatterPlotData} />
         <ScatterPlot
           title="Scatter Plot - data X axis, single trend line"
-          xData="x"
-          yData="y"
+          xDataKey="x"
+          yDataKey="y"
           xAxisLabel="X Axis Label"
           yAxisLabel="Y Axis Label"
           trendLine={true}
@@ -117,8 +117,8 @@ class Main extends React.Component {
           dataType="data" />
         <ScatterPlot
           title="Scatter Plot - data X axis, multiple trend line"
-          xData="x"
-          yData="y"
+          xDataKey="x"
+          yDataKey="y"
           xAxisLabel="X Axis Label"
           yAxisLabel="Y Axis Label"
           trendLine={true}

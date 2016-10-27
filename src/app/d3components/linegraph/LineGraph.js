@@ -88,10 +88,10 @@ class LineGraph extends React.Component {
       this.xScale= d3.scale.linear()
         .domain([
           d3.min(this.state.data,function(d){
-            return d[_self.props.xData];
+            return d[_self.props.xDataKey];
           }),
           d3.max(this.state.data,function(d){
-            return d[_self.props.xData];
+            return d[_self.props.xDataKey];
           })
         ])
         .range([0, this.w]);
@@ -114,7 +114,7 @@ class LineGraph extends React.Component {
         .domain(
           // Find min and max axis value
           d3.extent(this.state.data, function (d) {
-            return d[_self.props.xData];
+            return d[_self.props.xDataKey];
           })
         )
         // Set range from 0 to width of container
@@ -132,11 +132,11 @@ class LineGraph extends React.Component {
       .domain([
         // Find min axis value and subtract buffer
         d3.min(this.state.data,function(d){
-          return d[_self.props.yData]-_self.props.yMaxBuffer;
+          return d[_self.props.yDataKey]-_self.props.yMaxBuffer;
         }),
         // Find max axis value and add buffer
         d3.max(this.state.data,function(d){
-          return d[_self.props.yData]+_self.props.yMaxBuffer;
+          return d[_self.props.yDataKey]+_self.props.yMaxBuffer;
         })
       ])
       // Set range from height of container to 0
@@ -145,15 +145,15 @@ class LineGraph extends React.Component {
     // Create line
     this.line = d3.svg.line()
       .x(function (d) {
-        return this.xScale(d[_self.props.xData]);
+        return this.xScale(d[_self.props.xDataKey]);
       })
       .y(function (d) {
-        return this.yScale(d[_self.props.yData]);
+        return this.yScale(d[_self.props.yDataKey]);
       })
       .interpolate(this.props.lineType);
 
     this.dataNest = d3.nest()
-        .key(function(d) { return d[_self.props.valueKey]; })
+        .key(function(d) { return d[_self.props.labelKey]; })
         .entries(this.state.data);
 
     if(this.props.dataPercent == 'y') {
@@ -188,15 +188,15 @@ class LineGraph extends React.Component {
     // Format date for d3 to use
     const parseDate = d3.time.format(this.props.dateFormat).parse;
 
-    for(let i=0;i<data.length;++i) {
+    data.forEach((value, i) => {
       let d = data[i];
       if(this.props.dataType == 'date') {
-        if (typeof d[this.props.xData] === "string") {
-          d[this.props.xData] = parseDate(d[this.props.xData]);
+        if (typeof d[this.props.xDataKey] === "string") {
+          d[this.props.xDataKey] = parseDate(d[this.props.xDataKey]);
         }
         data[i] = d;
       }
-    }
+    });
 
     this.setState({data:data});
   }
@@ -260,8 +260,8 @@ class LineGraph extends React.Component {
             showToolTip={_self.showToolTip}
             hideToolTip={_self.hideToolTip}
             removeFirstAndLast={true}
-            xData={_self.props.xData}
-            yData={_self.props.yData} />
+            xDataKey={_self.props.xDataKey}
+            yDataKey={_self.props.yDataKey} />
           <ToolTip
             tooltip={_self.state.tooltip}
             xValue={_self.props.xToolTipLabel}
@@ -285,17 +285,17 @@ class LineGraph extends React.Component {
             <Axis h={this.h} axis={this.yAxis} axisType="y" />
             <Axis h={this.h} axis={this.xAxis} axisType="x" />
             {this.props.xAxisLabel ?
-              <AxisLabel key={0} h={this.h} w={this.w} axisLabel={this.props.yAxisLabel} axisType="y" />
+              <AxisLabel key={0} h={this.h} w={this.w} axisLabel={this.props.xAxisLabel} axisType="x" />
             : null}
             {this.props.yAxisLabel ?
-              <AxisLabel key={1} h={this.h} w={this.w} axisLabel={this.props.xAxisLabel} axisType="x" />
+              <AxisLabel key={1} h={this.h} w={this.w} axisLabel={this.props.yAxisLabel} axisType="y" />
             : null}
             {lines}
           </g>
         </svg>
         {this.props.legend ?
         <div>
-           <Legend data={_self.state.data} labelKey={_self.props.valueKey} />
+           <Legend data={_self.state.data} labelKey={_self.props.labelKey} />
         </div>
         : null}
       </div>
@@ -315,9 +315,9 @@ LineGraph.propTypes = {
   dataPercent: React.PropTypes.string,
   xFormat: React.PropTypes.string,
   data: React.PropTypes.array.isRequired,
-  valueKey: React.PropTypes.string,
-  xData: React.PropTypes.string.isRequired,
-  yData: React.PropTypes.string.isRequired,
+  labelKey: React.PropTypes.string,
+  xDataKey: React.PropTypes.string.isRequired,
+  yDataKey: React.PropTypes.string.isRequired,
   xAxisLabel: React.PropTypes.string,
   yAxisLabel: React.PropTypes.string,
   xToolTipLabel: React.PropTypes.string,
@@ -332,7 +332,7 @@ LineGraph.propTypes = {
 LineGraph.defaultProps = {
   width: 1920,
   height: 400,
-  valueKey: "label",
+  labelKey: "label",
   dateFormat:'%m-%d-%Y',
   dataType:'date',
   xFormat:'%a %e',

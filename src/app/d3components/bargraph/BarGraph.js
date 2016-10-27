@@ -7,6 +7,7 @@ import d3 from 'd3';
 import Axis from '../utilities/axis';
 import AxisLabel from '../utilities/axisLabel';
 import Grid from '../utilities/grid';
+import Legend from '../utilities/legend';
 
 class BarGraph extends React.Component {
 
@@ -58,13 +59,8 @@ class BarGraph extends React.Component {
     let xLabelHeightOffset = 0;
     let yLabelWidthOffset = 0;
 
-    if (this.props.xAxisLabel) {
-      xLabelHeightOffset = 30;
-    }
-
-    if (this.props.yAxisLabel) {
-      yLabelWidthOffset = 20;
-    }
+    {this.props.xAxisLabel ? xLabelHeightOffset = 30 : null;}
+    {this.props.yAxisLabel ? yLabelWidthOffset = 20 : null;}
 
     // Width of graph
     this.w = this.state.width - (this.props.margin.left + this.props.margin.right + yLabelWidthOffset);
@@ -110,11 +106,8 @@ class BarGraph extends React.Component {
   }
 
   reloadBarData() {
-
     let data = this.props.data;
-
     this.setState({data:data});
-
   }
 
   render(){
@@ -123,7 +116,7 @@ class BarGraph extends React.Component {
 
     const _self = this;
 
-    let bars = _self.stacked.map(function(data,i) {
+    let bars = this.stacked.map(function(data,i) {
       let rects = data.map(function(d,j) {
         return (<rect
           x={_self.xScale(d.x)}
@@ -135,27 +128,8 @@ class BarGraph extends React.Component {
         );
       });
 
-      return (<g key={i}>
-          {rects}
-        </g>
-      );
+      return (<g key={i}>{rects}</g>);
     });
-
-    let title;
-
-    if (this.props.title) {
-      title = <h3>{this.props.title}</h3>;
-    }
-
-    let axisLabels = [];
-
-    if (this.props.xAxisLabel) {
-      axisLabels.push(<AxisLabel key={0} h={this.h} w={this.w} axisLabel={this.props.yAxisLabel} axisType="y" />);
-    }
-
-    if (this.props.yAxisLabel) {
-      axisLabels.push(<AxisLabel key={1} h={this.h} w={this.w} axisLabel={this.props.xAxisLabel} axisType="x" />);
-    }
 
     let customClassName = "";
 
@@ -163,18 +137,30 @@ class BarGraph extends React.Component {
       customClassName = " " + this.props.chartClassName;
     }
 
+    // console.log(_self.state.data);
+
     return (
       <div>
-        {title}
+        {this.props.title ? <h3>{this.props.title}</h3> : null}
         <svg className={"rd3r-chart rd3r-bar-graph" + customClassName} id={this.props.chartId} width={this.state.width} height={this.props.height}>
           <g transform={this.transform}>
             <Grid h={this.h} grid={this.yGrid} gridType="y" />
             <Axis h={this.h} axis={this.yAxis} axisType="y" />
             <Axis h={this.h} axis={this.xAxis} axisType="x" />
-            {axisLabels}
+            {this.props.xAxisLabel ?
+              <AxisLabel key={0} h={this.h} w={this.w} axisLabel={this.props.xAxisLabel} axisType="x" />
+            : null}
+            {this.props.yAxisLabel ?
+              <AxisLabel key={1} h={this.h} w={this.w} axisLabel={this.props.yAxisLabel} axisType="y" />
+            : null}
             {bars}
           </g>
         </svg>
+        {this.props.legend ?
+        <div>
+           <Legend data={_self.state.data} labelKey={_self.props.valueKey} />
+        </div>
+        : null}
       </div>
     );
   }
@@ -188,9 +174,12 @@ BarGraph.propTypes = {
   chartId: React.PropTypes.string,
   chartClassName: React.PropTypes.string,
   data: React.PropTypes.array.isRequired,
+  valueKey: React.PropTypes.string,
+  labelKey: React.PropTypes.string,
   xData: React.PropTypes.string.isRequired,
   xAxisLabel: React.PropTypes.string,
   yAxisLabel: React.PropTypes.string,
+  legend: React.PropTypes.bool,
   keys: React.PropTypes.array.isRequired,
   margin: React.PropTypes.object
 };
@@ -198,6 +187,7 @@ BarGraph.propTypes = {
 BarGraph.defaultProps = {
   width: 1920,
   height: 400,
+  legend: true,
   margin: {
     top: 10,
     right: 40,
