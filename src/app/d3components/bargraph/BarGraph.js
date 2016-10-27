@@ -137,8 +137,6 @@ class BarGraph extends React.Component {
       customClassName = " " + this.props.chartClassName;
     }
 
-    // console.log(_self.state.data);
-
     return (
       <div>
         {this.props.title ? <h3>{this.props.title}</h3> : null}

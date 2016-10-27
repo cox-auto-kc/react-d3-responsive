@@ -21,17 +21,17 @@ class ChartLegend extends React.Component {
 
     const _self = this; 
     const legendItems = [];
-    let temp;
+    let temp = [];
     
     this.props.data.forEach((d, i) => {
-      if (temp != d[_self.props.labelKey]) {
+      if (temp.indexOf(d[_self.props.labelKey]) < 0) {
         legendItems.push(
           <span key={i} style={{display: "inline-block"}}>
             <span style={{ color: this.color(i), paddingRight: '5px' }}>&#9679;</span>
             <span style={{ paddingRight: '15px' }}>{d[_self.props.labelKey]}</span>
           </span>
         );
-        temp = d[_self.props.labelKey];
+        temp.push(d[_self.props.labelKey]);
       }
     });
 
