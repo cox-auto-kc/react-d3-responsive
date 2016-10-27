@@ -17,7 +17,7 @@ class AreaGraph extends React.Component {
     super(props);
     this.showToolTip = this.showToolTip.bind(this);
     this.hideToolTip = this.hideToolTip.bind(this);
-    this.componentWillMount = this.componentWillMount.bind(this);
+    this.updateSize = this.updateSize.bind(this);
     this.state = {
       tooltip: {
         display: false,
@@ -36,10 +36,7 @@ class AreaGraph extends React.Component {
   }
 
   componentWillMount() {
-    const _self = this;
-    window.addEventListener('resize', function() {
-      _self.updateSize();
-    }, true);
+    window.addEventListener('resize', this.updateSize, false);
     this.setState({width: this.props.width});
   }
 
@@ -49,17 +46,19 @@ class AreaGraph extends React.Component {
   }
 
   componentWillUnmount() {
-    const _self = this;
-    window.removeEventListener('resize', function() {
-      _self.updateSize();
-    });
+    window.removeEventListener('resize', this.updateSize, false);
+  }
+
+  updateSize() {
+    let node = ReactDOM.findDOMNode(this);
+    let parentWidth = node.offsetWidth;
+    (parentWidth < this.props.width) ? 
+      this.setState({width:parentWidth}) :
+      this.setState({width:this.props.width});
   }
 
   repaintComponent() {
-    const _self = this;
-    const forceResize = function(){
-        _self.updateSize();
-    };
+    const forceResize = this.updateSize;
     function onRepaint(callback){
       setTimeout(function(){
         window.requestAnimationFrame(callback);
@@ -75,13 +74,8 @@ class AreaGraph extends React.Component {
     let xLabelHeightOffset = 0;
     let yLabelWidthOffset = 0;
 
-    if (this.props.xAxisLabel) {
-      xLabelHeightOffset = 30;
-    }
-
-    if (this.props.yAxisLabel) {
-      yLabelWidthOffset = 20;
-    }
+    {this.props.xAxisLabel ? xLabelHeightOffset = 30 : null;}
+    {this.props.yAxisLabel ? yLabelWidthOffset = 20 : null;}
 
     // Width of graph
     this.w = this.state.width - (this.props.margin.left + this.props.margin.right + yLabelWidthOffset);
@@ -206,16 +200,6 @@ class AreaGraph extends React.Component {
     }
 
     this.setState({data:data});
-  }
-
-  updateSize(){
-    let node = ReactDOM.findDOMNode(this);
-    let parentWidth = node.offsetWidth;
-    if (parentWidth < this.props.width) {
-      this.setState({width:parentWidth});
-    } else {
-      this.setState({width:this.props.width});
-    }
   }
 
   showToolTip(e){

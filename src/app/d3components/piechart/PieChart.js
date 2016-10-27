@@ -10,6 +10,7 @@ class PieChart extends React.Component {
 
   constructor(props) {
     super(props);
+    this.updateSize = this.updateSize.bind(this);
     this.state = {
       width: this.props.width,
       height: this.props.height,
@@ -17,14 +18,11 @@ class PieChart extends React.Component {
     };
   }
 
-  componentWillMount(){
-    const _self = this;
-    window.addEventListener('resize', function() {
-      _self.updateSize();
-    }, true);
-    _self.setState({
-      width: _self.props.width,
-      height: _self.props.height
+  componentWillMount() {
+    window.addEventListener('resize', this.updateSize, false);
+    this.setState({
+      width: this.props.width,
+      height: this.props.height
     });
   }
 
@@ -34,17 +32,25 @@ class PieChart extends React.Component {
   }
 
   componentWillUnmount() {
-    const _self = this;
-    window.removeEventListener('resize', function() {
-      _self.updateSize();
-    });
+    window.removeEventListener('resize', this.updateSize, false);
+  }
+
+  updateSize() {
+    let node = ReactDOM.findDOMNode(this);
+    let parentWidth = node.offsetWidth;
+    (parentWidth < this.props.width) ? 
+      this.setState({
+        width: parentWidth,
+        height: parentWidth
+      }) :
+      this.setState({
+        width: this.props.width,
+        height: this.props.height
+      });
   }
 
   repaintComponent() {
-    const _self = this;
-    const forceResize = function(){
-        _self.updateSize();
-    };
+    const forceResize = this.updateSize;
     function onRepaint(callback){
       setTimeout(function(){
         window.requestAnimationFrame(callback);
@@ -99,22 +105,6 @@ class PieChart extends React.Component {
   reloadBarData() {
     let data = this.props.data;
     this.setState({data:data});
-  }
-
-  updateSize(){
-    let node = ReactDOM.findDOMNode(this);
-    let parentWidth = node.offsetWidth;
-    if (parentWidth < this.props.width) {
-      this.setState({
-        width: parentWidth,
-        height: parentWidth
-      });
-    } else {
-      this.setState({
-        width: this.props.width,
-        height: this.props.height
-      });
-    }
   }
 
   render() {
