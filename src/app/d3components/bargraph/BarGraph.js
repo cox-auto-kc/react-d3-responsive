@@ -54,7 +54,12 @@ class BarGraph extends React.Component {
 
   createChart(_self) {
 
-    this.color = d3.scale.category10();
+    if (this.props.colors) {
+      this.color = d3.scale.ordinal()
+      .range(this.props.colors);
+    } else {
+      this.color = d3.scale.category10();
+    }
 
     let xLabelHeightOffset = 0;
     let yLabelWidthOffset = 0;
@@ -137,6 +142,14 @@ class BarGraph extends React.Component {
       customClassName = " " + this.props.chartClassName;
     }
 
+    const legend = [];
+
+    this.props.keys.forEach((value, i) => {
+      const legendObj = {};
+      legendObj[_self.props.labelKey] = value;
+      legend[i] = legendObj;
+    });
+
     return (
       <div>
         {this.props.title ? <h3>{this.props.title}</h3> : null}
@@ -156,7 +169,7 @@ class BarGraph extends React.Component {
         </svg>
         {this.props.legend ?
         <div>
-           <Legend data={_self.state.data} labelKey={_self.props.valueKey} />
+          <Legend data={legend} labelKey={_self.props.labelKey} colors={_self.color} />
         </div>
         : null}
       </div>
@@ -171,8 +184,8 @@ BarGraph.propTypes = {
   height: React.PropTypes.number,
   chartId: React.PropTypes.string,
   chartClassName: React.PropTypes.string,
+  colors: React.PropTypes.array,
   data: React.PropTypes.array.isRequired,
-  valueKey: React.PropTypes.string,
   labelKey: React.PropTypes.string,
   xData: React.PropTypes.string.isRequired,
   xAxisLabel: React.PropTypes.string,
@@ -186,6 +199,7 @@ BarGraph.defaultProps = {
   width: 1920,
   height: 400,
   legend: true,
+  labelKey: "label",
   margin: {
     top: 10,
     right: 40,

@@ -136,6 +136,7 @@ class Main extends React.Component {
           xData="month"
           xAxisLabel="X Axis Label"
           yAxisLabel="Y Axis Label"
+          colors={["#98abc5", "#7b6888", "#a05d56", "#ff8c00"]}
           keys={['new','old','third','four']}
           data={ChartData.barGraphTestData} />
 

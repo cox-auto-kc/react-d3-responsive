@@ -69,7 +69,12 @@ class AreaGraph extends React.Component {
 
   createChart(_self) {
 
-    this.color = d3.scale.category10();
+    if (this.props.colors) {
+      this.color = d3.scale.ordinal()
+      .range(this.props.colors);
+    } else {
+      this.color = d3.scale.category10();
+    }
 
     let xLabelHeightOffset = 0;
     let yLabelWidthOffset = 0;
@@ -295,7 +300,7 @@ class AreaGraph extends React.Component {
         </svg>
         {this.props.legend ?
         <div>
-           <Legend data={_self.state.data} labelKey={_self.props.labelKey} />
+          <Legend data={_self.state.data} labelKey={_self.props.valueKey} colors={_self.color} />
         </div>
         : null}
       </div>
@@ -305,16 +310,17 @@ class AreaGraph extends React.Component {
 }
 
 AreaGraph.propTypes = {
+  title: React.PropTypes.string,
   width: React.PropTypes.number,
   height: React.PropTypes.number,
   chartId: React.PropTypes.string,
   chartClassName: React.PropTypes.string,
-  title: React.PropTypes.string,
+  colors: React.PropTypes.array,
+  data: React.PropTypes.array.isRequired,
   dateFormat: React.PropTypes.string,
   dataType: React.PropTypes.string,
   dataPercent: React.PropTypes.string,
   xFormat: React.PropTypes.string,
-  data: React.PropTypes.array.isRequired,
   labelKey: React.PropTypes.string,
   xDataKey: React.PropTypes.string.isRequired,
   yDataKey: React.PropTypes.string.isRequired,
