@@ -75,7 +75,7 @@ class BarGraph extends React.Component {
 
     this.stacked = d3.layout.stack()(_self.props.keys.map(function(key){
       return _self.state.data.map(function(d){
-        return {x: d[_self.props.xData], y: d[key] };
+        return {x: d[_self.props.xDataKey], y: d[key] };
       });
     }));
 
@@ -187,7 +187,7 @@ BarGraph.propTypes = {
   colors: React.PropTypes.array,
   data: React.PropTypes.array.isRequired,
   labelKey: React.PropTypes.string,
-  xData: React.PropTypes.string.isRequired,
+  xDataKey: React.PropTypes.string.isRequired,
   xAxisLabel: React.PropTypes.string,
   yAxisLabel: React.PropTypes.string,
   legend: React.PropTypes.bool,

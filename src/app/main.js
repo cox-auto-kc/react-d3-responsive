@@ -128,12 +128,12 @@ class Main extends React.Component {
 
         <BarGraph
           title="Bar Graph"
-          xData="month"
+          xDataKey="month"
           keys={['new','old','third','four']}
           data={ChartData.barGraphTestData} />
         <BarGraph
           title="Bar Graph - With Axis Labels"
-          xData="month"
+          xDataKey="month"
           xAxisLabel="X Axis Label"
           yAxisLabel="Y Axis Label"
           colors={["#98abc5", "#7b6888", "#a05d56", "#ff8c00"]}
