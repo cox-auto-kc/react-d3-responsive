@@ -79,26 +79,15 @@ class BarGraph extends React.Component {
       });
     }));
 
-    // X0 axis scale
-    this.x0Scale = d3.scale.ordinal()
+    // X axis scale
+    this.xScale = d3.scale.ordinal()
         .rangeRoundBands([0, this.w], .3)
         .domain(this.stacked[0].map(function(d) { return d.x; }));
-
-    // X1 axis scale
-    this.x1Scale = d3.scale.ordinal()
-        .rangeRoundBands([0, this.x0Scale.rangeBand()], 0)
-        .domain(this.props.keys.map(function(d) { return d; }));
 
     // Y axis scale
     this.yScale = d3.scale.linear()
         .rangeRound([this.h, 0])
-        .domain([0, d3.max(this.stacked[this.stacked.length - 1], function(d) { 
-            if (_self.props.barChartType == "side") {
-              return d.y;
-            } else {
-              return d.y0 + d.y;
-            }
-          })])
+        .domain([0, d3.max(this.stacked[this.stacked.length - 1], function(d) { return d.y0 + d.y; })])
         .nice();
 
     this.yAxis = d3.svg.axis()
@@ -107,7 +96,7 @@ class BarGraph extends React.Component {
       .ticks(5);
 
     this.xAxis = d3.svg.axis()
-      .scale(this.x0Scale)
+      .scale(this.xScale)
       .orient('bottom')
       .ticks(this.state.data.length);
 
@@ -133,30 +122,16 @@ class BarGraph extends React.Component {
     const _self = this;
 
     let bars = this.stacked.map(function(data,i) {
-      let rects;
-      if (_self.props.barChartType === "side") {
-        rects = data.map(function(d,j) {
-          return (<rect
-            x={_self.x0Scale(d.x)+(i*(_self.x0Scale.rangeBand() / (_self.stacked.length)))}
-            y={_self.h - (_self.yScale(d.y0) - _self.yScale(d.y + d.y0))}
-            fill={_self.color(i)}
-            height={_self.yScale(d.y0) - _self.yScale(d.y + d.y0)}
-            width={_self.x1Scale.rangeBand()}
-            key={j}/>
-          );
-        });
-      } else {
-        rects = data.map(function(d,j) {
-          return (<rect
-            x={_self.x0Scale(d.x)}
-            y={_self.yScale(d.y + d.y0)}
-            fill={_self.color(i)}
-            height={_self.yScale(d.y0) - _self.yScale(d.y + d.y0)}
-            width={_self.x0Scale.rangeBand()}
-            key={j}/>
-          );
-        });
-      }
+      let rects = data.map(function(d,j) {
+        return (<rect
+          x={_self.xScale(d.x)}
+          y={_self.yScale(d.y + d.y0)}
+          fill={_self.color(i)}
+          height={_self.yScale(d.y0) - _self.yScale(d.y + d.y0)}
+          width={_self.xScale.rangeBand()}
+          key={j}/>
+        );
+      });
 
       return (<g key={i}>{rects}</g>);
     });
@@ -210,7 +185,6 @@ BarGraph.propTypes = {
   chartId: React.PropTypes.string,
   chartClassName: React.PropTypes.string,
   colors: React.PropTypes.array,
-  barChartType: React.PropTypes.oneOf(['stack','side']),
   data: React.PropTypes.array.isRequired,
   labelKey: React.PropTypes.string,
   xDataKey: React.PropTypes.string.isRequired,
@@ -224,7 +198,6 @@ BarGraph.propTypes = {
 BarGraph.defaultProps = {
   width: 1920,
   height: 400,
-  barChartType: "side",
   legend: true,
   labelKey: "label",
   margin: {
