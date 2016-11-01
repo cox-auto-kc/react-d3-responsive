@@ -81,19 +81,19 @@ class BarGraph extends React.Component {
 
     // X0 axis scale
     this.x0Scale = d3.scale.ordinal()
-        .rangeRoundBands([0, this.w], .3)
+        .rangeRoundBands([0, this.w], this.props.groupSpacing)
         .domain(this.stacked[0].map(function(d) { return d.x; }));
 
     // X1 axis scale
     this.x1Scale = d3.scale.ordinal()
-        .rangeRoundBands([0, this.x0Scale.rangeBand()], 0)
+        .rangeRoundBands([0, this.x0Scale.rangeBand()], this.props.individualSpacing)
         .domain(this.props.keys.map(function(d) { return d; }));
 
     // Y axis scale
     this.yScale = d3.scale.linear()
         .rangeRound([this.h, 0])
         .domain([0, d3.max(this.stacked[this.stacked.length - 1], function(d) { 
-            if (_self.props.barChartType == "side") {
+            if (_self.props.barChartType === "side") {
               return d.y;
             } else {
               return d.y0 + d.y;
@@ -211,6 +211,8 @@ BarGraph.propTypes = {
   chartClassName: React.PropTypes.string,
   colors: React.PropTypes.array,
   barChartType: React.PropTypes.oneOf(['stack','side']),
+  groupSpacing: React.PropTypes.number,
+  individualSpacing: React.PropTypes.number,
   data: React.PropTypes.array.isRequired,
   labelKey: React.PropTypes.string,
   xDataKey: React.PropTypes.string.isRequired,
@@ -225,6 +227,8 @@ BarGraph.defaultProps = {
   width: 1920,
   height: 400,
   barChartType: "side",
+  groupSpacing: .3,
+  individualSpacing: .5,
   legend: true,
   labelKey: "label",
   margin: {
