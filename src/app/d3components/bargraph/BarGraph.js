@@ -54,12 +54,13 @@ class BarGraph extends React.Component {
 
   stackType() {
     let tempArray = [];
-    for (let i in this.stacked) {
-      for (let j in this.stacked[i]) {
+    const d = this.stacked;
+    for (let i in d) {
+      for (let j in d[i]) {
         if (this.props.barChartType === "side") {
-          tempArray.push(this.stacked[i][j].y);
+          tempArray.push(d[i][j].y);
         } else {
-          tempArray.push(this.stacked[i][j].y + this.stacked[i][j].y0);
+          tempArray.push(d[i][j].y + d[i][j].y0);
         }
       }
     }
