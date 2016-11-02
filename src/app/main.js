@@ -128,6 +128,13 @@ class Main extends React.Component {
 
         <BarGraph
           title="Bar Graph"
+          xDataKey="label"
+          xAxisLabel="X Axis Label"
+          yAxisLabel="Y Axis Label"
+          keys={['yourScore','monthToDate','vinAverage']}
+          data={ChartData.soldRatios} />
+        <BarGraph
+          title="Bar Graph"
           xDataKey="month"
           xAxisLabel="X Axis Label"
           yAxisLabel="Y Axis Label"

@@ -1281,7 +1281,7 @@ module.exports = {
       "new": 184,
       "old": 153,
       "third": 177,
-      "four": 121
+      "four": 500
     },
     {
       "month": "Apr",
@@ -1310,6 +1310,20 @@ module.exports = {
       "old": 135,
       "third": 120,
       "four": 164
+    }
+  ],
+  "soldRatios": [
+    {
+      "label": "One",
+      "yourScore": 70,
+      "monthToDate": 100,
+      "vinAverage": 12
+    },
+    {
+      "label": "Two",
+      "yourScore": 150,
+      "monthToDate": 250,
+      "vinAverage": 12
     }
   ],
   "pieTestData": [

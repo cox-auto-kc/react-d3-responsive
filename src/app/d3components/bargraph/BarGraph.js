@@ -92,13 +92,17 @@ class BarGraph extends React.Component {
     // Y axis scale
     this.yScale = d3.scale.linear()
         .rangeRound([this.h, 0])
-        .domain([0, d3.max(this.stacked[this.stacked.length - 1], function(d) { 
-            if (_self.props.barChartType === "side") {
-              return d.y;
-            } else {
-              return d.y0 + d.y;
+        .domain([0, d3.max(this.stacked, function(d) {
+          if (_self.props.barChartType === "side") {
+            for (let i in d) {
+              return d[i].y;
             }
-          })])
+          } else {
+            if (typeof d[d.length-1] != 'undefined') {
+              return d[d.length-1].y + d[d.length-1].y0;
+            }
+          }
+        })])
         .nice();
 
     this.yAxis = d3.svg.axis()
