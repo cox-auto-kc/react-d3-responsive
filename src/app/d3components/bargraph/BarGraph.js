@@ -52,6 +52,20 @@ class BarGraph extends React.Component {
     onRepaint(forceResize);
   }
 
+  stackType() {
+    let tempArray = [];
+    for (let i in this.stacked) {
+      for (let j in this.stacked[i]) {
+        if (this.props.barChartType === "side") {
+          tempArray.push(this.stacked[i][j].y);
+        } else {
+          tempArray.push(this.stacked[i][j].y + this.stacked[i][j].y0);
+        }
+      }
+    }
+    return tempArray;
+  }
+
   createChart(_self) {
 
     if (this.props.colors) {
@@ -92,17 +106,7 @@ class BarGraph extends React.Component {
     // Y axis scale
     this.yScale = d3.scale.linear()
         .rangeRound([this.h, 0])
-        .domain([0, d3.max(this.stacked, function(d) {
-          if (_self.props.barChartType === "side") {
-            for (let i in d) {
-              return d[i].y;
-            }
-          } else {
-            if (typeof d[d.length-1] != 'undefined') {
-              return d[d.length-1].y + d[d.length-1].y0;
-            }
-          }
-        })])
+        .domain([0, d3.max(this.stackType())])
         .nice();
 
     this.yAxis = d3.svg.axis()

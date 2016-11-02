@@ -136,8 +136,6 @@ class Main extends React.Component {
         <BarGraph
           title="Bar Graph"
           xDataKey="month"
-          xAxisLabel="X Axis Label"
-          yAxisLabel="Y Axis Label"
           keys={['new','old','third','four']}
           data={ChartData.barGraphTestData} />
         <BarGraph

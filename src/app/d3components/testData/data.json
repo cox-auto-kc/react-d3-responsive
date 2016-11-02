@@ -1281,7 +1281,7 @@ module.exports = {
       "new": 184,
       "old": 153,
       "third": 177,
-      "four": 500
+      "four": 16
     },
     {
       "month": "Apr",
