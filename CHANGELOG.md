@@ -2,6 +2,7 @@
 ###### 02 NOV 2016
 - Choose bar chart type (stack or side) 
 - Bar chart widths of bars props
+- Code Refinement
 
 ###0.1.3:
 ###### 25 OCT 2016
