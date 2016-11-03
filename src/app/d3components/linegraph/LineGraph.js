@@ -137,18 +137,18 @@ class LineGraph extends React.Component {
       .domain([
         // Find min axis value and subtract buffer
         d3.min(this.state.data,function(d){
-          if (!_self.props.yMin) {
-            return d[_self.props.yDataKey]-_self.props.yMaxBuffer;
-          } else {
+          if (typeof _self.props.yMin === "number") {
             return _self.props.yMin;
+          } else {
+            return d[_self.props.yDataKey]-_self.props.yMaxBuffer;
           }
         }),
         // Find max axis value and add buffer
         d3.max(this.state.data,function(d){
-          if (!_self.props.yMax) {
-            return d[_self.props.yDataKey]+_self.props.yMaxBuffer;
-          } else {
+          if (typeof _self.props.yMax === "number") {
             return _self.props.yMax;
+          } else {
+            return d[_self.props.yDataKey]+_self.props.yMaxBuffer;
           }
         })
       ])

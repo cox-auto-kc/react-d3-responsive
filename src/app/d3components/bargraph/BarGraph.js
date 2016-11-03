@@ -54,7 +54,9 @@ class BarGraph extends React.Component {
 
   stackType() {
     let tempArray = [];
-    if (!this.props.yMax) {
+    if (typeof this.props.yMax === "number") {
+      tempArray.push(this.props.yMax);
+    } else {
       const d = this.stacked;
       for (let i in d) {
         for (let j in d[i]) {
@@ -65,8 +67,6 @@ class BarGraph extends React.Component {
           }
         }
       }
-    } else {
-      tempArray.push(this.props.yMax);
     }
     return tempArray;
   }
