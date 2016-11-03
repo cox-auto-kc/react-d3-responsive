@@ -1,3 +1,14 @@
+###0.1.4:
+###### 02 NOV 2016
+- Choose bar chart type (stack or side) 
+- Bar chart widths of bars props
+- Code Refinement
+
+###0.1.3:
+###### 25 OCT 2016
+- Unmounting fix for resizing function on all charts and graphs
+- Unmounting fix for resizing function on trend line
+
 ###0.1.2:
 ###### 19 OCT 2016
 - Added Custom Key Value Prop to LineGraph Component

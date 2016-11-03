@@ -17,7 +17,7 @@ class AreaGraph extends React.Component {
     super(props);
     this.showToolTip = this.showToolTip.bind(this);
     this.hideToolTip = this.hideToolTip.bind(this);
-    this.componentWillMount = this.componentWillMount.bind(this);
+    this.updateSize = this.updateSize.bind(this);
     this.state = {
       tooltip: {
         display: false,
@@ -36,10 +36,7 @@ class AreaGraph extends React.Component {
   }
 
   componentWillMount() {
-    const _self = this;
-    window.addEventListener('resize', function() {
-      _self.updateSize();
-    }, true);
+    window.addEventListener('resize', this.updateSize, false);
     this.setState({width: this.props.width});
   }
 
@@ -49,17 +46,19 @@ class AreaGraph extends React.Component {
   }
 
   componentWillUnmount() {
-    const _self = this;
-    window.removeEventListener('resize', function() {
-      _self.updateSize();
-    });
+    window.removeEventListener('resize', this.updateSize, false);
+  }
+
+  updateSize() {
+    let node = ReactDOM.findDOMNode(this);
+    let parentWidth = node.offsetWidth;
+    (parentWidth < this.props.width) ? 
+      this.setState({width:parentWidth}) :
+      this.setState({width:this.props.width});
   }
 
   repaintComponent() {
-    const _self = this;
-    const forceResize = function(){
-        _self.updateSize();
-    };
+    const forceResize = this.updateSize;
     function onRepaint(callback){
       setTimeout(function(){
         window.requestAnimationFrame(callback);
@@ -70,18 +69,18 @@ class AreaGraph extends React.Component {
 
   createChart(_self) {
 
-    this.color = d3.scale.category10();
+    if (this.props.colors) {
+      this.color = d3.scale.ordinal()
+      .range(this.props.colors);
+    } else {
+      this.color = d3.scale.category10();
+    }
 
     let xLabelHeightOffset = 0;
     let yLabelWidthOffset = 0;
 
-    if (this.props.xAxisLabel) {
-      xLabelHeightOffset = 30;
-    }
-
-    if (this.props.yAxisLabel) {
-      yLabelWidthOffset = 20;
-    }
+    {this.props.xAxisLabel ? xLabelHeightOffset = 30 : null;}
+    {this.props.yAxisLabel ? yLabelWidthOffset = 20 : null;}
 
     // Width of graph
     this.w = this.state.width - (this.props.margin.left + this.props.margin.right + yLabelWidthOffset);
@@ -94,10 +93,10 @@ class AreaGraph extends React.Component {
       this.xScale= d3.scale.linear()
         .domain([
           d3.min(this.state.data,function(d){
-            return d[_self.props.xData];
+            return d[_self.props.xDataKey];
           }),
           d3.max(this.state.data,function(d){
-            return d[_self.props.xData];
+            return d[_self.props.xDataKey];
           })
         ])
         .range([0, this.w]);
@@ -120,7 +119,7 @@ class AreaGraph extends React.Component {
         .domain(
           // Find min and max axis value
           d3.extent(this.state.data, function (d) {
-            return d[_self.props.xData];
+            return d[_self.props.xDataKey];
           })
         )
         // Set range from 0 to width of container
@@ -138,11 +137,11 @@ class AreaGraph extends React.Component {
       .domain([
         // Find min axis value and subtract buffer
         d3.min(this.state.data,function(d){
-          return d[_self.props.yData]-_self.props.yMaxBuffer;
+          return d[_self.props.yDataKey]-_self.props.yMaxBuffer;
         }),
         // Find max axis value and add buffer
         d3.max(this.state.data,function(d){
-          return d[_self.props.yData]+_self.props.yMaxBuffer;
+          return d[_self.props.yDataKey]+_self.props.yMaxBuffer;
         })
       ])
       // Set range from height of container to 0
@@ -151,16 +150,16 @@ class AreaGraph extends React.Component {
     // Create area
     this.area = d3.svg.area()
       .x(function (d) {
-        return this.xScale(d[_self.props.xData]);
+        return this.xScale(d[_self.props.xDataKey]);
       })
       .y0(this.h)
       .y1(function (d) {
-        return this.yScale(d[_self.props.yData]);
+        return this.yScale(d[_self.props.yDataKey]);
       })
       .interpolate(this.props.lineType);
 
     this.dataNest = d3.nest()
-        .key(function(d) {return d.type;})
+        .key(function(d) { return d[_self.props.labelKey]; })
         .entries(this.state.data);
 
     if(this.props.dataPercent == 'y') {
@@ -195,27 +194,17 @@ class AreaGraph extends React.Component {
     // Format date for d3 to use
     const parseDate = d3.time.format(this.props.dateFormat).parse;
 
-    for(let i=0;i<data.length;++i) {
+    data.forEach((value, i) => {
       let d = data[i];
       if(this.props.dataType == 'date') {
-        if (typeof d[this.props.xData] === "string") {
-          d[this.props.xData] = parseDate(d[this.props.xData]);
+        if (typeof d[this.props.xDataKey] === "string") {
+          d[this.props.xDataKey] = parseDate(d[this.props.xDataKey]);
         }
         data[i] = d;
       }
-    }
+    });
 
     this.setState({data:data});
-  }
-
-  updateSize(){
-    let node = ReactDOM.findDOMNode(this);
-    let parentWidth = node.offsetWidth;
-    if (parentWidth < this.props.width) {
-      this.setState({width:parentWidth});
-    } else {
-      this.setState({width:this.props.width});
-    }
   }
 
   showToolTip(e){
@@ -276,8 +265,8 @@ class AreaGraph extends React.Component {
             showToolTip={_self.showToolTip}
             hideToolTip={_self.hideToolTip}
             removeFirstAndLast={true}
-            xData={_self.props.xData}
-            yData={_self.props.yData} />
+            xDataKey={_self.props.xDataKey}
+            yDataKey={_self.props.yDataKey} />
           <ToolTip
             tooltip={_self.state.tooltip}
             xValue={_self.props.xToolTipLabel}
@@ -285,28 +274,6 @@ class AreaGraph extends React.Component {
         </g>
       );
     });
-
-    let title;
-
-    if (this.props.title) {
-      title = <h3>{this.props.title}</h3>;
-    }
-
-    let axisLabels = [];
-
-    if (this.props.xAxisLabel) {
-      axisLabels.push(<AxisLabel key={0} h={this.h} w={this.w} axisLabel={this.props.yAxisLabel} axisType="y" />);
-    }
-
-    if (this.props.yAxisLabel) {
-      axisLabels.push(<AxisLabel key={1} h={this.h} w={this.w} axisLabel={this.props.xAxisLabel} axisType="x" />);
-    }
-
-    let legend;
-
-    if (this.props.legend) {
-      legend = <Legend height={this.h} width={this.state.width} data={_self.state.data} />;
-    }
 
     let customClassName = "";
 
@@ -316,19 +283,18 @@ class AreaGraph extends React.Component {
 
     return (
       <div>
-        {title}
+        {this.props.title && <h3>{this.props.title}</h3>}
         <svg className={"rd3r-chart rd3r-area-graph" + customClassName} id={this.props.chartId} width={this.state.width} height={this.props.height}>
           <g transform={this.transform}>
             <Grid h={this.h} grid={this.yGrid} gridType="y" />
             <Axis h={this.h} axis={this.yAxis} axisType="y" />
             <Axis h={this.h} axis={this.xAxis} axisType="x" />
-            {axisLabels}
+            {this.props.xAxisLabel && <AxisLabel key={0} h={this.h} w={this.w} axisLabel={this.props.xAxisLabel} axisType="x" />}
+            {this.props.yAxisLabel && <AxisLabel key={1} h={this.h} w={this.w} axisLabel={this.props.yAxisLabel} axisType="y" />}
             {lines}
           </g>
         </svg>
-        <div>
-          {legend}
-        </div>
+        {this.props.legend && <Legend data={this.state.data} labelKey={this.props.labelKey} colors={this.color} />}
       </div>
     );
   }
@@ -341,13 +307,15 @@ AreaGraph.propTypes = {
   height: React.PropTypes.number,
   chartId: React.PropTypes.string,
   chartClassName: React.PropTypes.string,
+  colors: React.PropTypes.array,
+  data: React.PropTypes.array.isRequired,
   dateFormat: React.PropTypes.string,
   dataType: React.PropTypes.string,
   dataPercent: React.PropTypes.string,
   xFormat: React.PropTypes.string,
-  data: React.PropTypes.array.isRequired,
-  xData: React.PropTypes.string.isRequired,
-  yData: React.PropTypes.string.isRequired,
+  labelKey: React.PropTypes.string,
+  xDataKey: React.PropTypes.string.isRequired,
+  yDataKey: React.PropTypes.string.isRequired,
   xAxisLabel: React.PropTypes.string,
   yAxisLabel: React.PropTypes.string,
   xToolTipLabel: React.PropTypes.string,
@@ -362,6 +330,7 @@ AreaGraph.propTypes = {
 AreaGraph.defaultProps = {
   width: 1920,
   height: 400,
+  labelKey: "label",
   dateFormat:'%m-%d-%Y',
   dataType:'date',
   xFormat:'%a %e',

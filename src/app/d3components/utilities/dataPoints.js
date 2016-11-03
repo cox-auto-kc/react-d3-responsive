@@ -28,25 +28,25 @@ class Dots extends React.Component {
 
     let circles = data.map(function(d,i) {
 
-      let xDatas = d[_self.props.xData];
+      let xDataKeys = d[_self.props.xDataKey];
 
-      if (!((new Date(d[_self.props.xData]) !== "Invalid Date" && !isNaN(new Date(d[_self.props.xData])))))
-        xDatas = d3.time.format(_self.props.format)(d[_self.props.xData]);
+      if (!((new Date(d[_self.props.xDataKey]) !== "Invalid Date" && !isNaN(new Date(d[_self.props.xDataKey])))))
+        xDataKeys = d3.time.format(_self.props.format)(d[_self.props.xDataKey]);
 
       return (
         <circle
           className="data-plot-point"
           r={_self.props.r}
-          cx={_self.props.x(d[_self.props.xData])}
-          cy={_self.props.y(d[_self.props.yData])}
+          cx={_self.props.x(d[_self.props.xDataKey])}
+          cy={_self.props.y(d[_self.props.yDataKey])}
           fill={_self.props.fill}
           stroke={_self.props.stroke}
           strokeWidth={_self.props.strokeWidth}
           key={i}
           onMouseOver={_self.props.showToolTip}
           onMouseOut={_self.props.hideToolTip}
-          data-key={xDatas}
-          data-value={d[_self.props.yData]} />
+          data-key={xDataKeys}
+          data-value={d[_self.props.yDataKey]} />
       );
     });
 
@@ -64,8 +64,8 @@ Dots.propTypes = {
   stroke: React.PropTypes.string,
   strokeWidth: React.PropTypes.number,
   r: React.PropTypes.number,
-  xData: React.PropTypes.string.isRequired,
-  yData: React.PropTypes.string.isRequired,
+  xDataKey: React.PropTypes.string.isRequired,
+  yDataKey: React.PropTypes.string.isRequired,
   format: React.PropTypes.string,
   removeFirstAndLast: React.PropTypes.bool
 };

@@ -10,6 +10,7 @@ class PieChart extends React.Component {
 
   constructor(props) {
     super(props);
+    this.updateSize = this.updateSize.bind(this);
     this.state = {
       width: this.props.width,
       height: this.props.height,
@@ -17,14 +18,11 @@ class PieChart extends React.Component {
     };
   }
 
-  componentWillMount(){
-    const _self = this;
-    window.addEventListener('resize', function() {
-      _self.updateSize();
-    }, true);
-    _self.setState({
-      width: _self.props.width,
-      height: _self.props.height
+  componentWillMount() {
+    window.addEventListener('resize', this.updateSize, false);
+    this.setState({
+      width: this.props.width,
+      height: this.props.height
     });
   }
 
@@ -34,17 +32,25 @@ class PieChart extends React.Component {
   }
 
   componentWillUnmount() {
-    const _self = this;
-    window.removeEventListener('resize', function() {
-      _self.updateSize();
-    });
+    window.removeEventListener('resize', this.updateSize, false);
+  }
+
+  updateSize() {
+    let node = ReactDOM.findDOMNode(this);
+    let parentWidth = node.offsetWidth;
+    (parentWidth < this.props.width) ? 
+      this.setState({
+        width: parentWidth,
+        height: parentWidth
+      }) :
+      this.setState({
+        width: this.props.width,
+        height: this.props.height
+      });
   }
 
   repaintComponent() {
-    const _self = this;
-    const forceResize = function(){
-        _self.updateSize();
-    };
+    const forceResize = this.updateSize;
     function onRepaint(callback){
       setTimeout(function(){
         window.requestAnimationFrame(callback);
@@ -55,7 +61,12 @@ class PieChart extends React.Component {
 
   createChart(_self) {
 
-    this.color = d3.scale.category10();
+    if (this.props.colors) {
+      this.color = d3.scale.ordinal()
+      .range(this.props.colors);
+    } else {
+      this.color = d3.scale.category10();
+    }
 
     let pieHeight = _self.state.height;
     let pieWidth;
@@ -101,22 +112,6 @@ class PieChart extends React.Component {
     this.setState({data:data});
   }
 
-  updateSize(){
-    let node = ReactDOM.findDOMNode(this);
-    let parentWidth = node.offsetWidth;
-    if (parentWidth < this.props.width) {
-      this.setState({
-        width: parentWidth,
-        height: parentWidth
-      });
-    } else {
-      this.setState({
-        width: this.props.width,
-        height: this.props.height
-      });
-    }
-  }
-
   render() {
     this.createChart(this);
 
@@ -146,21 +141,21 @@ class PieChart extends React.Component {
       );
     });
 
+    let customClassName = "";
+
+    if(this.props.chartClassName){
+      customClassName = " " + this.props.chartClassName;
+    }
+
     return(
       <div>
-        {_self.props.title ? 
-        <h3>{_self.props.title}</h3>
-        : null}
-        <svg id={this.props.chartId} width={this.state.width} height={this.state.height}>
+        {this.props.title && <h3>{this.props.title}</h3>}
+        <svg className={"rd3r-chart rd3r-pie-chart" + customClassName} id={this.props.chartId} width={this.state.width} height={this.state.height}>
           <g transform={this.transform}>
             {wedge}
           </g>
         </svg>
-        {_self.props.legend ? 
-        <div>
-          <Legend data={_self.state.data} labelKey={_self.props.labelKey} />
-        </div>
-        : null}
+        {this.props.legend && <Legend data={this.state.data} labelKey={this.props.labelKey} colors={this.color} />}
       </div>
     );
   }
@@ -168,10 +163,12 @@ class PieChart extends React.Component {
 }
 
 PieChart.propTypes = {
+  title: React.PropTypes.string,
   width: React.PropTypes.number,
   height: React.PropTypes.number,
   chartId: React.PropTypes.string,
-  title: React.PropTypes.string,
+  chartClassName: React.PropTypes.string,
+  colors: React.PropTypes.array,
   data: React.PropTypes.array,
   valueKey: React.PropTypes.string,
   labelKey: React.PropTypes.string,

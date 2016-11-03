@@ -7,12 +7,13 @@ import d3 from 'd3';
 import Axis from '../utilities/axis';
 import AxisLabel from '../utilities/axisLabel';
 import Grid from '../utilities/grid';
+import Legend from '../utilities/legend';
 
 class BarGraph extends React.Component {
 
   constructor(props) {
     super(props);
-    this.componentWillMount = this.componentWillMount.bind(this);
+    this.updateSize = this.updateSize.bind(this);
     this.state = {
       width: this.props.width,
       data: []
@@ -20,10 +21,7 @@ class BarGraph extends React.Component {
   }
 
   componentWillMount() {
-    const _self = this;
-    window.addEventListener('resize', function() {
-      _self.updateSize();
-    }, true);
+    window.addEventListener('resize', this.updateSize, false);
     this.setState({width: this.props.width});
   }
 
@@ -33,17 +31,19 @@ class BarGraph extends React.Component {
   }
 
   componentWillUnmount() {
-    const _self = this;
-    window.removeEventListener('resize', function() {
-      _self.updateSize();
-    });
+    window.removeEventListener('resize', this.updateSize, false);
+  }
+
+  updateSize() {
+    let node = ReactDOM.findDOMNode(this);
+    let parentWidth = node.offsetWidth;
+    (parentWidth < this.props.width) ? 
+      this.setState({width:parentWidth}) :
+      this.setState({width:this.props.width});
   }
 
   repaintComponent() {
-    const _self = this;
-    const forceResize = function(){
-        _self.updateSize();
-    };
+    const forceResize = this.updateSize;
     function onRepaint(callback){
       setTimeout(function(){
         window.requestAnimationFrame(callback);
@@ -52,20 +52,35 @@ class BarGraph extends React.Component {
     onRepaint(forceResize);
   }
 
+  stackType() {
+    let tempArray = [];
+    const d = this.stacked;
+    for (let i in d) {
+      for (let j in d[i]) {
+        if (this.props.barChartType === "side") {
+          tempArray.push(d[i][j].y);
+        } else {
+          tempArray.push(d[i][j].y + d[i][j].y0);
+        }
+      }
+    }
+    return tempArray;
+  }
+
   createChart(_self) {
 
-    this.color = d3.scale.category10();
+    if (this.props.colors) {
+      this.color = d3.scale.ordinal()
+      .range(this.props.colors);
+    } else {
+      this.color = d3.scale.category10();
+    }
 
     let xLabelHeightOffset = 0;
     let yLabelWidthOffset = 0;
 
-    if (this.props.xAxisLabel) {
-      xLabelHeightOffset = 30;
-    }
-
-    if (this.props.yAxisLabel) {
-      yLabelWidthOffset = 20;
-    }
+    {this.props.xAxisLabel ? xLabelHeightOffset = 30 : null;}
+    {this.props.yAxisLabel ? yLabelWidthOffset = 20 : null;}
 
     // Width of graph
     this.w = this.state.width - (this.props.margin.left + this.props.margin.right + yLabelWidthOffset);
@@ -75,19 +90,24 @@ class BarGraph extends React.Component {
 
     this.stacked = d3.layout.stack()(_self.props.keys.map(function(key){
       return _self.state.data.map(function(d){
-        return {x: d[_self.props.xData], y: d[key] };
+        return {x: d[_self.props.xDataKey], y: d[key] };
       });
     }));
 
-    // X axis scale
-    this.xScale = d3.scale.ordinal()
-        .rangeRoundBands([0, this.w], .3)
+    // X0 axis scale
+    this.x0Scale = d3.scale.ordinal()
+        .rangeRoundBands([0, this.w], this.props.groupSpacing)
         .domain(this.stacked[0].map(function(d) { return d.x; }));
+
+    // X1 axis scale
+    this.x1Scale = d3.scale.ordinal()
+        .rangeRoundBands([0, this.x0Scale.rangeBand()], this.props.individualSpacing)
+        .domain(this.props.keys.map(function(d) { return d; }));
 
     // Y axis scale
     this.yScale = d3.scale.linear()
         .rangeRound([this.h, 0])
-        .domain([0, d3.max(this.stacked[this.stacked.length - 1], function(d) { return d.y0 + d.y; })])
+        .domain([0, d3.max(this.stackType())])
         .nice();
 
     this.yAxis = d3.svg.axis()
@@ -96,7 +116,7 @@ class BarGraph extends React.Component {
       .ticks(5);
 
     this.xAxis = d3.svg.axis()
-      .scale(this.xScale)
+      .scale(this.x0Scale)
       .orient('bottom')
       .ticks(this.state.data.length);
 
@@ -111,21 +131,8 @@ class BarGraph extends React.Component {
   }
 
   reloadBarData() {
-
     let data = this.props.data;
-
     this.setState({data:data});
-
-  }
-
-  updateSize() {
-    let node = ReactDOM.findDOMNode(this);
-    let parentWidth = node.offsetWidth;
-    if (parentWidth < this.props.width) {
-      this.setState({width:parentWidth});
-    } else {
-      this.setState({width:this.props.width});
-    }
   }
 
   render(){
@@ -134,39 +141,34 @@ class BarGraph extends React.Component {
 
     const _self = this;
 
-    let bars = _self.stacked.map(function(data,i) {
-      let rects = data.map(function(d,j) {
-        return (<rect
-          x={_self.xScale(d.x)}
-          y={_self.yScale(d.y + d.y0)}
-          fill={_self.color(i)}
-          height={_self.yScale(d.y0) - _self.yScale(d.y + d.y0)}
-          width={_self.xScale.rangeBand()}
-          key={j}/>
-        );
-      });
+    let bars = this.stacked.map(function(data,i) {
+      let rects;
+      if (_self.props.barChartType === "side") {
+        rects = data.map(function(d,j) {
+          return (<rect
+            x={_self.x0Scale(d.x)+(i*(_self.x0Scale.rangeBand() / (_self.stacked.length)))}
+            y={_self.h - (_self.yScale(d.y0) - _self.yScale(d.y + d.y0))}
+            fill={_self.color(i)}
+            height={_self.yScale(d.y0) - _self.yScale(d.y + d.y0)}
+            width={_self.x1Scale.rangeBand()}
+            key={j}/>
+          );
+        });
+      } else {
+        rects = data.map(function(d,j) {
+          return (<rect
+            x={_self.x0Scale(d.x)}
+            y={_self.yScale(d.y + d.y0)}
+            fill={_self.color(i)}
+            height={_self.yScale(d.y0) - _self.yScale(d.y + d.y0)}
+            width={_self.x0Scale.rangeBand()}
+            key={j}/>
+          );
+        });
+      }
 
-      return (<g key={i}>
-          {rects}
-        </g>
-      );
+      return (<g key={i}>{rects}</g>);
     });
-
-    let title;
-
-    if (this.props.title) {
-      title = <h3>{this.props.title}</h3>;
-    }
-
-    let axisLabels = [];
-
-    if (this.props.xAxisLabel) {
-      axisLabels.push(<AxisLabel key={0} h={this.h} w={this.w} axisLabel={this.props.yAxisLabel} axisType="y" />);
-    }
-
-    if (this.props.yAxisLabel) {
-      axisLabels.push(<AxisLabel key={1} h={this.h} w={this.w} axisLabel={this.props.xAxisLabel} axisType="x" />);
-    }
 
     let customClassName = "";
 
@@ -174,18 +176,28 @@ class BarGraph extends React.Component {
       customClassName = " " + this.props.chartClassName;
     }
 
+    const legend = [];
+
+    this.props.keys.forEach((value, i) => {
+      const legendObj = {};
+      legendObj[_self.props.labelKey] = value;
+      legend[i] = legendObj;
+    });
+
     return (
       <div>
-        {title}
+        {this.props.title && <h3>{this.props.title}</h3>}
         <svg className={"rd3r-chart rd3r-bar-graph" + customClassName} id={this.props.chartId} width={this.state.width} height={this.props.height}>
           <g transform={this.transform}>
             <Grid h={this.h} grid={this.yGrid} gridType="y" />
             <Axis h={this.h} axis={this.yAxis} axisType="y" />
             <Axis h={this.h} axis={this.xAxis} axisType="x" />
-            {axisLabels}
+            {this.props.xAxisLabel && <AxisLabel key={0} h={this.h} w={this.w} axisLabel={this.props.xAxisLabel} axisType="x" />}
+            {this.props.yAxisLabel && <AxisLabel key={1} h={this.h} w={this.w} axisLabel={this.props.yAxisLabel} axisType="y" />}
             {bars}
           </g>
         </svg>
+        {this.props.legend && <Legend data={legend} labelKey={this.props.labelKey} colors={this.color} />}
       </div>
     );
   }
@@ -198,10 +210,16 @@ BarGraph.propTypes = {
   height: React.PropTypes.number,
   chartId: React.PropTypes.string,
   chartClassName: React.PropTypes.string,
+  colors: React.PropTypes.array,
+  barChartType: React.PropTypes.oneOf(['stack','side']),
+  groupSpacing: React.PropTypes.number,
+  individualSpacing: React.PropTypes.number,
   data: React.PropTypes.array.isRequired,
-  xData: React.PropTypes.string.isRequired,
+  labelKey: React.PropTypes.string,
+  xDataKey: React.PropTypes.string.isRequired,
   xAxisLabel: React.PropTypes.string,
   yAxisLabel: React.PropTypes.string,
+  legend: React.PropTypes.bool,
   keys: React.PropTypes.array.isRequired,
   margin: React.PropTypes.object
 };
@@ -209,6 +227,11 @@ BarGraph.propTypes = {
 BarGraph.defaultProps = {
   width: 1920,
   height: 400,
+  barChartType: "stack",
+  groupSpacing: .3,
+  individualSpacing: .5,
+  legend: true,
+  labelKey: "label",
   margin: {
     top: 10,
     right: 40,
