@@ -61,7 +61,12 @@ class PieChart extends React.Component {
 
   createChart(_self) {
 
-    this.color = d3.scale.category10();
+    if (this.props.colors) {
+      this.color = d3.scale.ordinal()
+      .range(this.props.colors);
+    } else {
+      this.color = d3.scale.category10();
+    }
 
     let pieHeight = _self.state.height;
     let pieWidth;
@@ -136,21 +141,21 @@ class PieChart extends React.Component {
       );
     });
 
+    let customClassName = "";
+
+    if(this.props.chartClassName){
+      customClassName = " " + this.props.chartClassName;
+    }
+
     return(
       <div>
-        {_self.props.title ? 
-        <h3>{_self.props.title}</h3>
-        : null}
-        <svg id={this.props.chartId} width={this.state.width} height={this.state.height}>
+        {this.props.title && <h3>{this.props.title}</h3>}
+        <svg className={"rd3r-chart rd3r-pie-chart" + customClassName} id={this.props.chartId} width={this.state.width} height={this.state.height}>
           <g transform={this.transform}>
             {wedge}
           </g>
         </svg>
-        {_self.props.legend ? 
-        <div>
-          <Legend data={_self.state.data} labelKey={_self.props.labelKey} />
-        </div>
-        : null}
+        {this.props.legend && <Legend data={this.state.data} labelKey={this.props.labelKey} colors={this.color} />}
       </div>
     );
   }
@@ -158,10 +163,12 @@ class PieChart extends React.Component {
 }
 
 PieChart.propTypes = {
+  title: React.PropTypes.string,
   width: React.PropTypes.number,
   height: React.PropTypes.number,
   chartId: React.PropTypes.string,
-  title: React.PropTypes.string,
+  chartClassName: React.PropTypes.string,
+  colors: React.PropTypes.array,
   data: React.PropTypes.array,
   valueKey: React.PropTypes.string,
   labelKey: React.PropTypes.string,

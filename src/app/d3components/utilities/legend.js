@@ -1,7 +1,6 @@
 'use strict';
 
 import React from 'react';
-import d3 from 'd3';
 
 class ChartLegend extends React.Component {
 
@@ -9,32 +8,22 @@ class ChartLegend extends React.Component {
     super(props);
   }
 
-  createChart(_self) {
-
-    _self.color = d3.scale.category10();
-
-  }
-
   render(){
-
-    this.createChart(this);
-
     const _self = this; 
     const legendItems = [];
-    let temp;
+    const legend = [];
     
     this.props.data.forEach((d, i) => {
-      if (temp != d[_self.props.labelKey]) {
+      if (legend.indexOf(d[_self.props.labelKey]) < 0) {
         legendItems.push(
           <span key={i} style={{display: "inline-block"}}>
-            <span style={{ color: this.color(i), paddingRight: '5px' }}>&#9679;</span>
+            <span style={{ color: _self.props.colors(legend.length), paddingRight: '5px' }}>&#9679;</span>
             <span style={{ paddingRight: '15px' }}>{d[_self.props.labelKey]}</span>
           </span>
         );
-        temp = d[_self.props.labelKey];
+        legend.push(d[_self.props.labelKey]);
       }
     });
-
     return (
       <div className="chart-legend">
         {legendItems}
@@ -45,11 +34,12 @@ class ChartLegend extends React.Component {
 
 ChartLegend.propTypes = {
   data: React.PropTypes.array,
-  labelKey: React.PropTypes.string
+  labelKey: React.PropTypes.string,
+  colors: React.PropTypes.func
 };
 
 ChartLegend.defaultProps = {
-  labelKey: "type"
+  labelKey: "label"
 };
 
 export default ChartLegend;

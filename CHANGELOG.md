@@ -1,3 +1,9 @@
+###0.1.4:
+###### 02 NOV 2016
+- Choose bar chart type (stack or side) 
+- Bar chart widths of bars props
+- Code Refinement
+
 ###0.1.3:
 ###### 25 OCT 2016
 - Unmounting fix for resizing function on all charts and graphs
