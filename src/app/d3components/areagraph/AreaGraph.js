@@ -283,26 +283,18 @@ class AreaGraph extends React.Component {
 
     return (
       <div>
-        {this.props.title ? <h3>{this.props.title}</h3> : null}
+        {this.props.title && <h3>{this.props.title}</h3>}
         <svg className={"rd3r-chart rd3r-area-graph" + customClassName} id={this.props.chartId} width={this.state.width} height={this.props.height}>
           <g transform={this.transform}>
             <Grid h={this.h} grid={this.yGrid} gridType="y" />
             <Axis h={this.h} axis={this.yAxis} axisType="y" />
             <Axis h={this.h} axis={this.xAxis} axisType="x" />
-            {this.props.xAxisLabel ?
-              <AxisLabel key={0} h={this.h} w={this.w} axisLabel={this.props.xAxisLabel} axisType="x" />
-            : null}
-            {this.props.yAxisLabel ?
-              <AxisLabel key={1} h={this.h} w={this.w} axisLabel={this.props.yAxisLabel} axisType="y" />
-            : null}
+            {this.props.xAxisLabel && <AxisLabel key={0} h={this.h} w={this.w} axisLabel={this.props.xAxisLabel} axisType="x" />}
+            {this.props.yAxisLabel && <AxisLabel key={1} h={this.h} w={this.w} axisLabel={this.props.yAxisLabel} axisType="y" />}
             {lines}
           </g>
         </svg>
-        {this.props.legend ?
-        <div>
-          <Legend data={_self.state.data} labelKey={_self.props.valueKey} colors={_self.color} />
-        </div>
-        : null}
+        {this.props.legend && <Legend data={this.state.data} labelKey={this.props.labelKey} colors={this.color} />}
       </div>
     );
   }

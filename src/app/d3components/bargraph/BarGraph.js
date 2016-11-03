@@ -186,26 +186,18 @@ class BarGraph extends React.Component {
 
     return (
       <div>
-        {this.props.title ? <h3>{this.props.title}</h3> : null}
+        {this.props.title && <h3>{this.props.title}</h3>}
         <svg className={"rd3r-chart rd3r-bar-graph" + customClassName} id={this.props.chartId} width={this.state.width} height={this.props.height}>
           <g transform={this.transform}>
             <Grid h={this.h} grid={this.yGrid} gridType="y" />
             <Axis h={this.h} axis={this.yAxis} axisType="y" />
             <Axis h={this.h} axis={this.xAxis} axisType="x" />
-            {this.props.xAxisLabel ?
-              <AxisLabel key={0} h={this.h} w={this.w} axisLabel={this.props.xAxisLabel} axisType="x" />
-            : null}
-            {this.props.yAxisLabel ?
-              <AxisLabel key={1} h={this.h} w={this.w} axisLabel={this.props.yAxisLabel} axisType="y" />
-            : null}
+            {this.props.xAxisLabel && <AxisLabel key={0} h={this.h} w={this.w} axisLabel={this.props.xAxisLabel} axisType="x" />}
+            {this.props.yAxisLabel && <AxisLabel key={1} h={this.h} w={this.w} axisLabel={this.props.yAxisLabel} axisType="y" />}
             {bars}
           </g>
         </svg>
-        {this.props.legend ?
-        <div>
-          <Legend data={legend} labelKey={_self.props.labelKey} colors={_self.color} />
-        </div>
-        : null}
+        {this.props.legend && <Legend data={legend} labelKey={this.props.labelKey} colors={this.color} />}
       </div>
     );
   }
@@ -235,7 +227,7 @@ BarGraph.propTypes = {
 BarGraph.defaultProps = {
   width: 1920,
   height: 400,
-  barChartType: "side",
+  barChartType: "stack",
   groupSpacing: .3,
   individualSpacing: .5,
   legend: true,

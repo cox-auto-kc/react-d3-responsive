@@ -150,7 +150,7 @@ class ScatterPlot extends React.Component {
       .range([this.h, 0]);
 
     this.dataNest = d3.nest()
-        .key(function(d) { return d[_self.props.valueKey]; })
+        .key(function(d) { return d[_self.props.labelKey]; })
         .entries(this.state.data);
 
     if(this.props.dataPercent == 'y') {
@@ -287,26 +287,18 @@ class ScatterPlot extends React.Component {
 
     return (
       <div>
-        {this.props.title ? <h3>{this.props.title}</h3> : null}
+        {this.props.title && <h3>{this.props.title}</h3>}
         <svg className={"rd3r-chart rd3r-scatter-plot" + customClassName} id={this.props.chartId} width={this.state.width} height={this.props.height}>
           <g transform={this.transform}>
             <Grid h={this.h} grid={this.yGrid} gridType="y" />
             <Axis h={this.h} axis={this.yAxis} axisType="y" />
             <Axis h={this.h} axis={this.xAxis} axisType="x" />
-            {this.props.xAxisLabel ?
-              <AxisLabel key={0} h={this.h} w={this.w} axisLabel={this.props.xAxisLabel} axisType="x" />
-            : null}
-            {this.props.yAxisLabel ?
-              <AxisLabel key={1} h={this.h} w={this.w} axisLabel={this.props.yAxisLabel} axisType="y" />
-            : null}
+            {this.props.xAxisLabel && <AxisLabel key={0} h={this.h} w={this.w} axisLabel={this.props.xAxisLabel} axisType="x" />}
+            {this.props.yAxisLabel && <AxisLabel key={1} h={this.h} w={this.w} axisLabel={this.props.yAxisLabel} axisType="y" />}
             {dataPoints}
           </g>
         </svg>
-        {this.props.legend ?
-        <div>
-          <Legend data={_self.state.data} labelKey={_self.props.valueKey} colors={_self.color} />
-        </div>
-        : null}
+        {this.props.legend && <Legend data={this.state.data} labelKey={this.props.labelKey} colors={this.color} />}
       </div>
     );
   }
@@ -321,7 +313,6 @@ ScatterPlot.propTypes = {
   chartClassName: React.PropTypes.string,
   colors: React.PropTypes.array,
   data: React.PropTypes.array.isRequired,
-  valueKey: React.PropTypes.string,
   labelKey: React.PropTypes.string,
   dateFormat: React.PropTypes.string,
   dataType: React.PropTypes.string,
@@ -343,7 +334,6 @@ ScatterPlot.propTypes = {
 ScatterPlot.defaultProps = {
   width: 1920,
   height: 400,
-  valueKey: "label",
   labelKey: "label",
   dateFormat:'%m-%d-%Y',
   dataType:'date',

@@ -129,6 +129,7 @@ class Main extends React.Component {
         <BarGraph
           title="Bar Graph"
           xDataKey="label"
+          barChartType="side"
           xAxisLabel="X Axis Label"
           yAxisLabel="Y Axis Label"
           keys={['yourScore','monthToDate','vinAverage']}
@@ -136,6 +137,8 @@ class Main extends React.Component {
         <BarGraph
           title="Bar Graph"
           xDataKey="month"
+          barChartType="side"
+          individualSpacing={0}
           keys={['new','old','third','four']}
           data={ChartData.barGraphTestData} />
         <BarGraph
@@ -143,7 +146,6 @@ class Main extends React.Component {
           xDataKey="month"
           xAxisLabel="X Axis Label"
           yAxisLabel="Y Axis Label"
-          barChartType="stack"
           colors={["#98abc5", "#7b6888", "#a05d56", "#ff8c00"]}
           keys={['new','old','third','four']}
           data={ChartData.barGraphTestData} />

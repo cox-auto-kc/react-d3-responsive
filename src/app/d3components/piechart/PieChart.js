@@ -149,19 +149,13 @@ class PieChart extends React.Component {
 
     return(
       <div>
-        {_self.props.title ? 
-        <h3>{_self.props.title}</h3>
-        : null}
+        {this.props.title && <h3>{this.props.title}</h3>}
         <svg className={"rd3r-chart rd3r-pie-chart" + customClassName} id={this.props.chartId} width={this.state.width} height={this.state.height}>
           <g transform={this.transform}>
             {wedge}
           </g>
         </svg>
-        {_self.props.legend ? 
-        <div>
-          <Legend data={_self.state.data} labelKey={_self.props.labelKey} colors={_self.color} />
-        </div>
-        : null}
+        {this.props.legend && <Legend data={this.state.data} labelKey={this.props.labelKey} colors={this.color} />}
       </div>
     );
   }
