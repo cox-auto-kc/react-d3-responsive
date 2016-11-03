@@ -54,15 +54,19 @@ class BarGraph extends React.Component {
 
   stackType() {
     let tempArray = [];
-    const d = this.stacked;
-    for (let i in d) {
-      for (let j in d[i]) {
-        if (this.props.barChartType === "side") {
-          tempArray.push(d[i][j].y);
-        } else {
-          tempArray.push(d[i][j].y + d[i][j].y0);
+    if (!this.props.yMax) {
+      const d = this.stacked;
+      for (let i in d) {
+        for (let j in d[i]) {
+          if (this.props.barChartType === "side") {
+            tempArray.push(d[i][j].y);
+          } else {
+            tempArray.push(d[i][j].y + d[i][j].y0);
+          }
         }
       }
+    } else {
+      tempArray.push(this.props.yMax);
     }
     return tempArray;
   }
@@ -221,7 +225,8 @@ BarGraph.propTypes = {
   yAxisLabel: React.PropTypes.string,
   legend: React.PropTypes.bool,
   keys: React.PropTypes.array.isRequired,
-  margin: React.PropTypes.object
+  margin: React.PropTypes.object,
+  yMax: React.PropTypes.number
 };
 
 BarGraph.defaultProps = {

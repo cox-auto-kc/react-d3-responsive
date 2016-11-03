@@ -1,7 +1,8 @@
 ###0.1.4:
-###### 02 NOV 2016
+###### 03 NOV 2016
 - Choose bar chart type (stack or side) 
 - Bar chart widths of bars props
+- Set y Axis Min and Max props
 - Code Refinement
 
 ###0.1.3:

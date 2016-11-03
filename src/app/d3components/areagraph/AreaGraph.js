@@ -137,11 +137,19 @@ class AreaGraph extends React.Component {
       .domain([
         // Find min axis value and subtract buffer
         d3.min(this.state.data,function(d){
-          return d[_self.props.yDataKey]-_self.props.yMaxBuffer;
+          if (!_self.props.yMin) {
+            return d[_self.props.yDataKey]-_self.props.yMaxBuffer;
+          } else {
+            return _self.props.yMin;
+          }
         }),
         // Find max axis value and add buffer
         d3.max(this.state.data,function(d){
-          return d[_self.props.yDataKey]+_self.props.yMaxBuffer;
+          if (!_self.props.yMax) {
+            return d[_self.props.yDataKey]+_self.props.yMaxBuffer;
+          } else {
+            return _self.props.yMax;
+          }
         })
       ])
       // Set range from height of container to 0
@@ -324,6 +332,8 @@ AreaGraph.propTypes = {
   lineType: React.PropTypes.string,
   strokeColor: React.PropTypes.string,
   margin: React.PropTypes.object,
+  yMax: React.PropTypes.number,
+  yMin: React.PropTypes.number,
   yMaxBuffer: React.PropTypes.number
 };
 
