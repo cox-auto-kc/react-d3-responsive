@@ -139,11 +139,19 @@ class ScatterPlot extends React.Component {
       .domain([
         // Find min axis value and subtract buffer
         d3.min(this.state.data,function(d){
-          return d[_self.props.yDataKey]-_self.props.yMaxBuffer;
+          if (typeof _self.props.yMin === "number") {
+            return _self.props.yMin;
+          } else {
+            return d[_self.props.yDataKey]-_self.props.yMaxBuffer;
+          }
         }),
         // Find max axis value and add buffer
         d3.max(this.state.data,function(d){
-          return d[_self.props.yDataKey]+_self.props.yMaxBuffer;
+          if (typeof _self.props.yMax === "number") {
+            return _self.props.yMax;
+          } else {
+            return d[_self.props.yDataKey]+_self.props.yMaxBuffer;
+          }
         })
       ])
       // Set range from height of container to 0
@@ -328,6 +336,8 @@ ScatterPlot.propTypes = {
   trendLine: React.PropTypes.bool,
   lineNumbers: React.PropTypes.oneOf(['single','multi']),
   margin: React.PropTypes.object,
+  yMax: React.PropTypes.number,
+  yMin: React.PropTypes.number,
   yMaxBuffer: React.PropTypes.number
 };
 
