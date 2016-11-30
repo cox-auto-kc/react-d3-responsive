@@ -1,3 +1,8 @@
+###0.1.5:
+###### 30 NOV 2016
+- Fix display issue with date on tooltip popup
+- Tooltip background color prop added
+
 ###0.1.4:
 ###### 03 NOV 2016
 - Choose bar chart type (stack or side) 
