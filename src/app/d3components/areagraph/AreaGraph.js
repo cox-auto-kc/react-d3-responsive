@@ -273,10 +273,12 @@ class AreaGraph extends React.Component {
             showToolTip={_self.showToolTip}
             hideToolTip={_self.hideToolTip}
             removeFirstAndLast={true}
+            dateFormat={_self.props.dataPointDateFormat}
             xDataKey={_self.props.xDataKey}
             yDataKey={_self.props.yDataKey} />
           <ToolTip
             tooltip={_self.state.tooltip}
+            bgStyle={_self.props.tooltipBgStyle}
             xValue={_self.props.xToolTipLabel}
             yValue={_self.props.yToolTipLabel} />
         </g>
@@ -318,6 +320,7 @@ AreaGraph.propTypes = {
   colors: React.PropTypes.array,
   data: React.PropTypes.array.isRequired,
   dateFormat: React.PropTypes.string,
+  dataPointDateFormat: React.PropTypes.string,
   dataType: React.PropTypes.string,
   dataPercent: React.PropTypes.string,
   xFormat: React.PropTypes.string,
@@ -328,6 +331,7 @@ AreaGraph.propTypes = {
   yAxisLabel: React.PropTypes.string,
   xToolTipLabel: React.PropTypes.string,
   yToolTipLabel: React.PropTypes.string,
+  tooltipBgStyle: React.PropTypes.string,
   legend: React.PropTypes.bool,
   lineType: React.PropTypes.string,
   strokeColor: React.PropTypes.string,
