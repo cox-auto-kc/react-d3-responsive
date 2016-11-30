@@ -31,7 +31,7 @@ class Dots extends React.Component {
       let xDataKeys = d[_self.props.xDataKey];
 
       if (xDataKeys instanceof Date) {
-        xDataKeys = d3.time.format(_self.props.format)(d[_self.props.xDataKey]);
+        xDataKeys = d3.time.format(_self.props.dateFormat)(d[_self.props.xDataKey]);
       }
 
       return (
@@ -67,7 +67,7 @@ Dots.propTypes = {
   r: React.PropTypes.number,
   xDataKey: React.PropTypes.string.isRequired,
   yDataKey: React.PropTypes.string.isRequired,
-  format: React.PropTypes.string,
+  dateFormat: React.PropTypes.string,
   removeFirstAndLast: React.PropTypes.bool
 };
 
@@ -75,7 +75,7 @@ Dots.defaultProps = {
   fill: "#b1bfb7",
   strokeWidth: 2,
   r: 5,
-  format: '%e %b %Y'
+  dateFormat: '%e %b %Y'
 };
 
 export default Dots;

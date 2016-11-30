@@ -273,6 +273,7 @@ class LineGraph extends React.Component {
             showToolTip={_self.showToolTip}
             hideToolTip={_self.hideToolTip}
             removeFirstAndLast={true}
+            dateFormat={_self.props.dataPointDateFormat}
             xDataKey={_self.props.xDataKey}
             yDataKey={_self.props.yDataKey} />
           <ToolTip
@@ -317,6 +318,7 @@ LineGraph.propTypes = {
   chartClassName: React.PropTypes.string,
   colors: React.PropTypes.array,
   dateFormat: React.PropTypes.string,
+  dataPointDateFormat: React.PropTypes.string,
   dataType: React.PropTypes.string,
   dataPercent: React.PropTypes.string,
   xFormat: React.PropTypes.string,
