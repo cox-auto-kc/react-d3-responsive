@@ -30,8 +30,9 @@ class Dots extends React.Component {
 
       let xDataKeys = d[_self.props.xDataKey];
 
-      if (!((new Date(d[_self.props.xDataKey]) !== "Invalid Date" && !isNaN(new Date(d[_self.props.xDataKey])))))
+      if (xDataKeys instanceof Date) {
         xDataKeys = d3.time.format(_self.props.format)(d[_self.props.xDataKey]);
+      }
 
       return (
         <circle
@@ -74,7 +75,7 @@ Dots.defaultProps = {
   fill: "#b1bfb7",
   strokeWidth: 2,
   r: 5,
-  format: '%b %e'
+  format: '%e %b %Y'
 };
 
 export default Dots;
