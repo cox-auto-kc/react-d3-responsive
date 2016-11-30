@@ -278,6 +278,7 @@ class LineGraph extends React.Component {
             yDataKey={_self.props.yDataKey} />
           <ToolTip
             tooltip={_self.state.tooltip}
+            bgStyle={_self.props.tooltipBgStyle}
             xValue={_self.props.xToolTipLabel}
             yValue={_self.props.yToolTipLabel} />
         </g>
@@ -330,6 +331,7 @@ LineGraph.propTypes = {
   yAxisLabel: React.PropTypes.string,
   xToolTipLabel: React.PropTypes.string,
   yToolTipLabel: React.PropTypes.string,
+  tooltipBgStyle: React.PropTypes.string,
   legend: React.PropTypes.bool,
   lineType: React.PropTypes.string,
   fillColor: React.PropTypes.string,
