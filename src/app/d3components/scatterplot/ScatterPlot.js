@@ -277,6 +277,7 @@ class ScatterPlot extends React.Component {
             fill={_self.color(i)}
             showToolTip={_self.showToolTip}
             hideToolTip={_self.hideToolTip}
+            dateFormat={_self.props.dataPointDateFormat}
             xDataKey={_self.props.xDataKey}
             yDataKey={_self.props.yDataKey} />
           <ToolTip
@@ -323,6 +324,7 @@ ScatterPlot.propTypes = {
   data: React.PropTypes.array.isRequired,
   labelKey: React.PropTypes.string,
   dateFormat: React.PropTypes.string,
+  dataPointDateFormat: React.PropTypes.string,
   dataType: React.PropTypes.string,
   dataPercent: React.PropTypes.string,
   xDataKey: React.PropTypes.string.isRequired,
