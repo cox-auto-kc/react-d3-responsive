@@ -132,7 +132,7 @@ class Main extends React.Component {
           barChartType="side"
           xAxisLabel="X Axis Label"
           yAxisLabel="Y Axis Label"
-          keys={['yourScore','monthToDate','vinAverage']}
+          keys={['Your Score','Month To Date','Vin Average']}
           data={ChartData.soldRatios} />
         <BarGraph
           title="Bar Graph"
@@ -140,7 +140,8 @@ class Main extends React.Component {
           barChartType="side"
           individualSpacing={0}
           keys={['new','old','third','four']}
-          data={ChartData.barGraphTestData} />
+          legendValues={ChartData.barGraphTestData2.legend}
+          data={ChartData.barGraphTestData2.data} />
         <BarGraph
           title="Bar Graph - With Axis Labels"
           xDataKey="month"
@@ -148,7 +149,7 @@ class Main extends React.Component {
           yAxisLabel="Y Axis Label"
           colors={["#98abc5", "#7b6888", "#a05d56", "#ff8c00"]}
           keys={['new','old','third','four']}
-          data={ChartData.barGraphTestData} />
+          data={ChartData.barGraphTestData2.data} />
 
         <PieChart
           title="Pie Chart"
