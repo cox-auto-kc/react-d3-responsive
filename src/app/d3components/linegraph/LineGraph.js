@@ -52,7 +52,7 @@ class LineGraph extends React.Component {
   updateSize() {
     let node = ReactDOM.findDOMNode(this);
     let parentWidth = node.offsetWidth;
-    (parentWidth < this.props.width) ? 
+    (parentWidth < this.props.width) ?
       this.setState({width:parentWidth}) :
       this.setState({width:this.props.width});
   }
@@ -356,7 +356,7 @@ LineGraph.defaultProps = {
   margin: {
     top: 10,
     right: 40,
-    bottom: 20,
+    bottom: 30,
     left: 40
   },
   yMaxBuffer: 100

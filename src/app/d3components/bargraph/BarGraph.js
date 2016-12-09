@@ -37,7 +37,7 @@ class BarGraph extends React.Component {
   updateSize() {
     let node = ReactDOM.findDOMNode(this);
     let parentWidth = node.offsetWidth;
-    (parentWidth < this.props.width) ? 
+    (parentWidth < this.props.width) ?
       this.setState({width:parentWidth}) :
       this.setState({width:this.props.width});
   }
@@ -181,12 +181,15 @@ class BarGraph extends React.Component {
     }
 
     const legend = [];
+    const legendType = this.props.legendValues ? this.props.legendValues : this.props.keys;
 
-    this.props.keys.forEach((value, i) => {
-      const legendObj = {};
-      legendObj[_self.props.labelKey] = value;
-      legend[i] = legendObj;
-    });
+    if(this.props.legend) {
+      legendType.forEach((value, i) => {
+        const legendObj = {};
+        legendObj[_self.props.labelKey] = value;
+        legend[i] = legendObj;
+      });
+    }
 
     return (
       <div>
@@ -225,6 +228,7 @@ BarGraph.propTypes = {
   yAxisLabel: React.PropTypes.string,
   legend: React.PropTypes.bool,
   keys: React.PropTypes.array.isRequired,
+  legendValues: React.PropTypes.array,
   margin: React.PropTypes.object,
   yMax: React.PropTypes.number
 };
@@ -240,7 +244,7 @@ BarGraph.defaultProps = {
   margin: {
     top: 10,
     right: 40,
-    bottom: 20,
+    bottom: 30,
     left: 40
   }
 };
