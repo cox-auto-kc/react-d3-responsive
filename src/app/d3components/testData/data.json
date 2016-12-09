@@ -1312,19 +1312,84 @@ module.exports = {
       "four": 164
     }
   ],
+  "barGraphTestData2": {
+    "legend": [
+      "Your Score",
+      "Month To Date",
+      "Vin Average",
+      "Fourth"
+    ],
+    "data": [
+      {
+        "month": "Jan",
+        "new": 0,
+        "old": 50,
+        "third": 161,
+        "four": 210,
+        "five": 10
+      },
+      {
+        "month": "Feb",
+        "new": 181,
+        "old": 24,
+        "third": 156,
+        "four": 59
+      },
+      {
+        "month": "Mar",
+        "new": 184,
+        "old": 153,
+        "third": 177,
+        "four": 16
+      },
+      {
+        "month": "Apr",
+        "new": 21,
+        "old": 180,
+        "third": 125,
+        "four": 150
+      },
+      {
+        "month": "May",
+        "new": 142,
+        "old": 1,
+        "third": 114,
+        "four": 142
+      },
+      {
+        "month": "Jun",
+        "new": 171,
+        "old": 17,
+        "third": 116,
+        "four": 153
+      },
+      {
+        "month": "Jul",
+        "new": 186,
+        "old": 135,
+        "third": 120,
+        "four": 164
+      }
+    ]
+  },
   "soldRatios": [
     {
       "label": "One",
-      "yourScore": 70,
-      "monthToDate": 100,
-      "vinAverage": 12
+      "Your Score": 70,
+      "Month To Date": 100,
+      "Vin Average": 12
     },
     {
       "label": "Two",
-      "yourScore": 150,
-      "monthToDate": 250,
-      "vinAverage": 12
+      "Your Score": 150,
+      "Month To Date": 250,
+      "Vin Average": 12
     }
+  ],
+  "soldRatiosLegend": [
+    "Your Score",
+    "Month To Date",
+    "Vin Average"
   ],
   "pieTestData": [
     {

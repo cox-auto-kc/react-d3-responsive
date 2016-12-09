@@ -1,3 +1,8 @@
+###0.1.6:
+###### 06 DEC 2016
+- Added more margin to bottom default so x-axis labels dont get cut off
+- Pass a prop for legend labels bar chart so Legend doesn't need refrence the key value to build
+
 ###0.1.5:
 ###### 30 NOV 2016
 - Fix display issue with date on tooltip popup
