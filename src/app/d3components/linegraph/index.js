@@ -1,1 +1,1 @@
-exports.LineGraph = require('./LineGraph').default;
+export {default as LineGraph} from './LineGraph';

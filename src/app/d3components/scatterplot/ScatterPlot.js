@@ -1,4 +1,3 @@
-/*eslint-disable react/no-set-state */
 'use strict';
 
 import React from 'react';
@@ -51,13 +50,13 @@ class ScatterPlot extends React.Component {
     window.removeEventListener('resize', this.updateSize, false);
   }
 
-  updateSize() {
-    let node = ReactDOM.findDOMNode(this);
-    let parentWidth = node.offsetWidth;
+  updateSize = () => {
+    const node = ReactDOM.findDOMNode(this);
+    const parentWidth = node.offsetWidth;
     (parentWidth < this.props.width) ?
       this.setState({width:parentWidth}) :
       this.setState({width:this.props.width});
-  }
+  };
 
   repaintComponent() {
     const forceResize = this.updateSize;
@@ -70,7 +69,6 @@ class ScatterPlot extends React.Component {
   }
 
   createChart(_self) {
-
     if (this.props.colors) {
       this.color = d3.scale.ordinal()
       .range(this.props.colors);
@@ -103,7 +101,7 @@ class ScatterPlot extends React.Component {
         ])
         .range([0, this.w]);
 
-      if(this.props.dataPercent == 'x') {
+      if(this.props.dataPercent === 'x') {
         this.xAxis = d3.svg.axis()
           .scale(this.xScale)
           .orient('bottom')
@@ -161,7 +159,7 @@ class ScatterPlot extends React.Component {
         .key(function(d) { return d[_self.props.labelKey]; })
         .entries(this.state.data);
 
-    if(this.props.dataPercent == 'y') {
+    if(this.props.dataPercent === 'y') {
       this.yAxis = d3.svg.axis()
         .scale(this.yScale)
         .orient('left')
@@ -187,15 +185,14 @@ class ScatterPlot extends React.Component {
   }
 
   reloadBarData() {
-
-    let data = this.props.data;
+    const data = this.props.data;
 
     // Format date for d3 to use
     const parseDate = d3.time.format(this.props.dateFormat).parse;
 
     data.forEach((value, i) => {
-      let d = data[i];
-      if(this.props.dataType == 'date') {
+      const d = data[i];
+      if(this.props.dataType === 'date') {
         if (typeof d[this.props.xDataKey] === "string") {
           d[this.props.xDataKey] = parseDate(d[this.props.xDataKey]);
         }
@@ -206,7 +203,7 @@ class ScatterPlot extends React.Component {
     this.setState({data:data});
   }
 
-  showToolTip(e){
+  showToolTip = (e) => {
     this.setState({
       tooltip: {
         display: true,
@@ -222,9 +219,9 @@ class ScatterPlot extends React.Component {
       }
     });
     e.target.setAttribute('fill', '#6f8679');
-  }
+  };
 
-  hideToolTip(e){
+  hideToolTip = (e) => {
     e.target.setAttribute('fill', this.state.tooltip.originalColor);
     this.setState({
       tooltip: {
@@ -240,18 +237,15 @@ class ScatterPlot extends React.Component {
         }
       }
     });
-  }
+  };
 
-  render(){
-
+  render() {
     this.createChart(this);
 
     const _self = this;
-    let dataPoints;
 
-    dataPoints = this.dataNest.map(function (d,i) {
-
-      let trendLine = [];
+    const dataPoints = this.dataNest.map(function (d,i) {
+      const trendLine = [];
 
       if (_self.props.trendLine) {
         trendLine.push(<TrendLine

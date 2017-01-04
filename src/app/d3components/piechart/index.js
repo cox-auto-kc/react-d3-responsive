@@ -1,1 +1,1 @@
-exports.PieChart = require('./PieChart').default;
+export {default as PieChart} from './PieChart';

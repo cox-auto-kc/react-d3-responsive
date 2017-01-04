@@ -1,4 +1,3 @@
-/*eslint-disable react/no-set-state */
 'use strict';
 
 import React from 'react';
@@ -30,6 +29,7 @@ class AreaGraph extends React.Component {
           y: 0
         }
       },
+      dataPointColor: '',
       width: this.props.width,
       data: []
     };
@@ -49,13 +49,13 @@ class AreaGraph extends React.Component {
     window.removeEventListener('resize', this.updateSize, false);
   }
 
-  updateSize() {
-    let node = ReactDOM.findDOMNode(this);
-    let parentWidth = node.offsetWidth;
+  updateSize = () => {
+    const node = ReactDOM.findDOMNode(this);
+    const parentWidth = node.offsetWidth;
     (parentWidth < this.props.width) ?
       this.setState({width:parentWidth}) :
       this.setState({width:this.props.width});
-  }
+  };
 
   repaintComponent() {
     const forceResize = this.updateSize;
@@ -68,7 +68,6 @@ class AreaGraph extends React.Component {
   }
 
   createChart(_self) {
-
     if (this.props.colors) {
       this.color = d3.scale.ordinal()
       .range(this.props.colors);
@@ -101,7 +100,7 @@ class AreaGraph extends React.Component {
         ])
         .range([0, this.w]);
 
-      if(this.props.dataPercent == 'x') {
+      if(this.props.dataPercent === 'x') {
         this.xAxis = d3.svg.axis()
           .scale(this.xScale)
           .orient('bottom')
@@ -170,7 +169,7 @@ class AreaGraph extends React.Component {
         .key(function(d) { return d[_self.props.labelKey]; })
         .entries(this.state.data);
 
-    if(this.props.dataPercent == 'y') {
+    if(this.props.dataPercent === 'y') {
       this.yAxis = d3.svg.axis()
         .scale(this.yScale)
         .orient('left')
@@ -196,15 +195,14 @@ class AreaGraph extends React.Component {
   }
 
   reloadBarData() {
-
-    let data = this.props.data;
+    const data = this.props.data;
 
     // Format date for d3 to use
     const parseDate = d3.time.format(this.props.dateFormat).parse;
 
     data.forEach((value, i) => {
-      let d = data[i];
-      if(this.props.dataType == 'date') {
+      const d = data[i];
+      if(this.props.dataType === 'date') {
         if (typeof d[this.props.xDataKey] === "string") {
           d[this.props.xDataKey] = parseDate(d[this.props.xDataKey]);
         }
@@ -215,7 +213,8 @@ class AreaGraph extends React.Component {
     this.setState({data:data});
   }
 
-  showToolTip(e){
+  showToolTip = (e) => {
+    const pointColor = e.target.getAttribute('fill');
     e.target.setAttribute('fill', '#6f8679');
     this.setState({
       tooltip: {
@@ -228,12 +227,13 @@ class AreaGraph extends React.Component {
           x: e.target.getAttribute('cx'),
           y: e.target.getAttribute('cy')
         }
-      }
+      },
+      dataPointColor: pointColor
     });
-  }
+  };
 
-  hideToolTip(e){
-    e.target.setAttribute('fill', '#b1bfb7');
+  hideToolTip = (e) => {
+    e.target.setAttribute('fill', this.state.dataPointColor);
     this.setState({
       tooltip: {
         display: false,
@@ -244,19 +244,18 @@ class AreaGraph extends React.Component {
         pos:{
           x: 0,
           y: 0
-        }
-      }
+        },
+      },
+      dataPointColor: ''
     });
-  }
+  };
 
   render(){
-
     this.createChart(this);
 
     const _self = this;
-    let lines;
 
-    lines = this.dataNest.map(function (d,i) {
+    const lines = this.dataNest.map(function (d,i) {
       return (
         <g key={i}>
           <path
@@ -270,6 +269,7 @@ class AreaGraph extends React.Component {
             x={_self.xScale}
             y={_self.yScale}
             stroke="#ffffff"
+            fill={_self.color(i)}
             showToolTip={_self.showToolTip}
             hideToolTip={_self.hideToolTip}
             removeFirstAndLast={true}

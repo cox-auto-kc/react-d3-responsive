@@ -2,20 +2,14 @@
 
 import React from 'react';
 
-class AxisLabel extends React.Component {
+const AxisLabel = ({w, h, axisLabel, axisType}) => {
+  const translateLabelX = "translate("+(w/2)+","+(h+40)+")";
+  const translateLabelY = "translate(-40,"+(h/2)+") rotate(270)";
 
-  constructor(props) {
-    super(props);
-  }
-
-  render(){
-    let translateLabelX = "translate("+(this.props.w/2)+","+(this.props.h+40)+")";
-    let translateLabelY = "translate(-40,"+(this.props.h/2)+") rotate(270)";
-    return (
-      <text className={this.props.axisType + "-axis-label"} textAnchor="middle" transform={this.props.axisType === 'y' ? translateLabelY : translateLabelX} >{this.props.axisLabel}</text>
-    );
-  }
-}
+  return (
+    <text className={axisType + "-axis-label"} textAnchor="middle" transform={axisType === 'y' ? translateLabelY : translateLabelX} >{axisLabel}</text>
+  );
+};
 
 AxisLabel.propTypes = {
   w:React.PropTypes.number,

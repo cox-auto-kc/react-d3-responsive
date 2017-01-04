@@ -1,4 +1,3 @@
-/*eslint-disable react/no-set-state */
 'use strict';
 
 import React from 'react';
@@ -34,9 +33,9 @@ class BarGraph extends React.Component {
     window.removeEventListener('resize', this.updateSize, false);
   }
 
-  updateSize() {
-    let node = ReactDOM.findDOMNode(this);
-    let parentWidth = node.offsetWidth;
+  updateSize = () => {
+    const node = ReactDOM.findDOMNode(this);
+    const parentWidth = node.offsetWidth;
     (parentWidth < this.props.width) ?
       this.setState({width:parentWidth}) :
       this.setState({width:this.props.width});
@@ -53,13 +52,13 @@ class BarGraph extends React.Component {
   }
 
   stackType() {
-    let tempArray = [];
+    const tempArray = [];
     if (typeof this.props.yMax === "number") {
       tempArray.push(this.props.yMax);
     } else {
       const d = this.stacked;
-      for (let i in d) {
-        for (let j in d[i]) {
+      for (const i in d) {
+        for (const j in d[i]) {
           if (this.props.barChartType === "side") {
             tempArray.push(d[i][j].y);
           } else {
@@ -72,7 +71,6 @@ class BarGraph extends React.Component {
   }
 
   createChart(_self) {
-
     if (this.props.colors) {
       this.color = d3.scale.ordinal()
       .range(this.props.colors);
@@ -135,17 +133,16 @@ class BarGraph extends React.Component {
   }
 
   reloadBarData() {
-    let data = this.props.data;
+    const data = this.props.data;
     this.setState({data:data});
   }
 
   render(){
-
     this.createChart(this);
 
     const _self = this;
 
-    let bars = this.stacked.map(function(data,i) {
+    const bars = this.stacked.map(function(data,i) {
       let rects;
       if (_self.props.barChartType === "side") {
         rects = data.map(function(d,j) {

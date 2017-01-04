@@ -8,19 +8,18 @@ class ToolTip extends React.Component {
     super(props);
   }
 
-  render(){
-
+  render() {
     let opacity = 0;
     let transform = "";
     let x = 0;
     let y = 0;
-    let width = 150;
-    let height = 70;
-    let transformText = 'translate('+width/2+','+(height/2-5)+')';
+    const width = 150;
+    const height = 70;
+    const transformText = 'translate('+width/2+','+(height/2-5)+')';
     let transformArrow = "";
 
     if (this.props.tooltip.display === true) {
-      let position = this.props.tooltip.pos;
+      const position = this.props.tooltip.pos;
 
       x = position.x;
       y = position.y;
@@ -33,7 +32,6 @@ class ToolTip extends React.Component {
         transform = 'translate(' + (x-width/2) + ',' + (Math.round(y)+20) + ')';
         transformArrow = 'translate('+(width/2-20)+','+0+') rotate(180,20,0)';
       }
-
     }
 
     return (
@@ -41,8 +39,8 @@ class ToolTip extends React.Component {
         <rect className="shadow" width={width} height={height} rx="5" ry="5" fill={this.props.bgStyle} opacity=".9"/>
         <polygon className="shadow" points="10,0  30,0  20,10" transform={transformArrow} fill={this.props.bgStyle} opacity=".9"/>
         <text transform={transformText}>
-          <tspan x="0" textAnchor="middle" fontSize="15px" fill="#ffffff">{this.props.xValue + ' : ' + this.props.tooltip.data.key}</tspan>
-          <tspan x="0" textAnchor="middle" dy="25" fontSize="20px" fill="#a9f3ff">{this.props.yValue + ' : ' + this.props.tooltip.data.value}</tspan>
+          <tspan x="0" textAnchor="middle" fontSize="15px" fill="#ffffff">{this.props.xValue + this.props.tooltip.data.key}</tspan>
+          <tspan x="0" textAnchor="middle" dy="25" fontSize="20px" fill="#a9f3ff">{this.props.yValue + this.props.tooltip.data.value}</tspan>
         </text>
       </g>
     );
@@ -59,7 +57,7 @@ ToolTip.propTypes = {
 };
 
 ToolTip.defaultProps = {
-  bgStyle: "#6391da"
+  bgStyle: "#000000"
 };
 
 export default ToolTip;

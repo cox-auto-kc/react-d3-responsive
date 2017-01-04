@@ -25,9 +25,9 @@ class Axis extends React.Component {
   }
 
   render(){
-    let translate = "translate(0,"+(this.props.h)+")";
+    const translate = "translate(0,"+(this.props.h)+")";
     return (
-      <g className="axis" transform={this.props.axisType === 'x' ? translate:""} ></g>
+      <g className="axis" transform={this.props.axisType === 'x' ? translate:""} />
     );
   }
 }

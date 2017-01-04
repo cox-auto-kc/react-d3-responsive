@@ -3,7 +3,7 @@
 // In this case, the transformation is useful since we only want to track errors in the built production code.
 
 // Allowing console calls below since this is a build file.
-/*eslint-disable no-console */
+/* eslint-disable no-console */
 
 import fs from 'fs';
 import colors from 'colors';
@@ -16,6 +16,6 @@ fs.readFile('src/www/index.html', 'utf8', function (err,data) {
 
   fs.writeFile('dist/index.html', $.html(), 'utf8', function (err) {
     if (err) return console.log(err);
-    console.log('index.html written to /dist'.green);
+    console.log(colors.green('index.html written to /dist'));
   });
 });

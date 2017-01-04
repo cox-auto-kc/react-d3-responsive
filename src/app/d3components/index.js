@@ -1,5 +1,5 @@
-exports.LineGraph = require('./linegraph').LineGraph;
-exports.AreaGraph = require('./areagraph').AreaGraph;
-exports.BarGraph = require('./bargraph').BarGraph;
-exports.PieChart = require('./piechart').PieChart;
-exports.ScatterPlot = require('./scatterplot').ScatterPlot;
+export {LineGraph as LineGraph} from './linegraph';
+export {AreaGraph as AreaGraph} from './areagraph';
+export {BarGraph as BarGraph} from './bargraph';
+export {PieChart as PieChart} from './piechart';
+export {ScatterPlot as ScatterPlot} from './scatterplot';

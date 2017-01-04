@@ -1,1 +1,1 @@
-exports.AreaGraph = require('./AreaGraph').default;
+export {default as AreaGraph} from './AreaGraph';

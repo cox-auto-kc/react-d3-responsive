@@ -1,1 +1,1 @@
-exports.ScatterPlot = require('./ScatterPlot').default;
+export {default as ScatterPlot} from './ScatterPlot';

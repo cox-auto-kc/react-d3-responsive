@@ -76,6 +76,23 @@ module.exports = {
       "count":199
     }
   ],
+  "lineGraphData4": [
+    {
+      "label": "Data Sample 1",
+      "day": "2016-02-11T06:00:00.000Z",
+      "count":180
+    },
+    {
+      "label": "Data Sample 1",
+      "day":"2016-02-12T06:00:00.000Z",
+      "count":250
+    },
+    {
+      "label": "Data Sample 1",
+      "day":"2016-02-13T06:00:00.000Z",
+      "count":150
+    }
+  ],
   "lineGraphData2": [
     {
       "label": "A",

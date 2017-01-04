@@ -1,7 +1,7 @@
 // For info about this file refer to webpack and webpack-hot-middleware documentation
 import webpack from 'webpack';
 import path from 'path';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
+// import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import TransferWebpackPlugin from 'transfer-webpack-plugin';
 
 const GLOBALS = {
@@ -26,7 +26,7 @@ export default {
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.DefinePlugin(GLOBALS), // Passes variables to Webpack. https://facebook.github.io/react/downloads.html
-    //new ExtractTextPlugin('styles.css'),
+    // new ExtractTextPlugin('styles.css'),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin({
       compressor: {screw_ie8: true, keep_fnames: false, warnings: false},
@@ -35,7 +35,7 @@ export default {
     // Transfer Files
     new TransferWebpackPlugin([
       {from: 'www'}
-    ], path.resolve(__dirname,"src"))    
+    ], path.resolve(__dirname,"src"))
   ],
   module: {
     loaders: [

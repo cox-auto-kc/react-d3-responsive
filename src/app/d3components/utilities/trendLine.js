@@ -1,4 +1,3 @@
-/*eslint-disable react/no-set-state */
 'use strict';
 
 import React from 'react';
@@ -40,9 +39,9 @@ class TrendLine extends React.Component {
   }
 
   updateSize() {
-    let node = ReactDOM.findDOMNode(this);
-    let parentWidth = node.offsetWidth;
-    (parentWidth < this.props.width) ? 
+    const node = ReactDOM.findDOMNode(this);
+    const parentWidth = node.offsetWidth;
+    (parentWidth < this.props.width) ?
       this.setState({width:parentWidth}) :
       this.setState({width:this.props.width});
   }
@@ -63,7 +62,6 @@ class TrendLine extends React.Component {
   }
 
   createChart(_self) {
-
     // Create line
     this.line = d3.svg.line()
       .x(function (d) {
@@ -80,20 +78,20 @@ class TrendLine extends React.Component {
 
   // returns slope, yIntercept and r-square of the line
   leastSquares(xSeries, ySeries) {
-    let ls = {};
+    const ls = {};
 
-    let reduceSumFunc = function(prev, cur) { return prev + cur; };
+    const reduceSumFunc = function(prev, cur) { return prev + cur; };
 
-    let xBar = xSeries.reduce(reduceSumFunc) * 1.0 / xSeries.length;
-    let yBar = ySeries.reduce(reduceSumFunc) * 1.0 / ySeries.length;
+    const xBar = xSeries.reduce(reduceSumFunc) * 1.0 / xSeries.length;
+    const yBar = ySeries.reduce(reduceSumFunc) * 1.0 / ySeries.length;
 
-    let ssXX = xSeries.map(function(d) { return Math.pow(d - xBar, 2); })
+    const ssXX = xSeries.map(function(d) { return Math.pow(d - xBar, 2); })
       .reduce(reduceSumFunc);
 
-    let ssYY = ySeries.map(function(d) { return Math.pow(d - yBar, 2); })
+    const ssYY = ySeries.map(function(d) { return Math.pow(d - yBar, 2); })
       .reduce(reduceSumFunc);
 
-    let ssXY = xSeries.map(function(d, i) { return (d - xBar) * (ySeries[i] - yBar); })
+    const ssXY = xSeries.map(function(d, i) { return (d - xBar) * (ySeries[i] - yBar); })
       .reduce(reduceSumFunc);
 
     ls['slope'] = ssXY / ssXX;
@@ -107,8 +105,8 @@ class TrendLine extends React.Component {
   minMaxing() {
     const _self = this;
 
-    let minMax = {};
-    let lineData = this.props.lineExtend;
+    const minMax = {};
+    const lineData = this.props.lineExtend;
     minMax['xMin'] = d3.min(lineData.map(function (d) { return d[_self.props.xDataKey]; }));
     minMax['xMax'] = d3.max(lineData.map(function (d) { return d[_self.props.xDataKey]; }));
 
@@ -120,24 +118,24 @@ class TrendLine extends React.Component {
     const _self = this;
     let data;
 
-    if(this.props.lineNumbers == 'single') {
+    if(this.props.lineNumbers === 'single') {
       data = this.props.lineExtend;
     } else {
       data = this.props.data;
     }
 
-    let xSeries = data.map(function (d) { return d[_self.props.xDataKey]; });
-    let ySeries = data.map(function (d) { return d[_self.props.yDataKey]; });
+    const xSeries = data.map(function (d) { return d[_self.props.xDataKey]; });
+    const ySeries = data.map(function (d) { return d[_self.props.yDataKey]; });
 
-    let leastSquaresCoeff = this.leastSquares(xSeries, ySeries);
-    let trendExtend = this.minMaxing();
+    const leastSquaresCoeff = this.leastSquares(xSeries, ySeries);
+    const trendExtend = this.minMaxing();
 
-    let x1 = trendExtend.xMin;
-    let y1 = (leastSquaresCoeff.slope * x1) + leastSquaresCoeff.yIntercept;
-    let x2 = trendExtend.xMax;
-    let y2 = (leastSquaresCoeff.slope * x2) + leastSquaresCoeff.yIntercept;
+    const x1 = trendExtend.xMin;
+    const y1 = (leastSquaresCoeff.slope * x1) + leastSquaresCoeff.yIntercept;
+    const x2 = trendExtend.xMax;
+    const y2 = (leastSquaresCoeff.slope * x2) + leastSquaresCoeff.yIntercept;
 
-    let trendData = [
+    const trendData = [
       {
         "label": "Trend Line",
         'x':x1,
@@ -154,12 +152,11 @@ class TrendLine extends React.Component {
   }
 
   render() {
-
     this.createChart(this);
 
     const _self = this;
 
-    let line = this.dataNest.map(function(d,i) {
+    const line = this.dataNest.map(function(d,i) {
       return (
         <path
           key={i}

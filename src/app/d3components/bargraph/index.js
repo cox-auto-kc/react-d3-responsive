@@ -1,1 +1,1 @@
-exports.BarGraph = require('./BarGraph').default;
+export {default as BarGraph} from './BarGraph';

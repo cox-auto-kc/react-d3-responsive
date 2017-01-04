@@ -13,21 +13,19 @@ class Dots extends React.Component {
   }
 
   render(){
-
     const _self = this;
 
     let data=[];
 
     if (this.props.removeFirstAndLast) {
-        for(let i=1;i<_self.props.data.length-1;++i){
-            data[i-1] = _self.props.data[i];
-        }
+      for(let i=1;i<_self.props.data.length-1;++i){
+        data[i-1] = _self.props.data[i];
+      }
     } else {
-        data = _self.props.data;
+      data = _self.props.data;
     }
 
-    let circles = data.map(function(d,i) {
-
+    const circles = data.map(function(d,i) {
       let xDataKeys = d[_self.props.xDataKey];
 
       if (xDataKeys instanceof Date) {
