@@ -34,7 +34,7 @@ const ToolTip = ({tooltip, bgStyle, xValue, yValue}) => {
       <polygon className="shadow" points="10,0  30,0  20,10" transform={transformArrow} fill={bgStyle} opacity=".9"/>
       <text transform={transformText}>
         <tspan x="0" textAnchor="middle" fontSize="15px" fill="#ffffff">{xValue + tooltip.data.key}</tspan>
-        <tspan x="0" textAnchor="middle" dy="25" fontSize="20px" fill="#a9f3ff">{yValue + tooltip.data.value}</tspan>
+        <tspan x="0" textAnchor="middle" dy="25" fontSize="20px" fill="#ffffff">{yValue + tooltip.data.value}</tspan>
       </text>
     </g>
   );
