@@ -1,3 +1,13 @@
+###0.1.7:
+###### 05 JAN 2017
+- Chart able to update upon passing new data via props
+- Updated the code to newer code standards
+- Exporting components differently more inline with ES6
+- Made some components into pure functions
+- Updated tooltip with different styling
+- Line graph now shows first and last data point by default this can be toggled
+- Tooltip will also adjust to prevent going off chart on Line Graph only currently
+
 ###0.1.6:
 ###### 06 DEC 2016
 - Added more margin to bottom default so x-axis labels dont get cut off
