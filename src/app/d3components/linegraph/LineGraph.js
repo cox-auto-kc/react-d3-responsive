@@ -216,8 +216,8 @@ class LineGraph extends React.Component {
           value: e.target.getAttribute('data-value')
         },
         pos:{
-          x: e.target.getAttribute('cx'),
-          y: e.target.getAttribute('cy')
+          x: parseInt(e.target.getAttribute('cx'),10),
+          y: parseInt(e.target.getAttribute('cy'),10)
         }
       },
       dataPointColor: pointColor
@@ -265,13 +265,16 @@ class LineGraph extends React.Component {
             fill={_self.color(i)}
             showToolTip={_self.showToolTip}
             hideToolTip={_self.hideToolTip}
-            removeFirstAndLast={true}
+            removeFirstAndLast={_self.props.removeFirstAndLast}
             dateFormat={_self.props.dataPointDateFormat}
             xDataKey={_self.props.xDataKey}
             yDataKey={_self.props.yDataKey} />
           <ToolTip
             tooltip={_self.state.tooltip}
             bgStyle={_self.props.tooltipBgStyle}
+            chartWidth={_self.state.width}
+            margin={_self.props.margin}
+            xAxis={_self.props.xAxisLabel ? true : false}
             xValue={_self.props.xToolTipLabel}
             yValue={_self.props.yToolTipLabel} />
         </g>
@@ -328,6 +331,7 @@ LineGraph.propTypes = {
   legend: React.PropTypes.bool,
   lineType: React.PropTypes.string,
   fillColor: React.PropTypes.string,
+  removeFirstAndLast: React.PropTypes.bool,
   margin: React.PropTypes.object,
   yMax: React.PropTypes.number,
   yMin: React.PropTypes.number,
@@ -346,6 +350,7 @@ LineGraph.defaultProps = {
   legend: true,
   lineType:'linear',
   fillColor: 'none',
+  removeFirstAndLast: false,
   margin: {
     top: 10,
     right: 40,
