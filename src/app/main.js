@@ -1,13 +1,7 @@
 import React from 'react';
-import rd3r from './d3components';
+import {LineGraph, BarGraph, AreaGraph, PieChart, ScatterPlot} from './d3components';
 // import rd3r from '../../lib-compiled';
 // import rd3r from '../../script-compiled';
-
-const LineGraph = rd3r.LineGraph;
-const AreaGraph = rd3r.AreaGraph;
-const BarGraph = rd3r.BarGraph;
-const PieChart = rd3r.PieChart;
-const ScatterPlot = rd3r.ScatterPlot;
 
 import ChartData from './d3components/testData/data.json';
 
@@ -27,12 +21,21 @@ class Main extends React.Component {
           xDataKey="day"
           yDataKey="count"
           dateFormat="%m-%d-%Y"
-          xToolTipLabel="X-TT"
-          yToolTipLabel="Y-TT"
+          xToolTipLabel="X-TT "
+          yToolTipLabel="Y-TT "
           lineType="linear"
           yMaxBuffer={50}
           data={ChartData.lineGraphData} />
 
+        <LineGraph
+          title="Line Graph - d3 cardinal line"
+          xAxisLabel="X Axis Label"
+          yAxisLabel="Y Axis Label"
+          xDataKey="day"
+          yDataKey="count"
+          dateFormat="%Y-%m-%dT%H:%M:%S.%LZ"
+          lineType="cardinal"
+          data={ChartData.lineGraphData4} />
         <LineGraph
           title="Line Graph - d3 cardinal line"
           xAxisLabel="X Axis Label"

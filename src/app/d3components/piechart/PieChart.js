@@ -1,4 +1,3 @@
-/*eslint-disable react/no-set-state */
 'use strict';
 
 import React from 'react';
@@ -10,35 +9,25 @@ class PieChart extends React.Component {
 
   constructor(props) {
     super(props);
-    this.updateSize = this.updateSize.bind(this);
     this.state = {
       width: this.props.width,
-      height: this.props.height,
-      data: []
+      height: this.props.height
     };
   }
 
-  componentWillMount() {
-    window.addEventListener('resize', this.updateSize, false);
-    this.setState({
-      width: this.props.width,
-      height: this.props.height
-    });
-  }
-
   componentDidMount() {
-    this.reloadBarData();
     this.repaintComponent();
+    window.addEventListener('resize', this.updateSize, false);
   }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.updateSize, false);
   }
 
-  updateSize() {
-    let node = ReactDOM.findDOMNode(this);
-    let parentWidth = node.offsetWidth;
-    (parentWidth < this.props.width) ? 
+  updateSize = () => {
+    const node = ReactDOM.findDOMNode(this);
+    const parentWidth = node.offsetWidth;
+    (parentWidth < this.props.width) ?
       this.setState({
         width: parentWidth,
         height: parentWidth
@@ -47,7 +36,7 @@ class PieChart extends React.Component {
         width: this.props.width,
         height: this.props.height
       });
-  }
+  };
 
   repaintComponent() {
     const forceResize = this.updateSize;
@@ -60,7 +49,6 @@ class PieChart extends React.Component {
   }
 
   createChart(_self) {
-
     if (this.props.colors) {
       this.color = d3.scale.ordinal()
       .range(this.props.colors);
@@ -83,12 +71,12 @@ class PieChart extends React.Component {
     } else {
       diameter = pieWidth;
     }
-    let radius = diameter/2;
+    const radius = diameter/2;
 
-    let outerRadius = radius;
-    let innerRadius = _self.props.innerRadiusRatio ? radius*_self.props.innerRadiusRatio : 0;
-    let startAngle = _self.degreesToRadians(_self.props.startAngle);
-    let endAngle = _self.degreesToRadians(_self.props.endAngle);
+    const outerRadius = radius;
+    const innerRadius = _self.props.innerRadiusRatio ? radius*_self.props.innerRadiusRatio : 0;
+    const startAngle = _self.degreesToRadians(_self.props.startAngle);
+    const endAngle = _self.degreesToRadians(_self.props.endAngle);
 
     this.arc = d3.svg.arc()
       .outerRadius(outerRadius)
@@ -99,38 +87,34 @@ class PieChart extends React.Component {
       .endAngle(endAngle)
       .value(function (d) { return d[_self.props.valueKey]; });
 
-    this.transform = 'translate(' + radius + ',' + radius + ')';
+    if (this.props.pieSort) {
+      this.pie.sort(null);
+    }
 
+    this.transform = 'translate(' + radius + ',' + radius + ')';
   }
 
   degreesToRadians(d) {
     return (Math.PI/180)*d;
   }
 
-  reloadBarData() {
-    let data = this.props.data;
-    this.setState({data:data});
-  }
-
   render() {
     this.createChart(this);
 
     const _self = this;
-    let data = this.state.data;
 
-    let wedge = _self.pie(data).map(function(d,i) {
-      let fill = _self.color(i);
-      let centroid = _self.arc.centroid(d);
-      let labelOffset = _self.props.labelOffset;
-      let label = "translate(" + centroid[0]*labelOffset +"," + centroid[1]*labelOffset + ")";
+    const wedge = _self.pie(this.props.data).map(function(d,i) {
+      const fill = _self.color(i);
+      const centroid = _self.arc.centroid(d);
+      const labelOffset = _self.props.labelOffset;
+      const label = "translate(" + centroid[0]*labelOffset +"," + centroid[1]*labelOffset + ")";
 
       return (
         <g key={i}>
           <path
             fill={fill}
-            d={_self.arc(d)}>
-          </path>
-          {_self.props.showLabel ? 
+            d={_self.arc(d)} />
+          {_self.props.showLabel ?
           <text
             transform={label}
             textAnchor="middle">
@@ -155,7 +139,7 @@ class PieChart extends React.Component {
             {wedge}
           </g>
         </svg>
-        {this.props.legend && <Legend data={this.state.data} labelKey={this.props.labelKey} colors={this.color} />}
+        {this.props.legend && <Legend data={this.props.data} labelKey={this.props.labelKey} colors={this.color} />}
       </div>
     );
   }
@@ -173,6 +157,7 @@ PieChart.propTypes = {
   valueKey: React.PropTypes.string,
   labelKey: React.PropTypes.string,
   showLabel: React.PropTypes.bool,
+  pieSort: React.PropTypes.bool,
   labelOffset: React.PropTypes.number,
   startAngle: React.PropTypes.number,
   endAngle: React.PropTypes.number,

@@ -1,4 +1,3 @@
-/*eslint-disable react/no-set-state */
 'use strict';
 
 import React from 'react';
@@ -15,9 +14,6 @@ class LineGraph extends React.Component {
 
   constructor(props) {
     super(props);
-    this.showToolTip = this.showToolTip.bind(this);
-    this.hideToolTip = this.hideToolTip.bind(this);
-    this.updateSize = this.updateSize.bind(this);
     this.state = {
       tooltip: {
         display: false,
@@ -28,34 +24,33 @@ class LineGraph extends React.Component {
         pos:{
           x: 0,
           y: 0
-        }
+        },
       },
-      width: this.props.width,
-      data: []
+      dataPointColor: '',
+      width: this.props.width
     };
   }
 
   componentWillMount() {
-    window.addEventListener('resize', this.updateSize, false);
-    this.setState({width: this.props.width});
+    this.reloadBarData();
   }
 
   componentDidMount() {
-    this.reloadBarData();
     this.repaintComponent();
+    window.addEventListener('resize', this.updateSize, false);
   }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.updateSize, false);
   }
 
-  updateSize() {
-    let node = ReactDOM.findDOMNode(this);
-    let parentWidth = node.offsetWidth;
+  updateSize = () => {
+    const node = ReactDOM.findDOMNode(this);
+    const parentWidth = node.offsetWidth;
     (parentWidth < this.props.width) ?
       this.setState({width:parentWidth}) :
       this.setState({width:this.props.width});
-  }
+  };
 
   repaintComponent() {
     const forceResize = this.updateSize;
@@ -68,7 +63,6 @@ class LineGraph extends React.Component {
   }
 
   createChart(_self) {
-
     if (this.props.colors) {
       this.color = d3.scale.ordinal()
       .range(this.props.colors);
@@ -92,16 +86,16 @@ class LineGraph extends React.Component {
     if(this.props.dataType !== 'date') {
       this.xScale= d3.scale.linear()
         .domain([
-          d3.min(this.state.data,function(d){
+          d3.min(this.props.data,function(d){
             return d[_self.props.xDataKey];
           }),
-          d3.max(this.state.data,function(d){
+          d3.max(this.props.data,function(d){
             return d[_self.props.xDataKey];
           })
         ])
         .range([0, this.w]);
 
-      if(this.props.dataPercent == 'x') {
+      if(this.props.dataPercent === 'x') {
         this.xAxis = d3.svg.axis()
           .scale(this.xScale)
           .orient('bottom')
@@ -118,7 +112,7 @@ class LineGraph extends React.Component {
       this.xScale = d3.time.scale()
         .domain(
           // Find min and max axis value
-          d3.extent(this.state.data, function (d) {
+          d3.extent(this.props.data, function (d) {
             return d[_self.props.xDataKey];
           })
         )
@@ -136,7 +130,7 @@ class LineGraph extends React.Component {
     this.yScale = d3.scale.linear()
       .domain([
         // Find min axis value and subtract buffer
-        d3.min(this.state.data,function(d){
+        d3.min(this.props.data,function(d){
           if (typeof _self.props.yMin === "number") {
             return _self.props.yMin;
           } else {
@@ -144,7 +138,7 @@ class LineGraph extends React.Component {
           }
         }),
         // Find max axis value and add buffer
-        d3.max(this.state.data,function(d){
+        d3.max(this.props.data,function(d){
           if (typeof _self.props.yMax === "number") {
             return _self.props.yMax;
           } else {
@@ -167,9 +161,9 @@ class LineGraph extends React.Component {
 
     this.dataNest = d3.nest()
         .key(function(d) { return d[_self.props.labelKey]; })
-        .entries(this.state.data);
+        .entries(this.props.data);
 
-    if(this.props.dataPercent == 'y') {
+    if(this.props.dataPercent === 'y') {
       this.yAxis = d3.svg.axis()
         .scale(this.yScale)
         .orient('left')
@@ -195,26 +189,24 @@ class LineGraph extends React.Component {
   }
 
   reloadBarData() {
-
-    let data = this.props.data;
+    const data = this.props.data;
 
     // Format date for d3 to use
     const parseDate = d3.time.format(this.props.dateFormat).parse;
 
     data.forEach((value, i) => {
-      let d = data[i];
-      if(this.props.dataType == 'date') {
+      const d = data[i];
+      if(this.props.dataType === 'date') {
         if (typeof d[this.props.xDataKey] === "string") {
           d[this.props.xDataKey] = parseDate(d[this.props.xDataKey]);
         }
         data[i] = d;
       }
     });
-
-    this.setState({data:data});
   }
 
-  showToolTip(e){
+  showToolTip = (e) => {
+    const pointColor = e.target.getAttribute('fill');
     e.target.setAttribute('fill', '#6f8679');
     this.setState({
       tooltip: {
@@ -224,15 +216,16 @@ class LineGraph extends React.Component {
           value: e.target.getAttribute('data-value')
         },
         pos:{
-          x: e.target.getAttribute('cx'),
-          y: e.target.getAttribute('cy')
+          x: parseInt(e.target.getAttribute('cx'),10),
+          y: parseInt(e.target.getAttribute('cy'),10)
         }
-      }
+      },
+      dataPointColor: pointColor
     });
-  }
+  };
 
-  hideToolTip(e){
-    e.target.setAttribute('fill', '#b1bfb7');
+  hideToolTip = (e) => {
+    e.target.setAttribute('fill', this.state.dataPointColor);
     this.setState({
       tooltip: {
         display: false,
@@ -243,19 +236,18 @@ class LineGraph extends React.Component {
         pos:{
           x: 0,
           y: 0
-        }
-      }
+        },
+      },
+      dataPointColor: ''
     });
-  }
+  };
 
   render(){
-
     this.createChart(this);
 
     const _self = this;
-    let lines;
 
-    lines = this.dataNest.map(function (d,i) {
+    const lines = this.dataNest.map(function (d,i) {
       return (
         <g key={i}>
           <path
@@ -270,15 +262,19 @@ class LineGraph extends React.Component {
             x={_self.xScale}
             y={_self.yScale}
             stroke="#ffffff"
+            fill={_self.color(i)}
             showToolTip={_self.showToolTip}
             hideToolTip={_self.hideToolTip}
-            removeFirstAndLast={true}
+            removeFirstAndLast={_self.props.removeFirstAndLast}
             dateFormat={_self.props.dataPointDateFormat}
             xDataKey={_self.props.xDataKey}
             yDataKey={_self.props.yDataKey} />
           <ToolTip
             tooltip={_self.state.tooltip}
             bgStyle={_self.props.tooltipBgStyle}
+            chartWidth={_self.state.width}
+            margin={_self.props.margin}
+            xAxis={_self.props.xAxisLabel ? true : false}
             xValue={_self.props.xToolTipLabel}
             yValue={_self.props.yToolTipLabel} />
         </g>
@@ -304,7 +300,7 @@ class LineGraph extends React.Component {
             {lines}
           </g>
         </svg>
-        {this.props.legend && <Legend data={this.state.data} labelKey={this.props.labelKey} colors={this.color} />}
+        {this.props.legend && <Legend data={this.props.data} labelKey={this.props.labelKey} colors={this.color} />}
       </div>
     );
   }
@@ -335,6 +331,7 @@ LineGraph.propTypes = {
   legend: React.PropTypes.bool,
   lineType: React.PropTypes.string,
   fillColor: React.PropTypes.string,
+  removeFirstAndLast: React.PropTypes.bool,
   margin: React.PropTypes.object,
   yMax: React.PropTypes.number,
   yMin: React.PropTypes.number,
@@ -353,6 +350,7 @@ LineGraph.defaultProps = {
   legend: true,
   lineType:'linear',
   fillColor: 'none',
+  removeFirstAndLast: false,
   margin: {
     top: 10,
     right: 40,

@@ -25,9 +25,9 @@ class Grid extends React.Component {
   }
 
   render(){
-    let translate = "translate(0,"+(this.props.h)+")";
+    const translate = "translate(0,"+(this.props.h)+")";
     return (
-      <g className="y-grid" stroke={this.props.lineColor} strokeWidth={this.props.strokeWidth} transform={this.props.gridType === 'x' ? translate : ""}></g>
+      <g className="y-grid" stroke={this.props.lineColor} strokeWidth={this.props.strokeWidth} transform={this.props.gridType === 'x' ? translate : ""} />
     );
   }
 }
