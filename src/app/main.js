@@ -3,7 +3,7 @@ import {LineGraph, BarGraph, AreaGraph, PieChart, ScatterPlot} from './d3compone
 // import rd3r from '../../lib-compiled';
 // import rd3r from '../../script-compiled';
 
-import ChartData from './d3components/testData/data.json';
+import ChartData from './d3components/testData/data.js';
 
 class Main extends React.Component {
   render() {
@@ -25,7 +25,7 @@ class Main extends React.Component {
           yToolTipLabel="Y-TT "
           lineType="linear"
           yMaxBuffer={50}
-          data={ChartData.lineGraphData} />
+          data={ChartData.lineGraphData}/>
 
         <LineGraph
           title="Line Graph - d3 cardinal line"
