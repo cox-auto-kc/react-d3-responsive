@@ -142,6 +142,7 @@ class Main extends React.Component {
           xDataKey="month"
           barChartType="side"
           individualSpacing={0}
+          yAxisPercent={true}
           keys={['new','old','third','four']}
           legendValues={ChartData.barGraphTestData2.legend}
           data={ChartData.barGraphTestData2.data} />
@@ -150,6 +151,7 @@ class Main extends React.Component {
           xDataKey="month"
           xAxisLabel="X Axis Label"
           yAxisLabel="Y Axis Label"
+          yAxisPercent={true}
           colors={["#98abc5", "#7b6888", "#a05d56", "#ff8c00"]}
           keys={['new','old','third','four']}
           data={ChartData.barGraphTestData2.data} />

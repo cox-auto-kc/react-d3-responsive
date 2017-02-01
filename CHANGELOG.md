@@ -1,3 +1,7 @@
+###0.1.8:
+###### 19 JAN 2017
+- Bar Chart displays percent when yAxisPercent is true
+
 ###0.1.7:
 ###### 05 JAN 2017
 - Chart able to update upon passing new data via props

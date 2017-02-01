@@ -84,6 +84,8 @@ class BarGraph extends React.Component {
     {this.props.xAxisLabel ? xLabelHeightOffset = 30 : null;}
     {this.props.yAxisLabel ? yLabelWidthOffset = 20 : null;}
 
+    {this.props.yAxisPercent ? yLabelWidthOffset = yLabelWidthOffset + 10 : null;}
+
     // Width of graph
     this.w = this.state.width - (this.props.margin.left + this.props.margin.right + yLabelWidthOffset);
 
@@ -112,10 +114,20 @@ class BarGraph extends React.Component {
         .domain([0, d3.max(this.stackType())])
         .nice();
 
-    this.yAxis = d3.svg.axis()
-      .scale(this.yScale)
-      .orient('left')
-      .ticks(5);
+    if(this.props.yAxisPercent) {
+      this.yAxis = d3.svg.axis()
+        .scale(this.yScale)
+        .orient('left')
+        .tickFormat( function(x) {
+          return x + '%';
+        })
+        .ticks(5);
+    } else {
+      this.yAxis = d3.svg.axis()
+        .scale(this.yScale)
+        .orient('left')
+        .ticks(5);
+    }
 
     this.xAxis = d3.svg.axis()
       .scale(this.x0Scale)
@@ -197,7 +209,7 @@ class BarGraph extends React.Component {
             <Axis h={this.h} axis={this.yAxis} axisType="y" />
             <Axis h={this.h} axis={this.xAxis} axisType="x" />
             {this.props.xAxisLabel && <AxisLabel key={0} h={this.h} w={this.w} axisLabel={this.props.xAxisLabel} axisType="x" />}
-            {this.props.yAxisLabel && <AxisLabel key={1} h={this.h} w={this.w} axisLabel={this.props.yAxisLabel} axisType="y" />}
+            {this.props.yAxisLabel && <AxisLabel key={1} h={this.h} w={this.w} axisLabel={this.props.yAxisLabel} axisType="y" padding={this.props.yAxisPercent ? 15 : 0} />}
             {bars}
           </g>
         </svg>
@@ -223,6 +235,7 @@ BarGraph.propTypes = {
   xDataKey: React.PropTypes.string.isRequired,
   xAxisLabel: React.PropTypes.string,
   yAxisLabel: React.PropTypes.string,
+  yAxisPercent: React.PropTypes.bool,
   legend: React.PropTypes.bool,
   keys: React.PropTypes.array.isRequired,
   legendValues: React.PropTypes.array,
