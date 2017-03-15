@@ -1,6 +1,6 @@
 {
   "name": "react-d3-responsive",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "D3 with React",
   "main": "index.js",
   "scripts": {

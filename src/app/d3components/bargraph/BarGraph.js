@@ -15,6 +15,17 @@ class BarGraph extends React.Component {
     super(props);
     this.updateSize = this.updateSize.bind(this);
     this.state = {
+      tooltip: {
+        display: false,
+        data: {
+          key: '',
+          value: ''
+        },
+        pos:{
+          x: 0,
+          y: 0
+        },
+      },
       width: this.props.width,
       data: []
     };
@@ -216,7 +227,7 @@ class BarGraph extends React.Component {
                 xAxis={_self.props.xAxisLabel ? true : false}
                 xValue={_self.props.xToolTipLabel}
                 yValue={_self.props.yToolTipLabel} />
-              </g>
+            </g>
           );
         });
       } else {
@@ -318,10 +329,11 @@ BarGraph.defaultProps = {
   barChartType: "stack",
   groupSpacing: .3,
   individualSpacing: .5,
-  xToolTipLabel: 'x',
-  yToolTipLabel: 'y',  
+  xToolTipLabel: '',
+  yToolTipLabel: '',  
   legend: true,
   labelKey: "label",
+  legendValues: [],
   margin: {
     top: 10,
     right: 40,

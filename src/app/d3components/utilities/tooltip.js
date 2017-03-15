@@ -31,7 +31,7 @@ const ToolTip = ({tooltip, bgStyle, chartWidth, margin, xAxis, xValue, yValue}) 
     if (y > height) {
       transform = 'translate(' + (x-width/2-xOffset) + ',' + (y-height-20) + ')';
       transformArrow = 'translate('+(width/2-10+xOffset)+','+(height-1)+')';
-    } else if (y < height) {
+    } else if (y <= height) {
       transform = 'translate(' + (x-width/2-xOffset) + ',' + (Math.round(y)+20) + ')';
       transformArrow = 'translate('+(width/2-10+xOffset)+','+0+') rotate(180,10,0)';
     }
