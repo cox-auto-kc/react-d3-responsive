@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-const ToolTip = ({tooltip, bgStyle, chartWidth, margin, xAxis, xValue, yValue}) => {
+const ToolTip = ({tooltip, bgStyle, chartWidth, chartHeight, margin, xAxis, xValue, yValue}) => {
   let displayType = "none";
   let transform = "";
   let x = 0;
@@ -33,6 +33,7 @@ const ToolTip = ({tooltip, bgStyle, chartWidth, margin, xAxis, xValue, yValue}) 
 
     if(tooltip.orientation === 'horizontal') {
       if (y <= height/2) yOffset = 20;
+      if (y+height > chartHeight) yOffset = -20;
       if (x > width) {
         transform = 'translate(' + (x-width-13) + ',' + (y-height/2+yOffset) + ')';
         transformArrow = 'translate('+(width)+','+(height/2+10)+') rotate(-90,0,0)';
@@ -69,6 +70,7 @@ ToolTip.propTypes = {
   // textStyle1: React.PropTypes.string,
   // textStyle2: React.PropTypes.string,
   chartWidth: React.PropTypes.number,
+  chartHeight: React.PropTypes.number,
   margin: React.PropTypes.object,
   xAxis: React.PropTypes.bool,
   xValue: React.PropTypes.string,

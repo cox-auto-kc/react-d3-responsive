@@ -27,6 +27,7 @@ class BarGraph extends React.Component {
         },
       },
       width: this.props.width,
+      height: this.props.height,
       data: []
     };
   }
@@ -278,6 +279,7 @@ class BarGraph extends React.Component {
               tooltip={_self.state.tooltip}
               bgStyle={_self.props.tooltipBgStyle}
               chartWidth={_self.state.width}
+              chartHeight={_self.state.height}
               margin={_self.props.margin}
               xAxis={_self.props.xAxisLabel ? true : false}
               xValue={_self.props.xToolTipLabel}
