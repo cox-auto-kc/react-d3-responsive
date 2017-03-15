@@ -167,13 +167,15 @@ class BarGraph extends React.Component {
     this.setState({
       tooltip: {
         display: true,
+        orientation: 'horizontal',
         data: {
           key: e.target.getAttribute('data-key'),
           value: e.target.getAttribute('data-value')
         },
         pos:{
-          x: parseInt(e.target.getAttribute('x'),10) + (parseInt(e.target.getAttribute("width"),10)/2),
-          y: parseInt(e.target.getAttribute('y'),10)
+          x: parseInt(e.target.getAttribute('x'),10),
+          y: parseInt(e.target.getAttribute('y'),10),
+          width: parseInt(e.target.getAttribute("width"),10)
         }
       },
       dataPointColor: pointColor
@@ -219,14 +221,6 @@ class BarGraph extends React.Component {
                 width={_self.x1Scale.rangeBand()}
                 data-key={_self.props.legendValues[i]}
                 data-value={d.y} />
-              <ToolTip
-                tooltip={_self.state.tooltip}
-                bgStyle={_self.props.tooltipBgStyle}
-                chartWidth={_self.state.width}
-                margin={_self.props.margin}
-                xAxis={_self.props.xAxisLabel ? true : false}
-                xValue={_self.props.xToolTipLabel}
-                yValue={_self.props.yToolTipLabel} />
             </g>
           );
         });
@@ -243,15 +237,7 @@ class BarGraph extends React.Component {
                 height={_self.yScale(d.y0) - _self.yScale(d.y + d.y0)}
                 width={_self.x0Scale.rangeBand()}
                 data-key={_self.props.legendValues[i]}
-                data-value={d.y} />                
-              <ToolTip
-                tooltip={_self.state.tooltip}
-                bgStyle={_self.props.tooltipBgStyle}
-                chartWidth={_self.state.width}
-                margin={_self.props.margin}
-                xAxis={_self.props.xAxisLabel ? true : false}
-                xValue={_self.props.xToolTipLabel}
-                yValue={_self.props.yToolTipLabel} />                
+                data-value={d.y} />           
             </g>
           );
         });
@@ -281,13 +267,21 @@ class BarGraph extends React.Component {
       <div>
         {this.props.title && <h3>{this.props.title}</h3>}
         <svg className={"rd3r-chart rd3r-bar-graph" + customClassName} id={this.props.chartId} width={this.state.width} height={this.props.height}>
-          <g transform={this.transform}>
+          <g transform={this.transform}>           
             <Grid h={this.h} grid={this.yGrid} gridType="y" />
             <Axis h={this.h} axis={this.yAxis} axisType="y" />
-            <Axis h={this.h} axis={this.xAxis} axisType="x" />
+            <Axis h={this.h} axis={this.xAxis} axisType="x" />           
             {this.props.xAxisLabel && <AxisLabel key={0} h={this.h} w={this.w} axisLabel={this.props.xAxisLabel} axisType="x" />}
             {this.props.yAxisLabel && <AxisLabel key={1} h={this.h} w={this.w} axisLabel={this.props.yAxisLabel} axisType="y" padding={this.props.yAxisPercent ? 15 : 0} />}
             {bars}
+            <ToolTip
+              tooltip={_self.state.tooltip}
+              bgStyle={_self.props.tooltipBgStyle}
+              chartWidth={_self.state.width}
+              margin={_self.props.margin}
+              xAxis={_self.props.xAxisLabel ? true : false}
+              xValue={_self.props.xToolTipLabel}
+              yValue={_self.props.yToolTipLabel} />              
           </g>
         </svg>
         {this.props.legend && <Legend data={legend} labelKey={this.props.labelKey} colors={this.color} />}
