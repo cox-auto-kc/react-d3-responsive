@@ -32,14 +32,14 @@ const ToolTip = ({tooltip, bgStyle, chartWidth, chartHeight, margin, xAxis, xVal
     }
 
     if(tooltip.orientation === 'horizontal') {
-      if (y <= height/2) yOffset = 20;
-      if (y+height > chartHeight) yOffset = -20;
+      if (y <= height/2) yOffset = 15;
+      if (y+height > chartHeight) yOffset = -15;
       if (x > width) {
         transform = 'translate(' + (x-width-13) + ',' + (y-height/2+yOffset) + ')';
-        transformArrow = 'translate('+(width)+','+(height/2+10)+') rotate(-90,0,0)';
+        transformArrow = 'translate('+(width)+','+(height/2+10-yOffset)+') rotate(-90,0,0)';
       } else if (x <= width) {
         transform = 'translate(' + (x+itemWidth+13) + ',' + (y-height/2+yOffset) + ')';
-        transformArrow = 'translate('+(0)+','+(height/2-10)+') rotate(90,0,0)';
+        transformArrow = 'translate('+(0)+','+(height/2-10-yOffset)+') rotate(90,0,0)';
       }
     } else {
       if (y > height) {
