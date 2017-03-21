@@ -14,9 +14,6 @@ class AreaGraph extends React.Component {
 
   constructor(props) {
     super(props);
-    this.showToolTip = this.showToolTip.bind(this);
-    this.hideToolTip = this.hideToolTip.bind(this);
-    this.updateSize = this.updateSize.bind(this);
     this.state = {
       tooltip: {
         display: false,

@@ -268,10 +268,10 @@ class BarGraph extends React.Component {
       <div>
         {this.props.title && <h3>{this.props.title}</h3>}
         <svg className={"rd3r-chart rd3r-bar-graph" + customClassName} id={this.props.chartId} width={this.state.width} height={this.props.height}>
-          <g transform={this.transform}>           
+          <g transform={this.transform}>
             <Grid h={this.h} grid={this.yGrid} gridType="y" />
             <Axis h={this.h} axis={this.yAxis} axisType="y" />
-            <Axis h={this.h} axis={this.xAxis} axisType="x" />           
+            <Axis h={this.h} axis={this.xAxis} axisType="x" />
             {this.props.xAxisLabel && <AxisLabel key={0} h={this.h} w={this.w} axisLabel={this.props.xAxisLabel} axisType="x" />}
             {this.props.yAxisLabel && <AxisLabel key={1} h={this.h} w={this.w} axisLabel={this.props.yAxisLabel} axisType="y" padding={this.props.yAxisPercent ? 15 : 0} />}
             {bars}
