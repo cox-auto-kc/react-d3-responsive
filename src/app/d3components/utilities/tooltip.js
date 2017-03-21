@@ -2,12 +2,14 @@
 
 import React from 'react';
 
-const ToolTip = ({tooltip, bgStyle, chartWidth, margin, xAxis, xValue, yValue}) => {
+const ToolTip = ({tooltip, bgStyle, chartWidth, chartHeight, margin, xAxis, xValue, yValue}) => {
   let displayType = "none";
   let transform = "";
   let x = 0;
   let xOffset = 0;
+  let yOffset = 0;
   let y = 0;
+  let itemWidth = 0;
   const xAxisPadding = xAxis ? 0 : 15;
   const width = 150;
   const height = 70;
@@ -17,23 +19,36 @@ const ToolTip = ({tooltip, bgStyle, chartWidth, margin, xAxis, xValue, yValue}) 
   if (tooltip.display === true) {
     x = tooltip.pos.x;
     y = tooltip.pos.y;
+    itemWidth = tooltip.pos.width;
     displayType = "block";
 
     if(margin) {
-      const pointLocation = tooltip.pos.x + (width/2) + margin.right + margin.left;
-      if (pointLocation > chartWidth) {
-        xOffset = pointLocation - chartWidth - xAxisPadding;
+      const xPointLocation = tooltip.pos.x + (width/2) + margin.right + margin.left;
+      if (xPointLocation > chartWidth) {
+        xOffset = xPointLocation - chartWidth - xAxisPadding;
       } else if (tooltip.pos.x < width/2) {
         xOffset = -(width/2 - tooltip.pos.x - 15);
       }
     }
 
-    if (y > height) {
-      transform = 'translate(' + (x-width/2-xOffset) + ',' + (y-height-20) + ')';
-      transformArrow = 'translate('+(width/2-10+xOffset)+','+(height-1)+')';
-    } else if (y < height) {
-      transform = 'translate(' + (x-width/2-xOffset) + ',' + (Math.round(y)+20) + ')';
-      transformArrow = 'translate('+(width/2-10+xOffset)+','+0+') rotate(180,10,0)';
+    if(tooltip.orientation === 'horizontal') {
+      if (y <= height/2) yOffset = 15;
+      if (y+height > chartHeight) yOffset = -15;
+      if (x > width) {
+        transform = 'translate(' + (x-width-13) + ',' + (y-height/2+yOffset) + ')';
+        transformArrow = 'translate('+(width)+','+(height/2+10-yOffset)+') rotate(-90,0,0)';
+      } else if (x <= width) {
+        transform = 'translate(' + (x+itemWidth+13) + ',' + (y-height/2+yOffset) + ')';
+        transformArrow = 'translate('+(0)+','+(height/2-10-yOffset)+') rotate(90,0,0)';
+      }
+    } else {
+      if (y > height) {
+        transform = 'translate(' + (x-width/2-xOffset) + ',' + (y-height-20) + ')';
+        transformArrow = 'translate('+(width/2-10+xOffset)+','+(height-1)+')';
+      } else if (y <= height) {
+        transform = 'translate(' + (x-width/2-xOffset) + ',' + (Math.round(y)+20) + ')';
+        transformArrow = 'translate('+(width/2-10+xOffset)+','+0+') rotate(180,10,0)';
+      }
     }
   }
 
@@ -55,6 +70,7 @@ ToolTip.propTypes = {
   // textStyle1: React.PropTypes.string,
   // textStyle2: React.PropTypes.string,
   chartWidth: React.PropTypes.number,
+  chartHeight: React.PropTypes.number,
   margin: React.PropTypes.object,
   xAxis: React.PropTypes.bool,
   xValue: React.PropTypes.string,

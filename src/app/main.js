@@ -136,6 +136,7 @@ class Main extends React.Component {
           xAxisLabel="X Axis Label"
           yAxisLabel="Y Axis Label"
           keys={['Your Score','Month To Date','Vin Average']}
+          legendValues={ChartData.soldRatiosLegend}
           data={ChartData.soldRatios} />
         <BarGraph
           title="Bar Graph"
@@ -154,6 +155,7 @@ class Main extends React.Component {
           yAxisPercent={true}
           colors={["#98abc5", "#7b6888", "#a05d56", "#ff8c00"]}
           keys={['new','old','third','four']}
+          legendValues={ChartData.barGraphTestData2.legend}
           data={ChartData.barGraphTestData2.data} />
 
         <PieChart

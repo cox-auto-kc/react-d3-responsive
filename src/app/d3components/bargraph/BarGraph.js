@@ -6,6 +6,7 @@ import d3 from 'd3';
 import Axis from '../utilities/axis';
 import AxisLabel from '../utilities/axisLabel';
 import Grid from '../utilities/grid';
+import ToolTip from '../utilities/tooltip';
 import Legend from '../utilities/legend';
 
 class BarGraph extends React.Component {
@@ -14,7 +15,19 @@ class BarGraph extends React.Component {
     super(props);
     this.updateSize = this.updateSize.bind(this);
     this.state = {
+      tooltip: {
+        display: false,
+        data: {
+          key: '',
+          value: ''
+        },
+        pos:{
+          x: 0,
+          y: 0
+        },
+      },
       width: this.props.width,
+      height: this.props.height,
       data: []
     };
   }
@@ -149,6 +162,45 @@ class BarGraph extends React.Component {
     this.setState({data:data});
   }
 
+  showToolTip = (e) => {
+    const pointColor = e.target.getAttribute('fill');
+    e.target.setAttribute('fill', '#6f8679');
+    this.setState({
+      tooltip: {
+        display: true,
+        orientation: 'horizontal',
+        data: {
+          key: e.target.getAttribute('data-key'),
+          value: e.target.getAttribute('data-value')
+        },
+        pos:{
+          x: parseInt(e.target.getAttribute('x'),10),
+          y: parseInt(e.target.getAttribute('y'),10),
+          width: parseInt(e.target.getAttribute("width"),10)
+        }
+      },
+      dataPointColor: pointColor
+    });
+  };
+
+  hideToolTip = (e) => {
+    e.target.setAttribute('fill', this.state.dataPointColor);
+    this.setState({
+      tooltip: {
+        display: false,
+        data: {
+          key: '',
+          value: ''
+        },
+        pos:{
+          x: 0,
+          y: 0
+        },
+      },
+      dataPointColor: ''
+    });
+  };  
+
   render(){
     this.createChart(this);
 
@@ -158,24 +210,36 @@ class BarGraph extends React.Component {
       let rects;
       if (_self.props.barChartType === "side") {
         rects = data.map(function(d,j) {
-          return (<rect
-            x={_self.x0Scale(d.x)+(i*(_self.x0Scale.rangeBand() / (_self.stacked.length)))}
-            y={_self.h - (_self.yScale(d.y0) - _self.yScale(d.y + d.y0))}
-            fill={_self.color(i)}
-            height={_self.yScale(d.y0) - _self.yScale(d.y + d.y0)}
-            width={_self.x1Scale.rangeBand()}
-            key={j}/>
+          return (
+            <g key={j}>
+              <rect
+                x={_self.x0Scale(d.x)+(i*(_self.x0Scale.rangeBand() / (_self.stacked.length)))}
+                y={_self.h - (_self.yScale(d.y0) - _self.yScale(d.y + d.y0))}
+                fill={_self.color(i)}
+                onMouseOver={_self.showToolTip}
+                onMouseOut={_self.hideToolTip}
+                height={_self.yScale(d.y0) - _self.yScale(d.y + d.y0)}
+                width={_self.x1Scale.rangeBand()}
+                data-key={_self.props.legendValues[i]}
+                data-value={d.y} />
+            </g>
           );
         });
       } else {
         rects = data.map(function(d,j) {
-          return (<rect
-            x={_self.x0Scale(d.x)}
-            y={_self.yScale(d.y + d.y0)}
-            fill={_self.color(i)}
-            height={_self.yScale(d.y0) - _self.yScale(d.y + d.y0)}
-            width={_self.x0Scale.rangeBand()}
-            key={j}/>
+          return (
+            <g key={j}>
+              <rect
+                x={_self.x0Scale(d.x)}
+                y={_self.yScale(d.y + d.y0)}
+                fill={_self.color(i)}
+                onMouseOver={_self.showToolTip}
+                onMouseOut={_self.hideToolTip}                
+                height={_self.yScale(d.y0) - _self.yScale(d.y + d.y0)}
+                width={_self.x0Scale.rangeBand()}
+                data-key={_self.props.legendValues[i]}
+                data-value={d.y} />           
+            </g>
           );
         });
       }
@@ -211,6 +275,15 @@ class BarGraph extends React.Component {
             {this.props.xAxisLabel && <AxisLabel key={0} h={this.h} w={this.w} axisLabel={this.props.xAxisLabel} axisType="x" />}
             {this.props.yAxisLabel && <AxisLabel key={1} h={this.h} w={this.w} axisLabel={this.props.yAxisLabel} axisType="y" padding={this.props.yAxisPercent ? 15 : 0} />}
             {bars}
+            <ToolTip
+              tooltip={_self.state.tooltip}
+              bgStyle={_self.props.tooltipBgStyle}
+              chartWidth={_self.state.width}
+              chartHeight={_self.state.height}
+              margin={_self.props.margin}
+              xAxis={_self.props.xAxisLabel ? true : false}
+              xValue={_self.props.xToolTipLabel}
+              yValue={_self.props.yToolTipLabel} />              
           </g>
         </svg>
         {this.props.legend && <Legend data={legend} labelKey={this.props.labelKey} colors={this.color} />}
@@ -236,6 +309,9 @@ BarGraph.propTypes = {
   xAxisLabel: React.PropTypes.string,
   yAxisLabel: React.PropTypes.string,
   yAxisPercent: React.PropTypes.bool,
+  xToolTipLabel: React.PropTypes.string,
+  yToolTipLabel: React.PropTypes.string,
+  tooltipBgStyle: React.PropTypes.string,  
   legend: React.PropTypes.bool,
   keys: React.PropTypes.array.isRequired,
   legendValues: React.PropTypes.array,
@@ -249,8 +325,11 @@ BarGraph.defaultProps = {
   barChartType: "stack",
   groupSpacing: .3,
   individualSpacing: .5,
+  xToolTipLabel: '',
+  yToolTipLabel: '',  
   legend: true,
   labelKey: "label",
+  legendValues: [],
   margin: {
     top: 10,
     right: 40,

@@ -1,3 +1,8 @@
+###0.1.9:
+###### 16 MAR 2017
+- Bar Chart Tool tip added
+- Arrow functions for tooltip in AreaGraph
+
 ###0.1.8:
 ###### 19 JAN 2017
 - Bar Chart displays percent when yAxisPercent is true
