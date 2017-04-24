@@ -1,6 +1,6 @@
 'use strict';
 
-import React from 'react';
+import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import d3 from 'd3';
 import Axis from '../utilities/axis';
@@ -309,34 +309,88 @@ class ScatterPlot extends React.Component {
 
 }
 
+
 ScatterPlot.propTypes = {
-  title: React.PropTypes.string,
-  width: React.PropTypes.number,
-  height: React.PropTypes.number,
-  chartId: React.PropTypes.string,
-  chartClassName: React.PropTypes.string,
-  colors: React.PropTypes.array,
-  data: React.PropTypes.array.isRequired,
-  labelKey: React.PropTypes.string,
-  dateFormat: React.PropTypes.string,
-  dataPointDateFormat: React.PropTypes.string,
-  dataType: React.PropTypes.string,
-  dataPercent: React.PropTypes.string,
-  xDataKey: React.PropTypes.string.isRequired,
-  yDataKey: React.PropTypes.string.isRequired,
-  xFormat: React.PropTypes.string,
-  xAxisLabel: React.PropTypes.string,
-  yAxisLabel: React.PropTypes.string,
-  xToolTipLabel: React.PropTypes.string,
-  yToolTipLabel: React.PropTypes.string,
-  tooltipBgStyle: React.PropTypes.string,
-  legend: React.PropTypes.bool,
-  trendLine: React.PropTypes.bool,
-  lineNumbers: React.PropTypes.oneOf(['single','multi']),
-  margin: React.PropTypes.object,
-  yMax: React.PropTypes.number,
-  yMin: React.PropTypes.number,
-  yMaxBuffer: React.PropTypes.number
+  /** Graph title */
+  title: PropTypes.string,
+
+  /** Graph max-width */
+  width: PropTypes.number,
+
+  /** Graph height */
+  height: PropTypes.number,
+
+  /** Chart ID */
+  chartId: PropTypes.string,
+
+  /** Class name for chart */
+  chartClassName: PropTypes.string,
+
+  /** Data point colors */
+  colors: PropTypes.array,
+
+  /** Data to be graphed */
+  data: PropTypes.array.isRequired,
+  
+  /** Data date format (d3.js v3 time api) */
+  dateFormat: PropTypes.string,
+
+  /** Tooltip date format (d3.js v3 time api) */
+  dataPointDateFormat: PropTypes.string,
+
+  /** Data type date, percent, or number */
+  dataType: PropTypes.string,
+
+  /** Axis to be percentage */
+  dataPercent: PropTypes.string,
+
+  /** X Axis date label format */
+  xFormat: PropTypes.string,
+
+  /** Label key */
+  labelKey: PropTypes.string,
+
+  /** X Axis data key */
+  xDataKey: PropTypes.string.isRequired,
+
+  /** Y Axis data key */
+  yDataKey: PropTypes.string.isRequired,
+
+  /** X Axis label */
+  xAxisLabel: PropTypes.string,
+
+  /** Y Axis label */
+  yAxisLabel: PropTypes.string,
+
+  /** X Axis tooltip label */
+  xToolTipLabel: PropTypes.string,
+
+  /** Y Axis tooltip label */
+  yToolTipLabel: PropTypes.string,
+
+  /** Tooltip background color */
+  tooltipBgStyle: PropTypes.string,
+
+  /** Display legend */
+  legend: PropTypes.bool,
+
+  /** Display trend line */
+  trendLine: PropTypes.bool,
+
+  /** Trend line type of single or multi */
+  lineNumbers: PropTypes.oneOf(['single','multi']),
+
+  /** Margin for graph */
+  margin: PropTypes.object,
+
+  /** Set Y maximum value */
+  yMax: PropTypes.number,
+
+  /** Set Y minimum value */
+  yMin: PropTypes.number,
+
+  /** Set Y padding for min and max value */
+  yMaxBuffer: PropTypes.number
 };
 
 ScatterPlot.defaultProps = {

@@ -1,9 +1,13 @@
 'use strict';
 
-import React from 'react';
+import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import d3 from 'd3';
 import Legend from '../utilities/legend';
+
+/**
+ * Pie Chart using d3
+ */
 
 class PieChart extends React.Component {
 
@@ -147,22 +151,53 @@ class PieChart extends React.Component {
 }
 
 PieChart.propTypes = {
-  title: React.PropTypes.string,
-  width: React.PropTypes.number,
-  height: React.PropTypes.number,
-  chartId: React.PropTypes.string,
-  chartClassName: React.PropTypes.string,
-  colors: React.PropTypes.array,
-  data: React.PropTypes.array,
-  valueKey: React.PropTypes.string,
-  labelKey: React.PropTypes.string,
-  showLabel: React.PropTypes.bool,
-  pieSort: React.PropTypes.bool,
-  labelOffset: React.PropTypes.number,
-  startAngle: React.PropTypes.number,
-  endAngle: React.PropTypes.number,
-  innerRadiusRatio: React.PropTypes.number,
-  legend: React.PropTypes.bool
+  /** Graph title */
+  title: PropTypes.string,
+
+  /** Graph max-width */
+  width: PropTypes.number,
+
+  /** Graph height */
+  height: PropTypes.number,
+
+  /** Chart ID */
+  chartId: PropTypes.string,
+
+  /** Class name for chart */
+  chartClassName: PropTypes.string,
+
+  /** Colors for slices */
+  colors: PropTypes.array,
+
+  /** Data to be graphed */
+  data: PropTypes.array,
+
+  /** Value key */
+  valueKey: PropTypes.string,
+
+  /** Label key */
+  labelKey: PropTypes.string,
+
+  /** Show labels */
+  showLabel: PropTypes.bool,
+
+  /** Sort largest to smallest */
+  pieSort: PropTypes.bool,
+
+  /** Offset lable */
+  labelOffset: PropTypes.number,
+
+  /** Starting angle (out of 360) */
+  startAngle: PropTypes.number,
+
+  /** Ending angle (out of 360) */
+  endAngle: PropTypes.number,
+
+  /** Inner radius */
+  innerRadiusRatio: PropTypes.number,
+
+  /** Display legend */
+  legend: PropTypes.bool
 };
 
 PieChart.defaultProps = {
@@ -175,12 +210,6 @@ PieChart.defaultProps = {
   labelOffset: 1,
   startAngle: 0,
   endAngle: 360,
-  margin: {
-    top: 50,
-    right: 50,
-    bottom: 50,
-    left: 50
-  },
   legend: true
 };
 

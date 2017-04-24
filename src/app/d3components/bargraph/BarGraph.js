@@ -1,6 +1,6 @@
 'use strict';
 
-import React from 'react';
+import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import d3 from 'd3';
 import Axis from '../utilities/axis';
@@ -294,29 +294,65 @@ class BarGraph extends React.Component {
 }
 
 BarGraph.propTypes = {
-  title: React.PropTypes.string,
-  width: React.PropTypes.number,
-  height: React.PropTypes.number,
-  chartId: React.PropTypes.string,
-  chartClassName: React.PropTypes.string,
-  colors: React.PropTypes.array,
-  barChartType: React.PropTypes.oneOf(['stack','side']),
-  groupSpacing: React.PropTypes.number,
-  individualSpacing: React.PropTypes.number,
-  data: React.PropTypes.array.isRequired,
-  labelKey: React.PropTypes.string,
-  xDataKey: React.PropTypes.string.isRequired,
-  xAxisLabel: React.PropTypes.string,
-  yAxisLabel: React.PropTypes.string,
-  yAxisPercent: React.PropTypes.bool,
-  xToolTipLabel: React.PropTypes.string,
-  yToolTipLabel: React.PropTypes.string,
-  tooltipBgStyle: React.PropTypes.string,  
-  legend: React.PropTypes.bool,
-  keys: React.PropTypes.array.isRequired,
-  legendValues: React.PropTypes.array,
-  margin: React.PropTypes.object,
-  yMax: React.PropTypes.number
+  /** Graph title */
+  title: PropTypes.string,
+
+  /** Graph max-width */
+  width: PropTypes.number,
+
+  /** Graph height */
+  height: PropTypes.number,
+
+  /** Chart ID */
+  chartId: PropTypes.string,
+
+  /** Class name for chart */
+  chartClassName: PropTypes.string,
+
+  /** Rectangle fill colors */
+  colors: PropTypes.array,
+
+  /** Chart type (stack or side) */
+  barChartType: PropTypes.oneOf(['stack','side']),
+
+  /** Space between groups of bars */
+  groupSpacing: PropTypes.number,
+
+  /** Space between individual bars */
+  individualSpacing: PropTypes.number,
+
+  /** Data to be graphed */
+  data: PropTypes.array.isRequired,
+
+  /** Label key */
+  labelKey: PropTypes.string,
+  
+  /** X Axis data key */
+  xDataKey: PropTypes.string.isRequired,
+
+  /** X Axis label */
+  xAxisLabel: PropTypes.string,
+
+  /** Y Axis label */
+  yAxisLabel: PropTypes.string,
+
+  /** Display Y Axis as percentage */
+  yAxisPercent: PropTypes.bool,
+
+  /** Display legend */
+  legend: PropTypes.bool,
+
+  /** Keys for values to be graphed */
+  keys: PropTypes.array.isRequired,
+
+  /** Values for legend */
+  legendValues: PropTypes.array,
+
+  /** Margin for graph */
+  margin: PropTypes.object,
+
+  /** Set Y maximum value */
+  yMax: PropTypes.number
 };
 
 BarGraph.defaultProps = {
