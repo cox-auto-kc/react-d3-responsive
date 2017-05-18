@@ -91,11 +91,8 @@ class BarGraph extends React.Component {
       this.color = d3.scale.category10();
     }
 
-    let xLabelHeightOffset = 0;
-    let yLabelWidthOffset = 0;
-
-    {this.props.xAxisLabel ? xLabelHeightOffset = 30 : null;}
-    {this.props.yAxisLabel ? yLabelWidthOffset = 20 : null;}
+    let xLabelHeightOffset = this.props.xAxisLabel ? 30 : 0;
+    let yLabelWidthOffset = this.props.yAxisLabel ? 20 : 0;
 
     {this.props.yAxisPercent ? yLabelWidthOffset = yLabelWidthOffset + 10 : null;}
 

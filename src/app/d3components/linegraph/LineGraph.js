@@ -70,11 +70,8 @@ class LineGraph extends React.Component {
       this.color = d3.scale.category10();
     }
 
-    let xLabelHeightOffset = 0;
-    let yLabelWidthOffset = 0;
-
-    {this.props.xAxisLabel ? xLabelHeightOffset = 30 : null;}
-    {this.props.yAxisLabel ? yLabelWidthOffset = 20 : null;}
+    let xLabelHeightOffset = this.props.xAxisLabel ? 30 : 0;
+    let yLabelWidthOffset = this.props.yAxisLabel ? 20 : 0;
 
     // Width of graph
     this.w = this.state.width - (this.props.margin.left + this.props.margin.right + yLabelWidthOffset);
